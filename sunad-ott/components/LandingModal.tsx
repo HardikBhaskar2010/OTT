@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLang } from './LangContext';
+import {
+  trackModalImpression,
+  trackModalSignIn,
+  trackModalGuestContinue,
+} from '@/lib/analytics';
 
 /**
  * LandingModal — Premium onboarding gate popup.
@@ -23,6 +28,7 @@ export default function LandingModal() {
       // Delay presentation slightly for a premium, non-jarring entrance
       const timer = setTimeout(() => {
         setIsOpen(true);
+        trackModalImpression();
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -31,9 +37,11 @@ export default function LandingModal() {
   const handleClose = () => {
     sessionStorage.setItem('sunad-gate-dismissed', 'true');
     setIsOpen(false);
+    trackModalGuestContinue();
   };
 
   const handleSignIn = () => {
+    trackModalSignIn();
     handleClose();
     router.push('/signin');
   };

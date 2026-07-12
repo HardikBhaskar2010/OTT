@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from './LangContext';
 import { NAV_ITEMS } from '@/lib/mockData';
+import { trackLanguageSwitch, trackNavSignIn } from '@/lib/analytics';
 
 const ICONS: Record<string, React.ReactNode> = {
   home: (
@@ -209,7 +210,11 @@ export default function TopNav() {
           {/* Language Toggle */}
           <button
             className="lang-toggle nav-lang-toggle"
-            onClick={toggle}
+            onClick={() => {
+              const next = lang === 'en' ? 'hi' : 'en';
+              trackLanguageSwitch(next);
+              toggle();
+            }}
             aria-label={lang === 'en'
               ? 'Switch to Hindi — हिंदी में देखें'
               : 'Switch to English — Switch to English'
@@ -224,7 +229,7 @@ export default function TopNav() {
           </button>
 
           {/* Sign In */}
-          <Link href="/signin" className="nav-sign-in">
+          <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
             {t('Sign In', 'साइन इन')}
           </Link>
 

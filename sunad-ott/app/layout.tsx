@@ -7,6 +7,10 @@ import TopNav from '@/components/TopNav';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
 import LandingModal from '@/components/LandingModal';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import CookieBanner from '@/components/CookieBanner';
 
 /* ─── FONTS via next/font/google ──────────────────────────────────────────── */
 /* Fraunces — Display/Editorial, Latin */
@@ -120,6 +124,8 @@ export default function RootLayout({
       ].join(' ')}
     >
       <head>
+        {/* Google Analytics 4 — loads after interactive, no render blocking */}
+        <GoogleAnalytics />
         {/*
           Tiro Devanagari Hindi — loaded via <link> as it's not available
           through next/font/google's standard subset list.
@@ -169,6 +175,14 @@ export default function RootLayout({
             <Footer />
           </LenisProvider>
         </LangProvider>
+
+        {/* Vercel Analytics — tracks page views & Core Web Vitals automatically */}
+        <Analytics />
+        {/* Vercel Speed Insights — tracks LCP, CLS, FID per page */}
+        <SpeedInsights />
+
+        {/* Cookie consent banner — shown to first-time visitors */}
+        <CookieBanner />
       </body>
     </html>
   );
