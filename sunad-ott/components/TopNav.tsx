@@ -196,7 +196,7 @@ export default function TopNav() {
 
           {/* Bell / Notifications */}
           <button
-            className="nav-icon-btn"
+            className="nav-icon-btn nav-bell"
             aria-label={t('Notifications', 'सूचनाएं')}
             title={t('Notifications', 'सूचनाएं')}
           >
@@ -208,7 +208,7 @@ export default function TopNav() {
 
           {/* Language Toggle */}
           <button
-            className="lang-toggle"
+            className="lang-toggle nav-lang-toggle"
             onClick={toggle}
             aria-label={lang === 'en'
               ? 'Switch to Hindi — हिंदी में देखें'

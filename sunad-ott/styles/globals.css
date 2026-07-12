@@ -722,10 +722,42 @@ h2[lang="hi"] {
 @media (max-width: 768px) {
   .nav-links        { display: none; }
   .nav-sign-in      { display: none; }
+  .nav-bell         { display: none; }
+  .nav-lang-toggle  { display: none; }
   .nav-hamburger    { display: flex; }
 
   .site-nav {
-    padding-inline: var(--space-3);
+    padding-inline: var(--space-2) !important;
+  }
+
+  .site-nav.is-docked {
+    padding-inline: var(--space-2) !important;
+    top: 10px !important;
+    height: 48px !important;
+  }
+
+  @keyframes nav-dock {
+    from {
+      width: 100vw;
+      top: 0px;
+      padding-inline: var(--space-2);
+      height: 60px;
+      border-radius: 0px;
+      background: transparent;
+      box-shadow: none;
+    }
+    to {
+      width: clamp(280px, 92vw, 1280px);
+      top: 10px;
+      padding-inline: var(--space-2);
+      height: 48px;
+      border-radius: var(--radius-full);
+      background: color-mix(in oklch, var(--primitive-black) 80%, transparent);
+      box-shadow:
+        0 0 0 1px color-mix(in oklch, var(--primitive-gold) 20%, transparent),
+        0 8px 32px color-mix(in oklch, var(--primitive-black) 60%, transparent),
+        0 2px 8px color-mix(in oklch, var(--primitive-black) 40%, transparent);
+    }
   }
 
   .mini-category-grid {
