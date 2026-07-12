@@ -23,6 +23,7 @@
 - **DRM:** license-based protection (Widevine/FairPlay/PlayReady-equivalent) for licensed and premium-tier content, per `02_PRD.md` NFR-5.
 - **CDN strategy:** a CDN with strong Indian and diaspora-market POP coverage; evaluate multi-CDN failover given the reliability expectations implied by the "premium" brand promise — buffering and downtime are brand-safety issues, not just technical ones, in a product whose differentiation is craftsmanship.
 - **Encoding pipeline:** support for dual-audio and multi-subtitle tracks as first-class encoding outputs (not bolted-on later), per `02_PRD.md` FR-7 — retrofitting multi-track support after launch is significantly more expensive than building it in from the start.
+- **4K Ultra HD Renditions (Slide 8):** The transcoding pipeline must support HEVC/H.265 encoding profiles for 4K Ultra HD playback, delivering high-resolution streams dynamically to smart TVs and high-bandwidth clients on premium tiers.
 - **Offline/download packaging:** encrypted, time-limited download packages for mobile offline viewing (`06_User_Flows.md` §10), with expiry enforcement handled gracefully client-side (clear messaging, not silent failure).
 
 ## 4. CMS Recommendations
@@ -63,3 +64,20 @@
 - Performance budget tied directly to `02_PRD.md` NFR-1 (interactive home screen within 2.5s on mid-tier Android/4G) — this should be a CI-enforced budget (automated Lighthouse/WebPageTest-style checks blocking regressions), not an aspirational target checked manually before launch.
 - Image/video thumbnail delivery via a responsive image pipeline (correctly sized/compressed per device) — thumbnail-heavy browsing screens are typically the largest real-world data cost for users on limited data plans, a meaningful concern for the India-primary NFR target audience.
 - Font-loading performance (§5) is treated as a performance requirement, not just a typography nicety, given the dual-script system's added font-weight footprint versus a Latin-only product.
+
+## 11. Artificial Intelligence Pipelines
+
+To support the smart technology platform requirements outlined in Slide 8 of `sunad OTT ppt.pdf`, the system architecture integrates the following AI pipelines:
+
+1. **AI Subtitle Pipeline:**
+   - Integrated into the CMS content ingestion workflow.
+   - Automatically processes video audio files through automated speech recognition (ASR) to generate source transcripts, followed by neural machine translation (NMT) to output high-accuracy Devanagari and Latin translation files (VTT/SRT).
+   - Includes a human-in-the-loop review interface in the CMS editor to verify terminal terminology and diacritics before publishing.
+
+2. **AI Dubbing Pipeline:**
+   - Leverages text-to-speech (TTS) and voice-cloning synthesis to generate translated audio tracks in Hindi or English, maintaining the original speaker's pitch, emotional register, and pacing.
+   - Tracks are packaged as separate audio channels inside the HLS master playlist, satisfying `02_PRD.md` FR-7.
+
+3. **Voice Search & Speech-to-Text:**
+   - Search input utilizes client-side speech capture APIs, streaming audio packets to a cloud-based speech-to-text translator.
+   - Supports multilingual speech models (English, Devanagari, and code-switched Hinglish), converting spoken inputs into canonical text strings to query the search index (`07_Information_Architecture.md` §7).

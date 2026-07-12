@@ -124,7 +124,15 @@ Photography and video thumbnails are the platform's primary emotional carriers �
 - No autoplay sound, ever, by default — a small but important trust signal that separates this from noisy entertainment apps.
 - Loading states use calm, content-shaped skeleton placeholders (never spinning mandalas, om symbols, or other literal cultural motifs used as decoration — this is a common, avoidable cliché in this category).
 
-## 10. Design Principles (summary heuristics for every future decision)
+## 10. Design Heuristics & Slogans
+
+All designs, interfaces, and content-ops decisions must align with the core slogans and taglines defined in `sunad OTT ppt.pdf`:
+- **Tagline:** *"WATCH. LEARN. EXPERIENCE. CONNECT."* — Guides the page hierarchy: video watch player (Watch) → companion readings/transcripts (Learn) → Live TV/EPG/festivals (Experience) → Creator community & commerce store (Connect).
+- **Core Slogan:** *"REAL STORIES. REAL BHARAT. REAL IMPACT."* — Governs content sourcing and photography direction: focus on authenticity and real practitioners, avoiding stock-photo aesthetics.
+- **Platform Mission Slogan:** *"ROOTED IN BHARAT. REACHING THE WORLD."* — Mandates bilingual, dual-script typographical excellence.
+- **Engagement Slogan:** *"CONTENT THAT INSPIRES. A PLATFORM THAT EMPOWERS."* — Guides the content + commerce integration: content inspires, the store/community empowers local creators.
+
+### 10.1 Design Heuristics (summary metrics for design decisions)
 
 1. **Restraint reads as trust.** When in doubt, remove.
 2. **Parallel, not translated.** Every Hindi surface is designed as its own first-class artifact, not a string-swap of an English layout.

@@ -20,7 +20,7 @@ The brief asks for coverage of Movies, Documentaries, Podcasts, Spiritual Series
 | **History** | History & Heritage | See IA definition |
 | **Journalism** | Journalism & Long-Form | Explanatory/investigative long-form, distinct from the sibling News platform's daily-news function (`07_Information_Architecture.md` §3) |
 | **Tourism** | Tourism & Pilgrimage | Travelogue format |
-| **Live TV** | New `Live` top-level item, Phase 2 (`02_PRD.md` §11) | Festival broadcasts, satsangs, premieres — kept visually and tonally distinct from on-demand editorial content so the two don't blur into a "devotional channel feed," per `07_Information_Architecture.md` §3 |
+| **Live TV** | Dedicated `Live TV` top-level section, Phase 1 | The 24-hour linear broadcast channel feed powered by the Fixed Programming Chart (FPC) schedule (per `12_Program_Chart.md`). Kept visually separate from on-demand items. |
 | **Events** | Live (when streamed) + a dedicated Events/calendar surface | Both virtual (streamed) and physical (in-person, promoted in-app) events tied to festivals/premieres |
 | **Collections** | Cross-cutting editorial layer | See `07_Information_Architecture.md` §4 |
 | **Featured content** | Home hero + editorial collections | See `04_Web_Experience.md` §3 |
@@ -39,12 +39,29 @@ Calm, curious, well-sourced, and specific — the register of a respected docume
 - **Original productions ("Sunad Originals"):** highest editorial control, highest production-value investment, primary vehicle for brand differentiation.
 - **Licensed archival/documentary content:** efficient way to build catalog depth early without full production cost; requires careful curation to maintain the visual/tonal consistency described in `03_Design.md` §8 (photography direction) — licensed content that doesn't match Sunad's visual register should be re-packaged (new key art, new synopsis voice) rather than presented as-is.
 - **Scholar/creator partnerships:** interviews, lecture series, and reading content produced *with* Sunad's production standard rather than simply hosting externally-produced YouTube-grade video — a critical distinction for maintaining premium positioning.
-- **Migrated content from `mysticpower.in`:** where usable, existing spiritual-video assets could seed the Spiritual Teaching category, but **only** after re-editing/re-framing to match the calmer, non-liturgical editorial voice defined above — a direct port would reintroduce the "devotional channel" tone the brand is explicitly moving away from. **[Assumption — actual migration decision is a stakeholder call]**
+- **Migrated content from `mysticpower.in`:** where usable, existing spiritual-video assets could seed the Spiritual Knowledge category, but **only** after re-editing/re-framing to match the calmer, non-liturgical editorial voice defined above — a direct port would reintroduce the "devotional channel" tone the brand is explicitly moving away from. **[Assumption — actual migration decision is a stakeholder call]**
+- **Creator Ecosystem (Slide 7 Creator Platform):** A structured partner portal providing hosting, production support, and monetization tools for:
+  - Independent Filmmakers, Documentary Creators, and Researchers.
+  - Universities, Educational Institutions, and Historians.
+  - Cultural Organisations, NGOs, Artists, Musicians, Performers, and Subject Experts.
+- **Creator Community Network (Slide 10 Hub):** To scale content production across every district of India, Sunad establishes a decentralized network including:
+  - District Ambassadors, Farmer Networks, and Women SHGs.
+  - Influencers, Youth Leaders, and local volunteers capturing regional stories, folk arts, and local innovations.
 
 ## 3. Content Calendar & Seasonality
 
-- Programming calendar anchored to the Hindu calendar/festival cycle (per `02_PRD.md` §8), with editorial collections prepared in advance of major festivals (Diwali, Holi, Navratri, regional festivals) rather than reactively assembled.
-- A steady cadence of "evergreen" releases (History, Tourism, Literature) balanced against "moment-driven" releases (festival-tied Spiritual content) so the platform doesn't feel dormant between festivals.
+Sunad's programming calendar utilizes a three-tier content development model designed to maximize viewer acquisition, retain daily engagement, and create anticipated seasonal spikes:
+
+1. **Daily Shows (Routine Retention):** Structured around the 24-hour Fixed Programming Chart (FPC) schedule to anchor daily viewing habits (e.g., *प्रभात भारत* at 5:00 AM, *आरोग्य भारत* at 6:00 AM, and peak Prime Time slots *तंत्र रहस्य* and *Mystic Bharat* at 7:00 PM and 8:00 PM). See [12_Program_Chart.md](file:///c:/Users/sesa457837/Music/Sunad%20Broadcast/OTT/12_Program_Chart.md).
+2. **Weekly Flagship Programs (Weekly Specials):** High-production-value weekly themes to build scheduled viewing routines, culminating in a premium 2-hour Mega Documentary on Sundays:
+   - **सोमवार (Monday):** शिव विशेष (Shiva Special)
+   - **मंगलवार (Tuesday):** हनुमान एवं भैरव (Hanuman & Bhairav Special)
+   - **बुधवार (Wednesday):** वेद विज्ञान (Vedic Science Special)
+   - **गुरुवार (Thursday):** गुरु परंपरा (Guru Parampara Special)
+   - **शुक्रवार (Friday):** शक्ति साधना (Shakti Sadhana Special)
+   - **शनिवार (Saturday):** तंत्र एवं नाथ परंपरा (Tantra & Nath Parampara Special)
+   - **रविवार (Sunday):** Mega Documentary — 2-Hour Feature (Mega Documentary - 2 घंटे)
+3. **Mega Event Programming (Seasonal Spikes):** Deep programming blocks (4–8 hours of live feeds, special darshan access, and dedicated documentary series) built around major civilizational festivals and milestones (Mahashivratri, Navratri, Kumbh Mela, Char Dham Yatra, Ram Navami, Guru Purnima) anchored to the Hindu calendar cycle (per `02_PRD.md` §8).
 
 ## 4. Featured Content Strategy
 
@@ -64,7 +81,7 @@ Before any title publishes, it should pass:
 
 **[Assumption — actual sequencing is a stakeholder/production-capacity decision]**
 
-- **Launch catalog:** a deliberately lean, high-quality set spanning all seven categories (better a small excellent catalog than a large uneven one, per `02_PRD.md` §2 objectives) — avoids the common early-OTT mistake of launching "wide but shallow."
-- **Month 1–3:** deepen Spiritual Teaching and History (likely fastest to produce/license given existing `mysticpower.in` relationships and archival availability) while original Documentaries and Tourism content is in production.
+- **Launch catalog & Live TV:** A deliberately lean, high-quality set spanning all seven categories (per `02_PRD.md` §2 objectives), launched concurrently with the 24-hour Live TV channel broadcasting the FPC schedule.
+- **Month 1–3:** Deepen Spiritual Teaching and History (likely fastest to produce/license given existing `mysticpower.in` relationships and archival availability) while original Documentaries and Tourism content is in production.
 - **Month 3–6:** Journalism & Long-Form and Literature categories mature; Family & Children category launches with purpose-built content (not adult content simply re-labeled, per `07_Information_Architecture.md` §3).
-- **6+ months:** Live/Events layer activates for a major festival moment, timed for maximum cultural relevance and press narrative (ties into the sibling News and Digital Marketing Agency products for cross-promotion, per `01_Report.md` §4).
+- **6+ months:** Interactive Live Event layer activates for major festival moments (outside the standard FPC schedule), timed for maximum cultural relevance and cross-platform promotion with the News and E-Commerce products (per `01_Report.md` §4).

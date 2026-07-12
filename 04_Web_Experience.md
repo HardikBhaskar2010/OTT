@@ -14,7 +14,7 @@ Guiding rule: **desktop earns extra whitespace and typographic ambition that mob
 ## 2. Navigation Philosophy
 
 - **Persistent top navigation bar**, transparent-over-hero on the home screen, solidifying to Deep Black on scroll (an Apple/Netflix-standard pattern users already trust).
-- Primary nav items (illustrative): **Home / होम · Browse / ब्राउज़ करें · Documentaries / वृत्तचित्र · Spiritual / आध्यात्मिक · History / इतिहास · Live / लाइव · Search / खोजें**
+- Primary nav items (illustrative): **Home / होम · Live TV / लाइव टीवी · Browse / ब्राउज़ करें · Documentaries / वृत्तचित्र · Spiritual / आध्यात्मिक · History / इतिहास · Search / खोजें**
 - A single, always-visible **language toggle** (EN / हिं) in the top-right, next to profile — never buried in a settings menu. Since bilingual is a first-class brand promise, the control for it must be first-class in placement too (see `03_Design.md` §5).
 - Profile, notifications, and search are grouped top-right, consistent with global streaming conventions (familiarity reduces friction; see `03_Design.md` §10 principle 5).
 - No mega-menu with deep nested flyouts — categories are broad and few (`07_Information_Architecture.md`), so navigation stays flat and confident rather than exhaustive.
@@ -24,11 +24,12 @@ Guiding rule: **desktop earns extra whitespace and typographic ambition that mob
 Top to bottom:
 
 1. **Hero moment** — one full-bleed featured title/collection (editorially chosen, not algorithmically rotated ad-hoc), title set in Display typography, minimal copy, a single primary CTA ("Watch Now / अभी देखें") and a secondary ("More Info / अधिक जानकारी").
-2. **Continue Watching** row (only shown to returning users with in-progress content).
-3. **Editorial collections** (human-curated, e.g., "This Month in Sunad," "Festival Spotlight") — explicitly labeled as curated, not algorithmic, reinforcing editorial trust (`01_Report.md` §6.1 differentiation).
-4. **Category rails** (Documentaries, Spiritual Teaching, History & Heritage, Journalism & Long-Form, Tourism, Literature) — each rail a horizontally scrollable row of cards.
-5. **"Because you watched…"** personalized row — algorithmic, clearly but subtly labeled, positioned *after* editorial content, not before it (signals editorial-first, algorithm-second — a deliberate brand choice).
-6. **Footer** — sitemap-style links, language toggle repeated, links to sibling Sunad products (News, Commerce) once those exist, legal/accessibility statement.
+2. **Live TV Banner (Now Playing)** — A slim, premium, glassmorphic banner showing the current live program (e.g., "LIVE: Mystic Bharat (8:00 PM – 9:00 PM)") with a real-time progress bar, a "Tune In / लाइव देखें" gold button, and a thumbnail of the next show ("Up Next: Real Bharat Documentary").
+3. **Continue Watching** row (only shown to returning users with in-progress content).
+4. **Editorial collections** (human-curated, e.g., "This Month in Sunad," "Festival Spotlight") — explicitly labeled as curated, not algorithmic, reinforcing editorial trust (`01_Report.md` §6.1 differentiation).
+5. **Category rails** (Documentaries, Spiritual Teaching, History & Heritage, Journalism & Long-Form, Tourism, Literature) — each rail a horizontally scrollable row of cards.
+6. **"Because you watched…"** personalized row — algorithmic, clearly but subtly labeled, positioned *after* editorial content, not before it (signals editorial-first, algorithm-second — a deliberate brand choice).
+7. **Footer** — sitemap-style links, language toggle repeated, links to sibling Sunad products (News, Commerce) once those exist, legal/accessibility statement.
 
 ## 4. Discovery
 
@@ -79,7 +80,44 @@ Top to bottom:
 - Account settings, billing history, connected devices, and privacy/data controls consolidated into a single, clearly organized settings area — bilingual throughout.
 - Clear, plain-language (not legal-jargon-only) explanations of data use, consistent with `02_PRD.md` §10 security/privacy requirements.
 
-## 12. Responsive Behavior (Desktop Breakpoints)
+## 12. Live TV & EPG Program Guide (EPG)
+
+The dedicated "Live TV" section delivers a hybrid layout combining a persistent video player with an interactive schedule grid:
+
+1. **Top Section: Live Player & Now Playing Metadata**
+   - Left: 16:9 widescreen HLS live player (Deep Black background, autohiding control bar, active viewer count, and "LIVE" red indicator badge).
+   - Right: Detail panel showing the current program title, subtitle, synopsis, running duration progress (e.g., "35 mins remaining / 25 mins elapsed"), and tags.
+2. **Bottom Section: Interactive EPG Schedule Grid**
+   - **Day Selector:** Horizontal tab row allowing the user to select the day of the week (सोमवार, मंगलवार, etc.), showing the special theme of the day (e.g., "शनिवार: तंत्र एवं नाथ परंपरा").
+   - **EPG Timeline:** A vertical list of hourly slots from 5:00 AM to 5:00 AM next day (based on the FPC in `12_Program_Chart.md`).
+     - Each slot displays: start-end time, show title (bilingual), program description, and category chip.
+     - The currently active show is highlighted with a gold border and a subtle "On Air" animation.
+     - **Catch-up Hook:** For shows that are already broadcasted and exist in the on-demand library, a "Watch Episode" button is displayed to immediately watch the content on-demand. For future shows, a "Remind Me" action adds it to the user's notification list.
+
+## 13. Commerce & Sunad Store Desktop UI
+
+To support the "Content + Commerce" integration defined in Slide 9 of `sunad OTT ppt.pdf`, the desktop web interface incorporates physical goods, courses, and event tickets into the content browsing and playback experiences:
+
+1. **Integrated Store Navigation Tab:**
+   - The top navigation bar includes a **Store / स्टोर** item leading to the unified e-commerce marketplace ("Sunad Store").
+   - Users can browse products by categories matching content themes: **Artisan Crafts (कला और शिल्प), Organic Produce (जैविक उत्पाद), Wellness & Yoga (योग और स्वास्थ्य), and Spiritual Goods (आध्यात्मिक वस्तुएं)**.
+
+2. **In-Player Product Overlay ("Shop the Story"):**
+   - When a video is paused, a glassmorphic sidebar panel slides in from the right edge, displaying 2-3 matching products linked to the content.
+   - For example:
+     - Watching an artisan documentary surfaces hand-woven textiles or clay pottery with brief descriptions and pricing.
+     - Watching a yoga/Ayurveda video surfaces organic oils, yoga mats, or herbal teas.
+   - Each product card contains a thumbnail image, title (bilingual), price, and an "Add to Cart / झोले में डालें" quick-action button.
+
+3. **Inline Entitlements for Courses & Tickets:**
+   - Video series that are part of structured learning courses (Slide 11) or ticketed live events (Slide 9) display a premium, gold-bordered callout card directly below the description panel.
+   - Users can purchase the course or event ticket in-line using a modal checkout popup. Once purchased, the content is instantly unlocked in the player and added to the user's library.
+
+4. **Persistent Shopping Cart & Checkout Overlay:**
+   - A shopping cart icon sits in the top-right header (next to Profile). Clicking it reveals a slide-out shopping cart drawer showing selected products.
+   - The checkout process runs via a secure, PCI-compliant overlay modal, preventing the user from losing their video playback position or browsing context.
+
+## 14. Responsive Behavior (Desktop Breakpoints)
 
 | Breakpoint | Behavior |
 |---|---|

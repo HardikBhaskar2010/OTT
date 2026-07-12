@@ -120,6 +120,20 @@ Direct research into the Indian cultural/spiritual/heritage OTT category:
 ### 6.1 Competitive takeaway
 No competitor currently occupies **"premium, restrained, civilizational-breadth media brand."** Every incumbent is either (a) broadcast-era devotional TV wearing an app's clothing, (b) low-budget-to-mid-budget mythology drama, (c) ideologically loud, or (d) culturally generic at scale. This is a genuine, defensible white space — but it also means Sunad has **no design template to copy**; the platform must set the category's visual and editorial standard rather than follow one. This raises execution risk (§9) as much as it creates opportunity.
 
+### 6.2 Structural Competitive Advantage (Traditional OTT vs. Sunad Broadcast OTT)
+
+To capture the unique value proposition of Sunad Broadcast OTT in comparison to standard market offerings, the platform is designed with the following structural differences (aligned with Slide 13 of `sunad OTT ppt.pdf`):
+
+| Feature Dimension | Traditional OTT Platforms | Sunad Broadcast OTT Platform |
+|---|---|---|
+| **Core Focus** | Entertainment & Mass Appeal Only | Culture + Knowledge + Commerce |
+| **Viewing Mode** | Passive Content Consumption | Interactive Learning & Exploration |
+| **Creator Engagement** | Limited, studio-centric participation | Nationwide Creator Network & Partner Platform |
+| **Shopping Experience** | Separate external E-commerce / No link | Integrated Content-to-Commerce Store |
+| **Content Authenticity** | Generic, mass-market drama & serials | Authentic, well-sourced Bharat civilizational stories |
+| **Platform Impact** | Entertainment only (distracting) | Social & Economic Impact for local communities |
+| **Geographic Reach** | Urban-centric distribution | Balanced Rural & Urban integration |
+
 ---
 
 ## 7. Website & UX Analysis — `sunad.in` and `mysticpower.in`

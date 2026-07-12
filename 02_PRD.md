@@ -7,7 +7,9 @@
 
 ## 1. Product Vision
 
-Sunad OTT is a premium, bilingual (Hindi/English) streaming platform dedicated to Indian civilizational storytelling — documentaries, spiritual teaching, history, journalism, tourism, and literature — designed with the visual discipline of Apple, the discovery mechanics of Netflix, and the sense of considered hospitality of Aman Resorts. It is explicitly **not** a devotional broadcast app, a mythology-drama entertainment app, or an ideologically framed platform. It is a trust-first cultural media brand.
+Sunad OTT is a premium, bilingual (Hindi/English) streaming platform dedicated to Indian civilizational storytelling — documentaries, spiritual teaching, history, journalism, tourism, and literature — designed with the visual discipline of Apple, the discovery mechanics of Netflix, and the sense of considered hospitality of Aman Resorts. It is a hybrid platform that seamlessly integrates a 24-hour linear Live TV channel (broadcasting a Fixed Programming Chart/FPC) with a rich on-demand catalog. 
+
+The platform operates under the core tagline **"WATCH. LEARN. EXPERIENCE. CONNECT."** and the slogan **"REAL STORIES. REAL BHARAT. REAL IMPACT."** It is built as a unified ecosystem linking **Content, Community, Commerce, and Culture** to connect India's heritage with the digital future. It is explicitly **not** a devotional broadcast app, a mythology-drama entertainment app, or an ideologically framed platform. It is a trust-first cultural media brand.
 
 ## 2. Objectives
 
@@ -33,9 +35,26 @@ Sunad OTT is a premium, bilingual (Hindi/English) streaming platform dedicated t
 - Search success rate and zero-result-query rate (discovery health)
 - Accessibility conformance score (automated + manual audit, see §7)
 
-## 4. User Personas
+## 4. Target Audience
 
-### 4.1 Aarav — The Rooted Professional
+In accordance with Slide 12 of `sunad OTT ppt.pdf`, the platform serves a diverse spectrum of viewers across generations with the slogan **"CONTENT FOR EVERYONE. INSPIRATION FOR GENERATIONS."** The target audiences consist of:
+
+- **Families (परिवार):** Widespread demand for clean, values-based family and children's content.
+- **Students (विद्यार्थी):** Curated educational videos, historical timelines, and civilizational insights.
+- **Youth (युवा):** Inspiring documentaries, podcasts, and startup/innovation showcases.
+- **Teachers (शिक्षक):** High-quality, verified historical and cultural content for classroom support.
+- **Researchers (शोधकर्ता):** Deep-dive scientific analyses, shastric texts, and historical documents.
+- **Artists (कलाकार):** Traditional handicrafts, folk arts, and local heritage stories.
+- **Entrepreneurs (उद्यमी):** Inspiring success stories, rural innovations, and leadership development.
+- **Farmers (किसान):** Agricultural techniques, rural innovation, and sustainable organic farming.
+- **Indian Diaspora (प्रवासी भारतीय):** Trusted access to language, culture, and values for families born abroad.
+- **Spiritual Seekers (आध्यात्मिक साधक):** Authentic teachings, meditation, yoga, and shastric wisdom.
+- **Culture Enthusiasts (संस्कृति प्रेमी):** Tourism, heritage walks, sacred architecture, and local traditions.
+- **Educational Institutions (शैक्षणिक संस्थान):** Partnerships for schools, colleges, and universities.
+
+### 4.1 User Personas (Representative Profiles)
+
+#### 4.1.1 Aarav — The Rooted Professional
 - 34, product manager in Bengaluru, grew up culturally engaged but time-poor as an adult.
 - Wants short, well-produced documentary or discourse content he can watch on weekday evenings without it feeling like "religious TV."
 - Values: production quality, English-first but comfortable code-switching to Hindi, mobile-first usage.
@@ -87,6 +106,24 @@ Sunad OTT is a premium, bilingual (Hindi/English) streaming platform dedicated t
 - FR-14: Shared identity/auth layer designed so News and Commerce products can federate login later without a redesign.
 - FR-15: Editorial cross-linking capability (e.g., a documentary about a temple links to a related News long-read or a Commerce product) — data model only in Phase 1, UI deferred.
 
+### 5.5 Live TV Channel Experience
+- FR-16: 24-hour Linear Streaming — Playback of the Sunad linear broadcast stream mapped to the FPC schedule.
+- FR-17: Interactive EPG (Electronic Program Guide) — Desktop and mobile interfaces displaying the daily/weekly schedule, current program runtime progress, and upcoming shows.
+- FR-18: One-tap On-Demand Catch-up — Ability to jump directly from an upcoming or past EPG show listing to its on-demand stream page (for pre-recorded content).
+
+### 5.6 Commerce Integration (Content + Commerce)
+To support the unique, commerce-driven OTT ecosystem described in Slide 9 of `sunad OTT ppt.pdf`, the platform integrates the following functional capabilities:
+- FR-19: Product-to-Content Mapping — An administrative metadata mapping system that associates relevant e-commerce items (from the Sunad Store) with specific video content (e.g., matching a pottery documentary with *Artisan Products*, a farming documentary with *Organic Products*, a yoga show with *Wellness Products*, and a temple travelogue with *Spiritual Accessories*).
+- FR-20: Interactive Store Rails & Cards — Widescreen and mobile detail pages display a horizontally scrollable rail of associated products ("Shop the Story / कहानी से खरीदें") while a video is paused or during detail browsing.
+- FR-21: One-Tap Commerce Entitlements — Capability to purchase and access *Event Tickets* (for live/virtual cultural events) and *Online Courses* (for educational program content) directly within the media player interface.
+
+### 5.7 Technology Platform Capabilities
+In accordance with the technological vision in Slide 8 of the PPT, the client player and search backend implement the following features:
+- FR-22: AI-Powered Subtitles & Dubbing — AI translation pipelines that automatically generate high-accuracy Devanagari and Latin subtitles and synthetic voice dubbing tracks to enable bilingual and regional scaling.
+- FR-23: Voice Search Integration — Speech-to-text API support in the search bar, enabling users to speak queries in English, Hindi, or mixed code-switched phrases (Hinglish).
+- FR-24: 4K Ultra HD Streaming — Dynamic profile detection supporting 4K Ultra HD playback for users on high-bandwidth networks who are subscribed to premium plans.
+- FR-25: Multi-Platform Sync — Real-time synchronization of continue-watching progress, watchlist, and user profile state across web, iOS, Android, and Smart TV platforms (Android TV, Apple TV, Fire TV, Tizen, WebOS).
+
 ## 6. Non-Functional Requirements
 
 - NFR-1: **Performance** — Home screen interactive within 2.5s on a mid-tier Android device on 4G (India's dominant device/network profile).
@@ -115,12 +152,37 @@ Sunad OTT is a premium, bilingual (Hindi/English) streaming platform dedicated t
 
 **[Assumption — commercial specifics require stakeholder confirmation]**
 
-Proposed tiered structure, modeled on premium global SVOD norms adapted to Indian price sensitivity and the diaspora ARPU opportunity identified in `01_Report.md`:
+To build a sustainable, scalable cultural ecosystem, the platform implements a diverse revenue strategy encompassing 13 distinct revenue streams (aligned with Slide 11 of `sunad OTT ppt.pdf`):
 
-| Tier | Positioning | Illustrative features |
+### 9.1 Subscription & Membership
+1. **OTT Subscription:** Standard monthly and annual recurring plans (e.g., Free, Premium, Family/Household tiers).
+2. **Premium Membership:** Exclusive premium benefits, early access, and "Patron of Heritage" membership tiers.
+3. **Creator Subscription:** Premium creator tools, dashboard analytics, and platform subscription services for creators.
+
+### 9.2 Advertising & Sponsorship
+4. **Advertising:** Targeted, contextually safe, non-intrusive advertisements across the platform (primarily for the Free tier).
+5. **Brand Sponsorship:** Dedicated sponsorships for specific shows, content categories, and cultural campaigns.
+6. **Live Streaming Sponsorship:** Real-time brand integration and sponsorships for high-profile live events and festivals.
+
+### 9.3 Content Commerce & Transactional
+7. **E-Commerce Commission:** Referral and transaction commissions from physical products sold through the integrated "Sunad Store" (artisan crafts, organic farm produce, wellness items, spiritual products).
+8. **Marketplace Revenue:** Listing and platform fees collected from verified third-party vendors and artisans in the marketplace.
+9. **Event Ticketing:** Sales of digital and physical tickets for exclusive live events, concerts, virtual darshans, and cultural tours.
+10. **Course Sales:** Online courses, certification programs, and educational modules sold directly on the platform.
+11. **Digital Downloads:** Purchases of premium downloadable content (eBooks, historical documents, traditional music files, art prints, wallpapers).
+
+### 9.4 Distribution & Licensing
+12. **Licensing:** Syndication and content licensing of Sunad Originals to global media outlets and educational institutions.
+13. **Content Distribution:** Strategic distribution partnerships with international television networks, IPTV providers, and airlines.
+
+---
+
+### 9.5 Subscription Tiers (Illustrative Structure)
+
+| Tier | Positioning | Illustrative Features |
 |---|---|---|
 | **Free / Sunad Sample** | Discovery and trust-building | Ad-supported, limited catalog, SD quality, one profile |
-| **Sunad Premium** | Core paid tier | Full catalog, HD/4K where available, downloads, multi-profile, ad-free |
+| **Sunad Premium** | Core paid tier | Full catalog, HD/4K, offline downloads, multi-profile, ad-free |
 | **Sunad Family/Household** | Higher ARPU tier | Everything in Premium + more simultaneous streams + Kids profiles + priority access to new originals |
 | **Sunad Patron** (optional, high-end) | Brand-building tier, not primarily revenue | Early access, behind-the-scenes/making-of content, invitations to live events/satsangs — a "patron of heritage" framing that fits the premium brand better than generic "Gold/Platinum" tier naming |
 
@@ -136,17 +198,24 @@ Regional pricing recommended: India domestic pricing calibrated to local SVOD no
 
 ## 11. Scalability & Future Roadmap
 
-**Phase 1 (Launch):** OTT platform, English + Hindi, documentary/spiritual/history/literature verticals, core web + mobile apps.
+In accordance with Slide 14 of `sunad OTT ppt.pdf`, the expansion roadmap is divided into three distinct strategic growth phases:
 
-**Phase 2 (6–12 months, illustrative):**
-- Additional regional Indian languages (content + UI)
-- Smart TV apps (Android TV, Apple TV, Fire TV, Samsung/LG) — large-screen "living room ritual" viewing fits this content category naturally
-- Live streaming for festivals/events, satsangs, and premieres
-- Deeper cross-linking with News platform
+**Phase 1 (Platform Launch):** 
+- **Content Production:** Focus on high-quality documentaries, spiritual knowledge, history, and literature core library.
+- **Creator Onboarding:** Onboard initial historians, scholars, independent filmmakers, and subject experts.
+- **Client Interfaces:** Launch responsive Web and native Mobile (iOS/Android) client platforms.
+- **Linear TV:** Launch the 24-hour Linear FPC Channel and Electronic Program Guide (EPG).
 
-**Phase 3 (12–24 months, illustrative):**
-- Commerce integration (curated heritage goods tied to editorial content, e.g., "shop the craftsmanship featured in this documentary")
-- Creator/scholar partner program with revenue share
-- International markets beyond core diaspora geographies (Southeast Asia, wider global "curious viewer" markets)
+**Phase 2 (6–12 months, Regional Expansion):**
+- **Live Channels:** Launch specialized local and regional live streaming options (festival broadcasts, live satsangs).
+- **AI Features:** Activate automated AI subtitles and AI voice dubbing pipelines for regional accessibility.
+- **Commerce Integration:** Launch the "Sunad Store" e-commerce integrations, course sales, and event ticketing.
+- **Language Scaling:** Expand regional Indian language localization (Tamil, Telugu, Bengali, Marathi, etc.).
+
+**Phase 3 (12–24 months, International Expansion):**
+- **Smart TV Apps:** Launch dedicated applications on Android TV, Apple TV, Fire TV, Samsung Tizen, and LG WebOS.
+- **Global Indian Audience:** Optimize marketing and delivery networks for international diaspora regions (US, UK, Gulf, Australia).
+- **Multi-language Platform:** Scale platform interfaces to include major international languages for global seekings.
+- **Global Creator Network:** Enable international creator onboarding and syndication portals.
 
 All roadmap items are **[Assumption / illustrative]** pending stakeholder prioritization, and are explored further in `11_Future_Ideas.md`.

@@ -10,15 +10,19 @@
 ```
 Sunad OTT
 ├── Home / होम
+├── Live TV / लाइव टीवी
 ├── Browse / ब्राउज़ करें
 │   ├── Documentaries / वृत्तचित्र
-│   ├── Spiritual Teaching / आध्यात्मिक शिक्षा
-│   ├── History & Heritage / इतिहास और विरासत
-│   ├── Journalism & Long-Form / पत्रकारिता और दीर्घ-रूप
-│   ├── Tourism & Pilgrimage / पर्यटन और तीर्थयात्रा
-│   ├── Literature / साहित्य
+│   ├── Culture & Heritage / संस्कृति और विरासत
+│   ├── History & Civilization / इतिहास और सभ्यता
+│   ├── Spiritual Knowledge / आध्यात्मिक ज्ञान
+│   ├── Yoga & Ayurveda / योग और आयुर्वेद
+│   ├── Art & Crafts / कला और शिल्प
+│   ├── Agriculture & Rural Innovation / कृषि और ग्रामीण नवाचार
+│   ├── Education & Skill Development / शिक्षा और कौशल विकास
+│   ├── Entrepreneurship / उद्यमिता
+│   ├── Tourism & Heritage Walks / पर्यटन और विरासत यात्रा
 │   └── Family & Children / परिवार और बच्चे
-├── Live / लाइव                      (Phase 2, per `02_PRD.md` §11)
 ├── Search / खोजें
 ├── My List / मेरी सूची
 ├── Downloads / डाउनलोड               (mobile-primary)
@@ -46,17 +50,21 @@ Not all content requires every layer — a standalone documentary film sits dire
 
 ## 3. Categories (Top-Level Taxonomy)
 
-Rationale for each category traces directly to `01_Report.md` §9 (Content Strategy Implications) and the brief's explicit civilizational breadth mandate:
+In accordance with Slide 5 of `sunad OTT ppt.pdf`, the content taxonomy is organized into 11 main topics to reflect the civilizational breadth of Bharat:
 
-| Category | Definition | Explicitly excludes |
+| Category | Definition | Key Themes / Formats Included |
 |---|---|---|
-| **Documentaries** | Nonfiction long-form on culture, craftsmanship, arts, regional identity | Scripted drama, reenactment-heavy "mythology serial" content |
-| **Spiritual Teaching** | Discourse, philosophy, scripture-context, teacher-led content, presented in a scholarly/calm register | Liturgical live-broadcast (aarti feeds, temple darshan livestreams) — those belong to `Live` (Phase 2), kept visually/tonally separate from on-demand editorial content |
-| **History & Heritage** | Documented history, archaeology, architecture, biography of historical (not mythological) figures | Unsourced or purely legendary content presented as history |
-| **Journalism & Long-Form** | Explanatory/investigative long-form video journalism, distinct from the sibling News platform's daily-news function | Breaking news, daily bulletins (owned by the News product) |
-| **Tourism & Pilgrimage** | Travelogue-style content on places, routes, seasonal pilgrimage | Advertorial/sponsored place promotion without editorial standards |
-| **Literature** | Author interviews, readings, adaptations, contextualized classic texts | Uncredited or uncontextualized text reproduction (copyright discipline applies here as much as anywhere) |
-| **Family & Children** | Age-appropriate heritage storytelling, produced to full Sunad production standard | Content that is simply "adult content with a kids' label" — this category requires purpose-built production, not filtering |
+| **Documentaries** | Nonfiction long-form films on culture, regional identity, and craftsmanship | Single-sitting films, docuseries, investigations |
+| **Culture & Heritage** | Festivals, rituals, regional customs, and traditional lifestyles | Festival broadcasts, cultural web series, folk heritage |
+| **History & Civilization** | Documented history, archaeology, ancient architecture, and biographies | Historical timelines, archaeological studies, dynasties |
+| **Spiritual Knowledge** | Discourse, Upanishads, Vedas, Gita philosophy, and teacher-led series | Scholar lectures, podcasts, guru-disciple Q&A |
+| **Yoga & Ayurveda** | Traditional Indian medicine, yoga postures, and mental health | Asanas, Ayurvedic nutrition, wellness tips |
+| **Art & Crafts** | Documentation of traditional crafts, pottery, weaving, and local artists | Artisan stories, craft workshops, handloom preservation |
+| **Agriculture & Rural Innovation** | Stories of farmers, organic farming techniques, and rural technology | Organic farming docuseries, rural innovation stories |
+| **Education & Skill Development** | Civilizational science, linguistics, learning series, and universities | Ancient technology, language learning, course series |
+| **Entrepreneurship** | Leadership interviews, local business successes, and startups | Success India, startup profiles, leader podcasts |
+| **Tourism & Heritage Walks** | Travelogues, sacred routes, historic temples, and tourism | Temple walks, pilgrim travel logs, heritage city walks |
+| **Family & Children** | Clean, animated civilizational stories and moral values for kids | Kids Dharma, Panchatantra animations, Ramayana/Mahabharata |
 
 ## 4. Collections (Editorial Grouping Layer)
 
@@ -100,3 +108,43 @@ Collections are the primary lever for the "editorial-first" brand promise (`04_W
 - **Result grouping:** Titles / People / Topics & Collections (per `06_User_Flows.md` Flow 6) rather than a single flat relevance-ranked list.
 - **Editorial override:** ability for content ops to pin/boost specific results for high-traffic queries (e.g., ensure a festival-relevant collection surfaces prominently during that festival's search spike) — technical requirement documented further in `10_Technical_Notes.md`.
 - **Zero-result handling:** always resolves to an editorial fallback rather than a dead end (per `06_User_Flows.md` §6).
+
+## 8. Live TV & EPG Content Mapping
+
+To ensure a seamless transition between the linear Live TV broadcast and the on-demand library, shows broadcasted on the FPC are mapped directly to primary on-demand categories and tagged accordingly:
+
+| FPC Show Name | Primary On-Demand Category | Key Metadata Tags |
+|---|---|---|
+| **प्रभात भारत** (*Prabhat Bharat*) | Spiritual Knowledge | Devotion, Yoga, Meditation, Morning Rituals |
+| **आरोग्य भारत** (*Arogya Bharat*) | Yoga & Ayurveda | Wellness, Ayurveda, Naturopathy, Health |
+| **भारत समाचार** (*Bharat Samachar*) | Culture & Heritage | Positive News, Science, Agriculture, Technology |
+| **सनातन ज्ञान** (*Sanatan Gyan*) | Spiritual Knowledge | Vedic Wisdom, Gita, Upanishads, Philosophy |
+| **Mystic Files** | Documentaries | Mysteries, Sacred Science, Shiva, Shakti, Nath |
+| **भारत यात्रा** (*Bharat Yatra*) | Tourism & Heritage Walks | Pilgrimage, Travelogue, Heritage Tourism |
+| **Indian Heritage** | History & Civilization | Archaeology, Ancient Civilizations, History |
+| **Success India** | Entrepreneurship | Motivation, Startups, Youth, Innovation |
+| **Food & Culture** | Culture & Heritage | Cuisine, Prasad, Temple Kitchens, Rural Cooking |
+| **Village India** | Culture & Heritage | Rural Arts, Folk Culture, Tribal Heritage |
+| **Kids Dharma** | Family & Children | Panchatantra, Animation, Moral Values |
+| **Women of India** | Entrepreneurship | Inspiration, Women Empowerment, Health |
+| **Live Temple Connect** | Culture & Heritage (Live TV Special) | Live Broadcast, Pilgrimage, Aarti, Temples |
+| **भारत संवाद** (*Bharat Samvad*) | Education & Skill Development | Discourse, Education, Panel, National Issues |
+| **तंत्र रहस्य** (*Tantra Rahasya*) | Spiritual Knowledge | Esoteric, Tantra Shastra, Kundalini, Yoga |
+| **Mystic Bharat** | Documentaries | Mysteries, Energy Sites, History, Scientific Analysis |
+| **Real Bharat Documentary** | Documentaries | Investigation, Ancient Technology, Exclusives |
+| **Spiritual Podcast** | Spiritual Knowledge | Podcast, Interview, Gurus, Scientific Discourse |
+| **दिवस का सार** (*Divas Ka Saar*) | Culture & Heritage | Summary, Daily Highlights, News |
+
+## 9. Commerce Product Metadata Schema
+
+To support the e-commerce store integration ("Content + Commerce") defined in Slide 9 of `sunad OTT ppt.pdf`, products are linked to media titles using the following database schema:
+
+| Metadata Field | Type | Description / Notes |
+|---|---|---|
+| **Product ID** | UUID | Unique product SKU identifier |
+| **Bilingual Name** | String (EN / HI) | Product title in both English and Devanagari |
+| **Product Type** | Enum | `Artisan` (crafts), `Organic` (food), `Wellness` (health), `Spiritual` (sadhana/ritual), `Ticket` (live events), `Course` (educational modules) |
+| **Linked Media IDs** | List of UUIDs | Content titles where this product overlay is active |
+| **Price** | Decimal | Local and diaspora currencies (INR / USD / GBP etc.) |
+| **Stock Status** | Boolean | Inventory availability check |
+| **Artisan ID / Vendor ID** | UUID | Connects to the local creator/artisan profile, supporting Slide 7's Partner Platform |

@@ -19,6 +19,7 @@ This set documents Sunad Broadcast Pvt. Ltd.'s OTT platform: a premium, bilingua
 | 09 | `09_Design_System.md` | The concrete tokens and components a designer/engineer builds from |
 | 10 | `10_Technical_Notes.md` | High-level engineering approach (no code) |
 | 11 | `11_Future_Ideas.md` | What could come later, and why |
+| 12 | `12_Program_Chart.md` | 24-hour Fixed Programming Chart (FPC), weekly specials, and show ratings |
 
 ## How to use the "Assumption" labels
 

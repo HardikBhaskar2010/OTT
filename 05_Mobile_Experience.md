@@ -11,7 +11,7 @@ Per `01_Report.md` §5 and the NFR-1 performance target in `02_PRD.md`, the majo
 
 ## 2. Navigation
 
-- **Bottom tab bar** (thumb-zone-native), 4–5 items maximum: **Home, Browse, Search, Downloads, Profile** (illustrative — final IA in `07_Information_Architecture.md`).
+- **Bottom tab bar** (thumb-zone-native), 5 items: **Home / होम · Live / लाइव · Browse / ब्राउज़ करें · Downloads / डाउनलोड · Profile / प्रोफ़ाइल** (with search accessible via a persistent top-right header icon on Home and Browse, maximizing tab utility for primary media types).
 - Bilingual tab labels set in the Text/UI Devanagari face (Mukta) and Latin face (General Sans) at matched visual weight — never icon-only, since label clarity matters more than minimalism here (a lesson from `03_Design.md` principle 5: familiar mechanics, unfamiliar craft — labels are familiar and expected).
 - Language toggle (EN/हिं) lives in Profile/Settings on mobile (not the tab bar, where space is precious) but is reachable in ≤2 taps from anywhere.
 
@@ -72,3 +72,35 @@ Per `01_Report.md` §5 and the NFR-1 performance target in `02_PRD.md`, the majo
 - Notification categories, each independently toggleable: **New Releases**, **Continue Watching Reminders**, **Festival/Seasonal Content**, **Downloads Ready**, **Account/Billing**.
 - Notification copy authored natively in the user's selected language, respecting the same bilingual-parity standard as the rest of the product (`02_PRD.md` NFR-3) — not machine-translated push copy, which is a common quality gap in regional apps.
 - Frequency capped and editorially curated (no daily "come back!" engagement-bait notifications) — consistent with the "unhurried, trust-first" brand personality; notification restraint is itself a premium signal.
+
+## 12. Mobile Live TV & EPG Experience
+
+The mobile Live TV tab is designed for quick viewing and intuitive schedule exploration in a portrait layout:
+
+1. **Top Widescreen Player:**
+   - A sticky 16:9 HLS stream player anchored to the top of the viewport.
+   - Supports pinch-to-zoom or double-tap to enter full-screen landscape mode.
+   - Includes standard playback stats, subtitle/audio toggles, and a "LIVE" state badge.
+2. **Tabbed Day Selector:**
+   - Directly below the player, a swipeable horizontal selector lets users choose the day of the week, with the current day pre-selected.
+3. **Scrollable Vertical EPG List:**
+   - The remaining screen space displays a vertically scrolling EPG timeline.
+   - Each show is represented as a compact card containing: time duration, show name, synopsis, and on-demand watch hook (for past shows).
+   - "Now Playing" program card is highlighted with a gold border, an active progress bar indicator, and a "Share Live" shortcut.
+   - Includes a "Set Reminder" toggle for upcoming slots, triggering local notifications before airtime.
+
+## 13. Mobile Commerce Integration
+
+To match the "Content + Commerce" paradigm (Slide 9) on mobile form factors, the interface incorporates swipe-native buying paths:
+
+1. **Inline Product Rails:**
+   - Underneath the mobile video description panel (on Browse/Detail pages), a swipeable horizontal product rail ("Shop the Story / कहानी से खरीदें") presents 16:9 cards of matching products.
+   - Each card displays: product thumbnail, bilingual title, price, and a shopping cart "+" icon.
+
+2. **In-Player Paused State Bottom Drawer:**
+   - When the user pauses video playback in portrait mode, a bottom drawer slides up automatically from the lower third, containing matching products (e.g. *Artisan*, *Organic*, *Wellness*, *Spiritual* goods) so users can explore items without leaving the watch screen.
+   - Swipe-down gestures dismiss the drawer, returning to standard pause controls.
+
+3. **Event Ticketing & Course Sign-Up Flows:**
+   - Live events (Slide 9) and education programs display a prominent "Unlock Access" gold button on the cover screen.
+   - Tapping it opens a secure bottom sheet checkout. Payment processing runs natively via Apple Pay / Google Pay or UPI/net banking integrations calibrated for high-speed, zero-redirection mobile transactions in India.
