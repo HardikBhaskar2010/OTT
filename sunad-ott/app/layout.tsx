@@ -47,7 +47,7 @@ const notoSerifDevanagari = Noto_Serif_Devanagari({
 
 /* ─── METADATA ────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sunadott.com'),
+  metadataBase: new URL('https://sunadbroadcast.vercel.app'),
   title: {
     template: '%s | Sunad OTT',
     default: 'Sunad OTT — Real Stories. Real Bharat. Real Impact.',
