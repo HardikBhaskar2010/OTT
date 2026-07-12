@@ -1,0 +1,17 @@
+# ignore Next.js application artifacts
+sunad-ott/node_modules/
+sunad-ott/.next/
+sunad-ott/out/
+sunad-ott/build/
+sunad-ott/.env*
+sunad-ott/next-env.d.ts
+sunad-ott/*.tsbuildinfo
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# system files
+.DS_Store
+Thumbs.db
