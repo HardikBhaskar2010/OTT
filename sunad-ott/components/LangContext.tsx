@@ -21,11 +21,15 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
 
   // Hydrate from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as Lang | null;
-    if (stored === 'hi' || stored === 'en') {
-      setLangState(stored);
-    }
-    setMounted(true);
+    const timer = window.setTimeout(() => {
+      const stored = localStorage.getItem(STORAGE_KEY) as Lang | null;
+      if (stored === 'hi' || stored === 'en') {
+        setLangState(stored);
+      }
+      setMounted(true);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   // Sync body class and html lang attribute whenever lang changes

@@ -1,83 +1,46 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { LucideIcon } from 'lucide-react';
+import {
+  BookOpen,
+  ChevronRight,
+  Clock3,
+  Compass,
+  Film,
+  Flame,
+  Flower2,
+  Hand,
+  IndianRupee,
+  Info,
+  Landmark,
+  Languages,
+  Lightbulb,
+  MapPinned,
+  Palette,
+  Play,
+  Radio,
+  ShoppingBag,
+  Sparkles,
+  Star,
+  Tv,
+  Users,
+  Wheat,
+} from 'lucide-react';
 import { PROGRAMS, CATEGORIES, HERO_SLIDES, getProgramThumbnail } from '@/lib/mockData';
 
-const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  documentaries: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect width="20" height="20" x="2" y="2" rx="2.18" ry="2.18" />
-      <line x1="7" x2="7" y1="2" y2="22" />
-      <line x1="17" x2="17" y1="2" y2="22" />
-      <line x1="2" x2="22" y1="7" y2="7" />
-      <line x1="2" x2="22" y1="17" y2="17" />
-    </svg>
-  ),
-  spiritual: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-      <path d="M2 12h20" />
-    </svg>
-  ),
-  history: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="11" width="18" height="11" rx="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-    </svg>
-  ),
-  culture: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-      <path d="M12 6v12" />
-      <path d="M8 10h8" />
-      <path d="M8 14h8" />
-    </svg>
-  ),
-  tourism: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="10" />
-      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
-    </svg>
-  ),
-  yoga: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="12" cy="5" r="2" />
-      <path d="M12 7v8" />
-      <path d="M5 10c3 1 4 2 7 2s4-1 7-2" />
-      <path d="M9 22c1-2 2-3 3-5s2 3 3 5" />
-    </svg>
-  ),
-  arts: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.63-.77 1.63-1.7 0-.45-.18-.85-.46-1.17-.29-.3-.46-.72-.46-1.18 0-.92.77-1.63 1.7-1.63h1.8c5.44 0 9.79-4.35 9.79-9.79C26.21 6.5 22 2 12 2Z" />
-    </svg>
-  ),
-  agriculture: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 .5 6-3.8 9.8A7 7 0 0 1 11 20Z" />
-      <path d="M9 22V12" />
-    </svg>
-  ),
-  education: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-    </svg>
-  ),
-  entrepreneurship: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .6 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-      <path d="M9 18h6" />
-      <path d="M10 22h4" />
-    </svg>
-  ),
-  family: (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  )
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  documentaries: Film,
+  spiritual: Sparkles,
+  history: Landmark,
+  culture: Hand,
+  tourism: MapPinned,
+  yoga: Flower2,
+  arts: Palette,
+  agriculture: Wheat,
+  education: BookOpen,
+  entrepreneurship: Lightbulb,
+  family: Users,
 };
 
 export const metadata: Metadata = {
@@ -86,279 +49,398 @@ export const metadata: Metadata = {
     'Discover premium Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, yoga, tourism and more. Watch live TV and on-demand content in Hindi and English.',
 };
 
+function ProgramCard({
+  show,
+  rank,
+  wide = false,
+}: {
+  show: (typeof PROGRAMS)[number];
+  rank?: number;
+  wide?: boolean;
+}) {
+  return (
+    <Link
+      href={`/watch/${show.id}`}
+      className={`content-card program-card${wide ? ' program-card--wide' : ''}`}
+      aria-label={`${show.nameEn} — ${show.startTime} to ${show.endTime}`}
+    >
+      <div
+        className="content-card__thumbnail"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(11,9,7,0.05), rgba(11,9,7,0.9)), url(${getProgramThumbnail(show.categoryId)})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+        aria-hidden="true"
+      />
+      <div className="content-card__overlay" aria-hidden="true" />
+      {rank && (
+        <span className="badge badge--gold-outline rank-badge">
+          TOP {rank}
+        </span>
+      )}
+      {show.isPrimeTime && !rank && (
+        <span className="badge badge--gold-outline rank-badge">
+          <Flame size={12} aria-hidden="true" /> Prime
+        </span>
+      )}
+      <div className="content-card__body">
+        <p className="content-card__title">
+          <span className="lang-en-only">{show.nameEn}</span>
+          <span className="lang-hi-only" lang="hi">{show.nameHi}</span>
+        </p>
+        <div className="content-card__meta">
+          <Clock3 size={13} aria-hidden="true" />
+          <span>{show.startTime} - {show.endTime}</span>
+          {show.trpScore && <span>TRP {show.trpScore}%</span>}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function HomePage() {
-  const primeTimeShows = PROGRAMS.filter((p) => p.isPrimeTime);
+  const hero = HERO_SLIDES[0];
+  const heroProgram = PROGRAMS.find((p) => p.id === 'mystic-bharat') ?? PROGRAMS[0];
   const liveShow = PROGRAMS.find((p) => p.isLive);
+  const primeTimeShows = PROGRAMS.filter((p) => p.isPrimeTime);
+  const trendingShows = [...PROGRAMS]
+    .sort((a, b) => (b.trpScore ?? 0) - (a.trpScore ?? 0))
+    .slice(0, 8);
+  const nextUpShows = PROGRAMS.slice(3, 7);
+  const cultureShows = PROGRAMS.filter((p) => ['culture', 'arts', 'tourism'].includes(p.categoryId)).slice(0, 3);
 
   return (
-    <>
-      {/* ── Hero Section ── */}
-      <section
-        aria-label="Featured content"
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: 'clamp(400px, 60vh, 680px)',
-          overflow: 'hidden',
-          marginBottom: '0',
-        }}
-      >
-        {/* Hero background */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'url(/mystic_bharat.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'right center',
-          }}
-          aria-hidden="true"
-        />
-        {/* Hero gradient overlay */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'linear-gradient(90deg, #0E0D0C 0%, #0E0D0C 35%, rgba(14,13,12,0.7) 60%, transparent 100%), linear-gradient(0deg, #0E0D0C 0%, transparent 50%)',
-          }}
-          aria-hidden="true"
-        />
+    <div className="home-experience">
+      <section className="home-hero" aria-label="Featured Sunad original">
+        <div className="home-hero__media" aria-hidden="true">
+          <Image
+            src="/mystic_bharat.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="home-hero__image"
+          />
+        </div>
+        <div className="home-hero__shade" aria-hidden="true" />
+        <div className="home-hero__pattern" aria-hidden="true" />
 
-        {/* Hero text content */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 'var(--space-12)',
-            left: 'var(--space-8)',
-            maxWidth: '560px',
-            zIndex: 10,
-          }}
-        >
-          {/* Badge */}
-          <div className="badge badge--gold-outline" style={{ marginBottom: 'var(--space-3)' }}>
-            <span className="lang-en-only">NEW ORIGINAL SERIES</span>
-            <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>नई ओरिजिनल सीरीज़</span>
+        <div className="home-hero__inner">
+          <div className="hero-copy reveal">
+            <div className="hero-eyebrow">
+              <Sparkles size={16} aria-hidden="true" />
+              <span className="lang-en-only">{hero.badge}</span>
+              <span className="lang-hi-only" lang="hi">{hero.badgeHi}</span>
+            </div>
+
+            <h1 className="type-display-xl hero-title">
+              <span className="lang-en-only">
+                Stories of Bharat, streamed with <span className="hero-title__accent">shraddha</span> and cinema.
+              </span>
+              <span className="lang-hi-only" lang="hi">
+                भारत की कहानियां, श्रद्धा और सिनेमा के साथ।
+              </span>
+            </h1>
+
+            <p className="hero-description">
+              <span className="lang-en-only">
+                {hero.subtitleEn} Watch documentaries, live temple broadcasts, heritage journeys, and artisan-led stories in a premium bilingual experience.
+              </span>
+              <span className="lang-hi-only" lang="hi">
+                {hero.subtitleHi} वृत्तचित्र, लाइव मंदिर प्रसारण, विरासत यात्राएं और कारीगरों की कहानियां एक प्रीमियम द्विभाषी अनुभव में देखें।
+              </span>
+            </p>
+
+            <div className="hero-actions">
+              <Link href={hero.href} className="btn-primary" id="hero-watch-now">
+                <Play size={18} fill="currentColor" aria-hidden="true" />
+                <span className="lang-en-only">Watch Now</span>
+                <span className="lang-hi-only" lang="hi">अभी देखें</span>
+              </Link>
+              <Link href="/originals" className="btn-glass" id="hero-more-info">
+                <Info size={18} aria-hidden="true" />
+                <span className="lang-en-only">Explore Originals</span>
+                <span className="lang-hi-only" lang="hi">ओरिजिनल देखें</span>
+              </Link>
+            </div>
+
+            <div className="hero-meta" aria-label="Platform highlights">
+              <div className="hero-meta__item">
+                <strong>19</strong>
+                <span className="lang-en-only">Daily shows</span>
+                <span className="lang-hi-only" lang="hi">दैनिक कार्यक्रम</span>
+              </div>
+              <div className="hero-meta__item">
+                <strong>2</strong>
+                <span className="lang-en-only">Languages</span>
+                <span className="lang-hi-only" lang="hi">भाषाएं</span>
+              </div>
+              <div className="hero-meta__item">
+                <strong>4K</strong>
+                <span className="lang-en-only">Premium plans</span>
+                <span className="lang-hi-only" lang="hi">प्रीमियम अनुभव</span>
+              </div>
+            </div>
           </div>
 
-          {/* Title */}
-          <h1
-            className="type-display-l"
-            style={{ color: 'var(--primitive-white)', marginBottom: 'var(--space-3)' }}
-          >
-            <span className="lang-en-only">{HERO_SLIDES[0].titleEn}</span>
-            <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-display-hi)', fontSize: 'var(--type-hi-display-l)', lineHeight: 'var(--lh-hi-display)' }}>{HERO_SLIDES[0].titleHi}</span>
-          </h1>
-
-          {/* Subtitle / Description (High contrast + text shadow for AAA readability) */}
-          <p
-            style={{
-              fontSize: 'var(--type-body-l)',
-              color: 'var(--primitive-white)',
-              lineHeight: 'var(--lh-body)',
-              textShadow: '0 2px 4px rgba(0, 0, 0, 0.9)',
-              marginBottom: 'var(--space-4)',
-              maxWidth: '460px',
-            }}
-          >
-            <span className="lang-en-only">{HERO_SLIDES[0].subtitleEn}</span>
-            <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>{HERO_SLIDES[0].subtitleHi}</span>
-          </p>
-
-          {/* CTAs */}
-          <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-            <a href={HERO_SLIDES[0].href} className="btn-primary" id="hero-watch-now">
-              ▶ <span className="lang-en-only">Watch Now</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>अभी देखें</span>
-            </a>
-            <button className="btn-glass" id="hero-more-info" style={{ color: 'var(--primitive-white)' }}>
-              <span className="lang-en-only">More Info</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>अधिक जानकारी</span>
-            </button>
-          </div>
+          <aside className="hero-panel reveal" aria-label="Tonight spotlight">
+            <p className="hero-panel__label">
+              <span className="lang-en-only">Tonight at {heroProgram.startTime}</span>
+              <span className="lang-hi-only" lang="hi">आज रात {heroProgram.startTime}</span>
+            </p>
+            <h2 className="type-display-m hero-panel__title">
+              <span className="lang-en-only">{heroProgram.nameEn}</span>
+              <span className="lang-hi-only" lang="hi">{heroProgram.nameHi}</span>
+            </h2>
+            <p className="hero-panel__text">
+              <span className="lang-en-only">{heroProgram.description}</span>
+              <span className="lang-hi-only" lang="hi">{heroProgram.descriptionHi}</span>
+            </p>
+            <div className="culture-chips" aria-label="Content tags">
+              {heroProgram.tags.slice(0, 4).map((tag) => (
+                <span className="culture-chip" key={tag}>
+                  <Star size={13} aria-hidden="true" />
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="card-actions" style={{ marginTop: 'var(--space-4)' }}>
+              <Link href={`/watch/${heroProgram.id}`} className="btn-ghost">
+                <span className="lang-en-only">Open Feature</span>
+                <span className="lang-hi-only" lang="hi">फीचर खोलें</span>
+                <ChevronRight size={17} aria-hidden="true" />
+              </Link>
+            </div>
+          </aside>
         </div>
       </section>
 
-      {/* ── Main Content ── */}
-      <div
-        style={{
-          maxWidth: 'var(--grid-max-width)',
-          margin: '0 auto',
-          padding: '0 var(--space-6)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-12)',
-        }}
-      >
+      {liveShow && (
+        <section className="live-now-card reveal" aria-label="Live TV now playing">
+          <div className="live-signal" aria-hidden="true">
+            <Radio size={23} />
+          </div>
+          <div>
+            <p className="live-now-card__eyebrow">
+              <span className="lang-en-only">Live now from the Sunad mandap</span>
+              <span className="lang-hi-only" lang="hi">सुनाद मंडप से लाइव</span>
+            </p>
+            <p className="live-now-card__title">
+              <span className="lang-en-only">{liveShow.nameEn}</span>
+              <span className="lang-hi-only" lang="hi">{liveShow.nameHi}</span>
+            </p>
+            <div className="live-progress" aria-hidden="true">
+              <span />
+            </div>
+          </div>
+          <div className="live-actions">
+            <Link href="/live" className="btn-primary">
+              <Tv size={18} aria-hidden="true" />
+              <span className="lang-en-only">Tune In</span>
+              <span className="lang-hi-only" lang="hi">लाइव देखें</span>
+            </Link>
+            <Link href={`/watch/${liveShow.id}`} className="btn-glass">
+              <span className="lang-en-only">Details</span>
+              <span className="lang-hi-only" lang="hi">विवरण</span>
+            </Link>
+          </div>
+        </section>
+      )}
 
-        {/* ── Live TV Banner (Floated to overlap Hero seamlessly) ── */}
-        {liveShow && (
-          <div style={{ marginTop: '-48px', position: 'relative', zIndex: 20 }}>
-            <section
-              className="reveal"
-              aria-label="Live TV — Now Playing"
-              style={{
-                background: 'var(--glass-bg-strong)',
-                backdropFilter: 'var(--glass-blur)',
-                WebkitBackdropFilter: 'var(--glass-blur)',
-                border: 'var(--glass-border-gold)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'var(--space-4)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-4)',
-                flexWrap: 'wrap',
-              }}
-            >
-              <span className="badge badge--live">LIVE</span>
-              <div style={{ flex: 1, minWidth: '200px' }}>
-                <p style={{ fontSize: 'var(--type-label)', color: 'var(--color-text-muted)', marginBottom: '4px' }}>
-                  <span className="lang-en-only">Now Playing</span>
-                  <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>अभी चल रहा है</span>
-                </p>
-                <p style={{ fontSize: 'var(--type-body-l)', fontWeight: 600, color: 'var(--color-text)' }}>
-                  <span className="lang-en-only">{liveShow.nameEn}</span>
-                  <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)', fontSize: 'var(--type-hi-body-l)' }}>{liveShow.nameHi}</span>
-                </p>
-                <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-muted)' }}>
-                  {liveShow.startTime} – {liveShow.endTime} ·{' '}
-                  <span className="lang-en-only">{liveShow.category}</span>
-                  <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>
-                    {liveShow.category === 'Spiritual Knowledge' ? 'आध्यात्मिक ज्ञान' : liveShow.category}
-                  </span>
-                </p>
+      <div className="home-content">
+        <section className="content-row reveal" aria-labelledby="prime-time-heading">
+          <div>
+            <div className="section-header">
+              <div>
+                <span className="section-kicker">
+                  <Flame size={15} aria-hidden="true" /> Prime Time
+                </span>
+                <h2 className="section-header__title" id="prime-time-heading">
+                  <span className="lang-en-only">Tonight&apos;s cultural premieres</span>
+                  <span className="lang-hi-only" lang="hi">आज रात की प्रमुख प्रस्तुतियां</span>
+                </h2>
               </div>
-              <a href="/live" className="btn-glass" style={{ flexShrink: 0, color: 'var(--primitive-white)', borderColor: 'var(--color-border-gold)' }}>
-                ▶ <span className="lang-en-only">Tune In</span>
-                <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>लाइव देखें</span>
-              </a>
-            </section>
+              <Link href="/search" className="section-header__link">
+                <span className="lang-en-only">Search all</span>
+                <span className="lang-hi-only" lang="hi">सभी खोजें</span>
+                <ChevronRight size={15} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="rail rail--snap" role="list">
+              {primeTimeShows.map((show) => (
+                <ProgramCard key={show.id} show={show} wide />
+              ))}
+            </div>
           </div>
-        )}
 
-        {/* ── Prime Time Rail ── */}
-        <section className="reveal" aria-labelledby="prime-time-heading">
-          <div className="section-header">
-            <h2 className="section-header__title" id="prime-time-heading">
-              <span className="lang-en-only">Prime Time</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>प्राइम टाइम</span>
+          <aside className="story-panel" aria-labelledby="next-up-heading">
+            <span className="section-kicker">
+              <Clock3 size={15} aria-hidden="true" /> Schedule
+            </span>
+            <h2 className="type-heading-2" id="next-up-heading" style={{ color: 'var(--primitive-white)', marginTop: 'var(--space-1)' }}>
+              <span className="lang-en-only">Next on Sunad</span>
+              <span className="lang-hi-only" lang="hi">आगे सुनाद पर</span>
             </h2>
-            <a href="/browse" className="section-header__link">
-              <span className="lang-en-only">View All ›</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)', fontSize: '0.85rem' }}>सभी देखें ›</span>
-            </a>
+            <div className="story-panel__grid">
+              {nextUpShows.map((show) => (
+                <Link href={`/watch/${show.id}`} className="story-mini" key={show.id}>
+                  <div
+                    className="story-mini__thumb"
+                    style={{
+                      backgroundImage: `linear-gradient(to bottom, rgba(11,9,7,0.05), rgba(11,9,7,0.6)), url(${getProgramThumbnail(show.categoryId)})`,
+                    }}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <p className="story-mini__title">
+                      <span className="lang-en-only">{show.nameEn}</span>
+                      <span className="lang-hi-only" lang="hi">{show.nameHi}</span>
+                    </p>
+                    <p className="story-mini__meta">{show.startTime} - {show.category}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </aside>
+        </section>
+
+        <section className="culture-panel reveal" aria-labelledby="culture-commerce-heading">
+          <div className="culture-panel__copy">
+            <span className="section-kicker">
+              <IndianRupee size={15} aria-hidden="true" /> Culture Commerce
+            </span>
+            <h2 className="type-display-m" id="culture-commerce-heading" style={{ color: 'var(--primitive-white)', margin: 'var(--space-2) 0' }}>
+              <span className="lang-en-only">Watch the story, support the hands behind it.</span>
+              <span className="lang-hi-only" lang="hi">कहानी देखें, कारीगरों का साथ दें।</span>
+            </h2>
+            <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', lineHeight: 1.65 }}>
+              <span className="lang-en-only">
+                Sunad connects films, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
+              </span>
+              <span className="lang-hi-only" lang="hi">
+                सुनाद फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है, ताकि दर्शक कहानी के साथ शिल्प, स्वास्थ्य सामग्री और स्थानीय उत्पाद भी खोज सकें।
+              </span>
+            </p>
+            <div className="culture-chips">
+              <span className="culture-chip"><ShoppingBag size={14} aria-hidden="true" /> Artisan Store</span>
+              <span className="culture-chip"><Compass size={14} aria-hidden="true" /> Heritage Trails</span>
+              <span className="culture-chip"><Languages size={14} aria-hidden="true" /> Hindi + English</span>
+            </div>
+            <div className="card-actions" style={{ marginTop: 'var(--space-4)' }}>
+              <Link href="/store" className="btn-primary">
+                <ShoppingBag size={18} aria-hidden="true" />
+                <span className="lang-en-only">Visit Store</span>
+                <span className="lang-hi-only" lang="hi">स्टोर देखें</span>
+              </Link>
+            </div>
           </div>
-          <div className="rail" role="list">
-            {primeTimeShows.map((show) => (
-              <article
-                key={show.id}
-                role="listitem"
-                className="content-card"
-                style={{ width: 'clamp(200px, 24vw, 320px)' }}
-                aria-label={`${show.nameEn} — ${show.startTime} to ${show.endTime}`}
-              >
-                <div
-                  className="content-card__thumbnail"
-                  style={{
-                    backgroundImage: `linear-gradient(to bottom, rgba(14,13,12,0.1), rgba(14,13,12,0.85)), url(${getProgramThumbnail(show.categoryId)})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                  }}
-                  aria-hidden="true"
-                />
-                <div className="content-card__overlay" aria-hidden="true" />
-                 <div className="content-card__body">
-                  {show.isPrimeTime && (
-                    <div className="badge badge--gold-outline" style={{ marginBottom: '6px', fontSize: '0.65rem' }}>
-                      PRIME TIME
-                    </div>
-                  )}
-                  <p className="content-card__title">
-                    <span className="lang-en-only">{show.nameEn}</span>
-                    <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>{show.nameHi}</span>
-                  </p>
-                </div>
-              </article>
-            ))}
+          <div className="culture-panel__media" aria-hidden="true">
+            <Image
+              src="/the_craftsmen.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
         </section>
 
-        {/* ── All Programs Rail ── */}
         <section className="reveal" aria-labelledby="trending-heading">
           <div className="section-header">
-            <h2 className="section-header__title" id="trending-heading">
-              <span className="lang-en-only">Trending Now</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>ट्रेंडिंग</span>
-            </h2>
-            <a href="/browse" className="section-header__link">
-              <span className="lang-en-only">View All ›</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)', fontSize: '0.85rem' }}>सभी देखें ›</span>
-            </a>
+            <div>
+              <span className="section-kicker">
+                <Star size={15} aria-hidden="true" /> Trending
+              </span>
+              <h2 className="section-header__title" id="trending-heading">
+                <span className="lang-en-only">Most watched across Bharat</span>
+                <span className="lang-hi-only" lang="hi">भारत में सबसे अधिक देखे गए</span>
+              </h2>
+            </div>
+            <Link href="/search" className="section-header__link">
+              <span className="lang-en-only">Find more</span>
+              <span className="lang-hi-only" lang="hi">और खोजें</span>
+              <ChevronRight size={15} aria-hidden="true" />
+            </Link>
           </div>
-          <div className="rail" role="list">
-            {PROGRAMS.slice(0, 8).map((show, idx) => (
-              <article
-                key={show.id}
-                role="listitem"
-                className="content-card"
-                style={{ width: 'clamp(180px, 20vw, 280px)' }}
-                aria-label={show.nameEn}
-              >
+          <div className="rail rail--snap" role="list">
+            {trendingShows.map((show, idx) => (
+              <ProgramCard key={show.id} show={show} rank={idx + 1} />
+            ))}
+          </div>
+        </section>
+
+        <section className="reveal" aria-labelledby="categories-heading">
+          <div className="section-header">
+            <div>
+              <span className="section-kicker">
+                <Compass size={15} aria-hidden="true" /> Explore
+              </span>
+              <h2 className="section-header__title" id="categories-heading">
+                <span className="lang-en-only">Browse by cultural path</span>
+                <span className="lang-hi-only" lang="hi">सांस्कृतिक मार्ग से ब्राउज़ करें</span>
+              </h2>
+            </div>
+          </div>
+          <div className="mini-category-grid" role="list">
+            {CATEGORIES.map((cat) => {
+              const Icon = CATEGORY_ICONS[cat.id] ?? Sparkles;
+
+              return (
+                <Link
+                  key={cat.id}
+                  href={`/browse/${cat.id}`}
+                  className="mini-category-tile category-tile"
+                  role="listitem"
+                  aria-label={cat.nameEn}
+                  style={{ background: `linear-gradient(135deg, rgba(230,154,36,0.16), rgba(0,109,119,0.12)), ${cat.gradient}` }}
+                >
+                  <span className="mini-category-tile__icon" aria-hidden="true">
+                    <Icon size={30} strokeWidth={1.5} />
+                  </span>
+                  <span className="mini-category-tile__label">
+                    <span className="lang-en-only">{cat.nameEn}</span>
+                    <span className="lang-hi-only" lang="hi">{cat.nameHi}</span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="story-panel reveal" aria-labelledby="editorial-heading">
+          <div className="section-header" style={{ marginBottom: 0 }}>
+            <div>
+              <span className="section-kicker">
+                <BookOpen size={15} aria-hidden="true" /> Editorial Picks
+              </span>
+              <h2 className="section-header__title" id="editorial-heading">
+                <span className="lang-en-only">Journeys that feel rooted</span>
+                <span className="lang-hi-only" lang="hi">जड़ से जुड़ी यात्राएं</span>
+              </h2>
+            </div>
+          </div>
+          <div className="story-panel__grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}>
+            {cultureShows.map((show) => (
+              <Link href={`/watch/${show.id}`} className="story-mini" key={show.id}>
                 <div
-                  className="content-card__thumbnail"
+                  className="story-mini__thumb"
                   style={{
-                    backgroundImage: `linear-gradient(to bottom, rgba(14,13,12,0.1), rgba(14,13,12,0.85)), url(${getProgramThumbnail(show.categoryId)})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundImage: `linear-gradient(to bottom, rgba(11,9,7,0.05), rgba(11,9,7,0.55)), url(${getProgramThumbnail(show.categoryId)})`,
                   }}
                   aria-hidden="true"
                 />
-                <div className="content-card__overlay" aria-hidden="true" />
-                 {/* TOP N badge */}
-                <div style={{ position: 'absolute', top: 'var(--space-1)', left: 'var(--space-1)' }}>
-                  <span className="badge badge--gold-outline" style={{ fontSize: '0.6rem' }}>TOP {idx + 1}</span>
-                </div>
-                 <div className="content-card__body">
-                  <p className="content-card__title">
+                <div>
+                  <p className="story-mini__title">
                     <span className="lang-en-only">{show.nameEn}</span>
-                    <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>{show.nameHi}</span>
+                    <span className="lang-hi-only" lang="hi">{show.nameHi}</span>
                   </p>
+                  <p className="story-mini__meta">{show.category}</p>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </section>
-
-        {/* ── Category Mini Grid ── */}
-        <section className="reveal" aria-labelledby="categories-heading">
-          <div className="section-header">
-            <h2 className="section-header__title" id="categories-heading">
-              <span className="lang-en-only">Browse by Category</span>
-              <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>श्रेणी के अनुसार</span>
-            </h2>
-          </div>
-          <div className="mini-category-grid" role="list">
-            {CATEGORIES.map((cat) => (
-               <a
-                key={cat.id}
-                href={`/browse/${cat.id}`}
-                className="mini-category-tile"
-                role="listitem"
-                aria-label={`${cat.nameEn}`}
-                style={{ background: cat.gradient }}
-              >
-                <span className="mini-category-tile__icon" aria-hidden="true">
-                  {CATEGORY_ICONS[cat.id] || cat.icon}
-                </span>
-                <div className="mini-category-tile__label">
-                  <span className="lang-en-only">{cat.nameEn}</span>
-                  <span className="lang-hi-only" lang="hi" style={{ fontFamily: 'var(--font-ui-hi)', display: 'block', fontSize: '0.85rem' }}>{cat.nameHi}</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
       </div>
-    </>
+    </div>
   );
 }

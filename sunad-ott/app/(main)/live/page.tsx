@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useLang } from '@/components/LangContext';
-import { PROGRAMS, WEEKLY_SPECIALS, Program, getProgramThumbnail } from '@/lib/mockData';
+import { PROGRAMS, WEEKLY_SPECIALS, getProgramThumbnail } from '@/lib/mockData';
 
 // Format time strings (e.g. "05:00" to minutes) for comparisons
 function parseTimeToMinutes(timeStr: string): number {
@@ -29,7 +28,7 @@ const SparklesIcon = ({ size = 20 }: { size?: number }) => (
 
 export default function LivePage() {
   const { t } = useLang();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   // Active day selection (Monday to Sunday)
   const days = [
@@ -44,7 +43,6 @@ export default function LivePage() {
 
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [currentTimeMinutes, setCurrentTimeMinutes] = useState(0);
-  const [activeLiveProgram, setActiveLiveProgram] = useState<Program | null>(null);
 
   // Sync current time of day in minutes (local time simulator)
   useEffect(() => {
@@ -63,21 +61,14 @@ export default function LivePage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Update active live program based on current time
-  useEffect(() => {
-    // Find program matching current simulated time
-    const active = PROGRAMS.find((p) => {
-      const start = parseTimeToMinutes(p.startTime);
-      const end = parseTimeToMinutes(p.endTime);
-      if (end < start) {
-        // Over midnight
-        return currentTimeMinutes >= start || currentTimeMinutes < end;
-      }
-      return currentTimeMinutes >= start && currentTimeMinutes < end;
-    });
-
-    setActiveLiveProgram(active || PROGRAMS[0]);
-  }, [currentTimeMinutes]);
+  const activeLiveProgram = PROGRAMS.find((p) => {
+    const start = parseTimeToMinutes(p.startTime);
+    const end = parseTimeToMinutes(p.endTime);
+    if (end < start) {
+      return currentTimeMinutes >= start || currentTimeMinutes < end;
+    }
+    return currentTimeMinutes >= start && currentTimeMinutes < end;
+  }) || PROGRAMS[0];
 
   const activeTheme = WEEKLY_SPECIALS[selectedDay as keyof typeof WEEKLY_SPECIALS];
 

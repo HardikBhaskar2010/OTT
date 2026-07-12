@@ -7,20 +7,24 @@
 /* ─── LAYER 1: PRIMITIVE ─────────────────────────────────────────────────── */
 :root {
   /* ── Core Palette ── */
-  --primitive-black:        #0E0D0C;   /* warm near-black, ink undertone */
-  --primitive-black-raised: #171513;   /* elevated surfaces, one step lighter */
-  --primitive-charcoal:     #211F1D;   /* secondary surfaces */
-  --primitive-stone:        #5C574E;   /* borders, dividers, disabled */
-  --primitive-stone-light:  #8A857A;   /* placeholder text, least emphasis */
-  --primitive-ivory:        #F3EDE1;   /* primary reading text */
-  --primitive-warm-white:   #FAF7F0;   /* text on warm-toned surfaces */
+  --primitive-black:        #0B0907;   /* warm near-black, lamp-soot undertone */
+  --primitive-black-raised: #15100D;   /* elevated surfaces, one step lighter */
+  --primitive-charcoal:     #211A15;   /* secondary surfaces */
+  --primitive-indigo:       #182B56;   /* heritage night blue */
+  --primitive-peacock:      #006D77;   /* teal accent for cultural contrast */
+  --primitive-sindoor:      #C3342B;   /* auspicious red accent */
+  --primitive-stone:        #5F5549;   /* borders, dividers, disabled */
+  --primitive-stone-light:  #A59A86;   /* placeholder text, least emphasis */
+  --primitive-ivory:        #F7EBD5;   /* primary reading text */
+  --primitive-warm-white:   #FFF8EA;   /* text on warm-toned surfaces */
   --primitive-white:        #FFFFFF;
 
   /* ── Warm Orange-Amber Accent (updated from reference design) ── */
   /* Think sunset amber, not neon — warm Indian golden-hour orange */
-  --primitive-gold:         #D4851A;   /* primary warm amber-orange */
-  --primitive-gold-bright:  #F07C1E;   /* hover/CTA brighter orange */
-  --primitive-gold-muted:   #A06010;   /* disabled/low-emphasis */
+  --primitive-gold:         #E69A24;   /* primary saffron-marigold */
+  --primitive-gold-bright:  #FFB83D;   /* hover/CTA brighter marigold */
+  --primitive-gold-muted:   #9B651B;   /* disabled/low-emphasis brass */
+  --primitive-brass:        #C89B3C;
 
   /* ── State Colors ── */
   --primitive-red-live:     #E63946;   /* live indicator badge only */
@@ -57,7 +61,8 @@
   --shadow-1:    0 2px 8px rgba(0, 0, 0, 0.35);
   --shadow-2:    0 8px 32px rgba(0, 0, 0, 0.5);
   --shadow-gold: 0 0 0 2px var(--primitive-gold);
-  --shadow-glow: 0 0 20px color-mix(in oklch, var(--primitive-gold) 30%, transparent);
+  --shadow-glow: 0 18px 55px color-mix(in oklch, var(--primitive-gold) 20%, transparent);
+  --shadow-indigo: 0 20px 70px color-mix(in oklch, var(--primitive-indigo) 45%, transparent);
 }
 
 /* ─── LAYER 2: SEMANTIC ──────────────────────────────────────────────────── */
@@ -66,6 +71,7 @@
   --color-bg:          var(--primitive-black);
   --color-bg-raised:   var(--primitive-black-raised);
   --color-surface:     var(--primitive-charcoal);
+  --color-surface-2:   color-mix(in oklch, var(--primitive-indigo) 28%, var(--primitive-black-raised));
   --color-overlay:     color-mix(in oklch, var(--primitive-black) 72%, transparent);
 
   /* ── Text ── */
@@ -78,6 +84,10 @@
   --color-gold:         var(--primitive-gold);
   --color-gold-hover:   var(--primitive-gold-bright);
   --color-gold-dim:     var(--primitive-gold-muted);
+  --color-brass:        var(--primitive-brass);
+  --color-indigo:       var(--primitive-indigo);
+  --color-peacock:      var(--primitive-peacock);
+  --color-sindoor:      var(--primitive-sindoor);
   --color-muted:        var(--primitive-stone);
 
   /* ── State ── */
@@ -94,6 +104,8 @@
   --glass-bg:           color-mix(in oklch, var(--primitive-black) 20%, transparent);
   --glass-bg-strong:    color-mix(in oklch, var(--primitive-black) 40%, transparent);
   --glass-bg-subtle:    color-mix(in oklch, var(--primitive-black) 10%, transparent);
+  --color-glass-bg:     var(--glass-bg);
+  --color-glass-border: color-mix(in oklch, var(--primitive-ivory) 14%, transparent);
   --glass-blur:         blur(16px);
   --glass-blur-strong:  blur(24px);
   --glass-blur-subtle:  blur(8px);
@@ -123,6 +135,8 @@
   --type-display-xl:  clamp(3.5rem, 1.5rem + 5vw, 4.5rem);
   /* Display L: 40-48px */
   --type-display-l:   clamp(2.5rem, 1rem + 3.5vw, 3rem);
+  /* Display M: 30-38px */
+  --type-display-m:   clamp(1.875rem, 1.15rem + 2vw, 2.375rem);
   /* Heading 1: 28-32px */
   --type-heading-1:   clamp(1.75rem, 1rem + 1.5vw, 2rem);
   /* Heading 2: 20-24px */
@@ -155,8 +169,8 @@
 
   /* ── Letter Spacing ── */
   /* NEVER apply negative tracking to Devanagari (collides matras/conjuncts) */
-  --tracking-display:     -0.015em;   /* Latin display: -1.5% */
-  --tracking-heading:     -0.005em;   /* Latin heading: -0.5% */
+  --tracking-display:      0em;
+  --tracking-heading:      0em;
   --tracking-body:         0em;
   --tracking-hi-display:   0em;       /* Devanagari: never negative */
   --tracking-hi-heading:   0.003em;   /* slight positive */

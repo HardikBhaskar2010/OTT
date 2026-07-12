@@ -233,7 +233,7 @@ export default function SearchPage() {
           }} className="reveal-fade">
             <span style={{ fontSize: '3rem', display: 'block', marginBottom: 'var(--space-2)' }}>🔍</span>
             <h2 className="type-display-m" style={{ color: 'var(--primitive-ivory)' }}>
-              No matches found for "{query}" / कोई मेल नहीं मिला
+              No matches found for &quot;{query}&quot; / कोई मेल नहीं मिला
             </h2>
             <p style={{ color: 'var(--color-text-dim)', marginBottom: 'var(--space-4)', maxWidth: '400px', marginInline: 'auto' }}>
               Check spelling or try searching for another term. Alternatively, explore our latest original documentaries below.
