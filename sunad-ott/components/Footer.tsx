@@ -48,9 +48,22 @@ export default function Footer() {
             </p>
 
             {/* WATCH. LEARN. EXPERIENCE. CONNECT. */}
-            <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', lineHeight: 1.6 }}>
+            <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', lineHeight: 1.6, marginBottom: 'var(--space-4)' }}>
               WATCH · LEARN · EXPERIENCE · CONNECT
             </p>
+
+            {/* Contact Details */}
+            <div style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-dim)', lineHeight: 1.6 }}>
+              <p style={{ margin: 0, fontWeight: 600, color: 'var(--primitive-white)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.05em' }}>Corporate Office</p>
+              <p style={{ margin: '0 0 var(--space-3) 0', color: 'var(--color-text-muted)' }}>
+                505, C-Tower, I-Thum Building,<br />
+                Sector 62, Noida, Uttar Pradesh - 201301
+              </p>
+              <p style={{ margin: 0, fontWeight: 600, color: 'var(--primitive-white)', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.05em' }}>Customer Care</p>
+              <p style={{ margin: 0, color: 'var(--color-gold)', fontWeight: 600 }}>
+                <a href="tel:+918810322236" style={{ color: 'inherit', textDecoration: 'none' }}>+91 88103 22236</a>
+              </p>
+            </div>
           </div>
 
           {/* Column 2: Explore */}
