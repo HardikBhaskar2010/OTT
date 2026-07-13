@@ -120,7 +120,15 @@ export default function HomePage() {
             fill
             priority
             sizes="100vw"
-            className="home-hero__image"
+            className="home-hero__image dark-only-image"
+          />
+          <Image
+            src="/mystic_bharat_light.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="home-hero__image light-only-image"
           />
         </div>
         <div className="home-hero__shade" aria-hidden="true" />

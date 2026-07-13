@@ -131,6 +131,135 @@ body::before {
   }
 }
 
+/* ─── DARK/LIGHT HERO IMAGES & SHADES ─────────────────────────────────────── */
+/* Default theme image visibility */
+.light-only-image {
+  display: none !important;
+}
+.dark-only-image {
+  display: block !important;
+}
+
+/* Light theme overrides for Hero section */
+[data-theme="light"] .light-only-image {
+  display: block !important;
+}
+[data-theme="light"] .dark-only-image {
+  display: none !important;
+}
+
+/* Make sure text is fully legible on the new bright background */
+[data-theme="light"] .home-hero__shade {
+  background:
+    linear-gradient(90deg, rgba(255, 248, 234, 0.96) 0%, rgba(255, 248, 234, 0.82) 34%, rgba(255, 248, 234, 0.22) 68%, rgba(255, 248, 234, 0.55) 100%),
+    linear-gradient(0deg, #FFFFFF 0%, rgba(255, 248, 234, 0.15) 45%, rgba(255, 248, 234, 0.02) 100%) !important;
+}
+
+[data-theme="light"] .home-hero__pattern {
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 42px, rgba(200, 134, 10, 0.12) 42px 43px),
+    linear-gradient(135deg, rgba(200, 134, 10, 0.16), transparent 34%, rgba(0, 109, 119, 0.12));
+}
+
+/* Ensure secondary content and detail boxes have good legibility in light theme */
+[data-theme="light"] .hero-copy .hero-description {
+  color: #2F2414;
+}
+[data-theme="light"] .hero-copy .hero-title {
+  color: #1A1208;
+}
+[data-theme="light"] .hero-title__accent {
+  color: #A67C00;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME WAVE TRANSITION — View Transitions API
+   A radial ripple expands from the exact click point, flooding the page
+   with the new theme. Works in Chrome 111+, Edge 111+, Safari 18+.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Reset default cross-fade */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* 2. Old snapshot stays still underneath */
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+/* 3. New snapshot expands as a circle from the click origin */
+::view-transition-new(root) {
+  z-index: 9999;
+  animation:
+    theme-wave-expand 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Wave expand: 0 → computed radius stored in CSS custom props */
+@keyframes theme-wave-expand {
+  from {
+    clip-path: circle(0px at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%));
+    opacity: 0.85;
+  }
+  to {
+    clip-path: circle(var(--theme-clip-radius, 200vmax) at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%));
+    opacity: 1;
+  }
+}
+
+/* 4. Switching TO light — add a golden-sunrise shimmer on the expanding edge */
+[data-theme="light"]::view-transition-new(root)::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%),
+    rgba(230, 154, 36, 0.18) 0%,
+    rgba(200, 134, 10, 0.06) 40%,
+    transparent 70%
+  );
+  animation: theme-shimmer-in 520ms ease-out forwards;
+}
+
+/* 5. Switching TO dark — deep moonrise ripple */
+[data-theme="dark"]::view-transition-new(root)::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%),
+    rgba(11, 9, 7, 0.25) 0%,
+    rgba(24, 43, 86, 0.10) 40%,
+    transparent 70%
+  );
+  animation: theme-shimmer-in 520ms ease-out forwards;
+}
+
+@keyframes theme-shimmer-in {
+  from { opacity: 0; }
+  50%  { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── Fallback: smooth CSS transitions for browsers without View Transitions ── */
+/* Only the key properties that change between themes */
+:root {
+  transition:
+    color-scheme 0.35s ease;
+}
+body {
+  transition:
+    background 0.35s ease,
+    color 0.25s ease;
+}
+
 /* ─── SCROLLBAR ──────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar          { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track    { background: transparent; }

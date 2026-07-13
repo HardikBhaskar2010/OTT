@@ -149,7 +149,7 @@ export default function TopNav() {
       >
         {/* ── Left: Logo ── */}
         <Link href="/" className="nav-logo" aria-label={t('Sunad OTT — Home', 'सुनाद OTT — होम')}>
-          <img src="/sunad_logo.jpg" alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" />
+          <img src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'} alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" />
           <span className="nav-logo__text">Sunad</span>
           <span className="nav-logo__badge">OTT</span>
         </Link>
@@ -212,7 +212,7 @@ export default function TopNav() {
           {/* Theme Toggle */}
           <button
             className="nav-icon-btn nav-theme-toggle"
-            onClick={toggleTheme}
+            onClick={(e) => toggleTheme({ x: e.clientX, y: e.clientY })}
             aria-label={isLight ? t('Switch to Dark theme', 'डार्क थीम पर जाएं') : t('Switch to White & Gold theme', 'व्हाइट & गोल्ड थीम पर जाएं')}
             title={isLight ? t('Switch to Dark theme', 'डार्क थीम') : t('White & Gold theme', 'व्हाइट & गोल्ड थीम')}
             style={{ position: 'relative', overflow: 'hidden' }}
@@ -356,7 +356,7 @@ export default function TopNav() {
           {/* Mobile Theme Toggle */}
           <button
             className="lang-toggle"
-            onClick={toggleTheme}
+            onClick={(e) => toggleTheme({ x: e.clientX, y: e.clientY })}
             style={{ width: '100%', justifyContent: 'center', gap: 'var(--space-1)' }}
           >
             {isLight ? (
