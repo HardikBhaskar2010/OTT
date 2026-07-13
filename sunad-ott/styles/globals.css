@@ -131,48 +131,138 @@ body::before {
   }
 }
 
-/* ─── DARK/LIGHT HERO IMAGES & SHADES ─────────────────────────────────────── */
-/* Default theme image visibility */
-.light-only-image {
-  display: none !important;
-}
-.dark-only-image {
-  display: block !important;
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT THEME — HERO SECTION
+   Same mystic_bharat.jpg image is used; CSS filter + cream overlay creates
+   the "sunshine" look while keeping IDENTICAL composition/framing.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Brighten & warm the existing temple image — same photo, sunny feel */
+[data-theme="light"] .home-hero__image {
+  filter: brightness(1.55) saturate(0.72) sepia(0.18) contrast(0.88);
 }
 
-/* Light theme overrides for Hero section */
-[data-theme="light"] .light-only-image {
-  display: block !important;
-}
-[data-theme="light"] .dark-only-image {
-  display: none !important;
-}
-
-/* Make sure text is fully legible on the new bright background */
+/* 2. Replace dark gradient shade with a warm cream/ivory wash */
 [data-theme="light"] .home-hero__shade {
   background:
-    linear-gradient(90deg, rgba(255, 248, 234, 0.96) 0%, rgba(255, 248, 234, 0.82) 34%, rgba(255, 248, 234, 0.22) 68%, rgba(255, 248, 234, 0.55) 100%),
-    linear-gradient(0deg, #FFFFFF 0%, rgba(255, 248, 234, 0.15) 45%, rgba(255, 248, 234, 0.02) 100%) !important;
+    linear-gradient(90deg,
+      rgba(255, 248, 230, 0.97) 0%,
+      rgba(255, 248, 230, 0.88) 30%,
+      rgba(255, 248, 230, 0.35) 62%,
+      rgba(255, 248, 230, 0.60) 100%),
+    linear-gradient(0deg,
+      rgba(255, 255, 255, 1.00) 0%,
+      rgba(255, 248, 230, 0.25) 38%,
+      rgba(255, 248, 230, 0.04) 100%) !important;
 }
 
+/* 3. Pattern — multiply blend + warm gold tint */
 [data-theme="light"] .home-hero__pattern {
-  opacity: 0.16;
+  opacity: 0.14;
   mix-blend-mode: multiply;
   background:
-    repeating-linear-gradient(90deg, transparent 0 42px, rgba(200, 134, 10, 0.12) 42px 43px),
-    linear-gradient(135deg, rgba(200, 134, 10, 0.16), transparent 34%, rgba(0, 109, 119, 0.12));
+    repeating-linear-gradient(90deg, transparent 0 42px, rgba(200, 134, 10, 0.14) 42px 43px),
+    linear-gradient(135deg, rgba(200, 134, 10, 0.18), transparent 34%, rgba(0, 109, 119, 0.10));
 }
 
-/* Ensure secondary content and detail boxes have good legibility in light theme */
-[data-theme="light"] .hero-copy .hero-description {
-  color: #2F2414;
+/* 4. Hero eyebrow badge */
+[data-theme="light"] .hero-eyebrow {
+  background: rgba(255, 248, 230, 0.85);
+  border-color: rgba(200, 134, 10, 0.40);
+  color: #A67C00;
 }
-[data-theme="light"] .hero-copy .hero-title {
+
+/* 5. Hero headline — dark warm black for contrast on cream bg */
+[data-theme="light"] .hero-title {
   color: #1A1208;
+  text-shadow: 0 2px 12px rgba(255, 248, 230, 0.8);
 }
 [data-theme="light"] .hero-title__accent {
   color: #A67C00;
 }
+
+/* 6. Hero description */
+[data-theme="light"] .hero-description {
+  color: #3B2C14;
+  text-shadow: none;
+}
+
+/* 7. "Watch Now" (btn-primary) — keep gold bg, ensure dark text is legible */
+[data-theme="light"] .home-hero .btn-primary {
+  background: #C8860A;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(200, 134, 10, 0.30);
+}
+[data-theme="light"] .home-hero .btn-primary:hover {
+  background: #E69A24;
+}
+
+/* 8. "Explore Originals" (btn-glass) — dark bordered button on cream bg */
+[data-theme="light"] .home-hero .btn-glass {
+  background: rgba(255, 248, 230, 0.75);
+  border: 1px solid rgba(200, 134, 10, 0.45);
+  color: #1A1208;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="light"] .home-hero .btn-glass:hover {
+  background: rgba(255, 248, 230, 0.95);
+  border-color: #C8860A;
+  color: #A67C00;
+}
+
+/* 9. Hero meta stats (19 Daily shows, 2 Languages, 4K) */
+[data-theme="light"] .hero-meta__item {
+  background: rgba(255, 248, 230, 0.75);
+  border-left-color: #C8860A;
+  color: #4A3B1A;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+[data-theme="light"] .hero-meta__item strong {
+  color: #1A1208;
+}
+
+/* 10. Hero panel (Mystic Bharat card on the right) — warm gold-glass */
+[data-theme="light"] .hero-panel {
+  background:
+    linear-gradient(145deg, rgba(255, 248, 230, 0.92), rgba(255, 243, 210, 0.80));
+  border-color: rgba(200, 134, 10, 0.35);
+  box-shadow:
+    0 8px 32px rgba(200, 134, 10, 0.14),
+    0 2px 8px rgba(180, 130, 10, 0.10);
+}
+[data-theme="light"] .hero-panel::before {
+  background:
+    linear-gradient(90deg, transparent 0 12px, rgba(200, 134, 10, 0.16) 12px 13px, transparent 13px 26px),
+    linear-gradient(180deg, rgba(200, 134, 10, 0.06), transparent 38%);
+}
+[data-theme="light"] .hero-panel__label {
+  color: #8B7355;
+}
+[data-theme="light"] .hero-panel__title {
+  color: #1A1208;
+}
+[data-theme="light"] .hero-panel__text {
+  color: #4A3B1A;
+}
+/* "Open Feature" button inside the panel */
+[data-theme="light"] .hero-panel .btn-ghost {
+  color: #1A1208;
+  border-color: rgba(200, 134, 10, 0.45);
+}
+[data-theme="light"] .hero-panel .btn-ghost:hover {
+  color: #A67C00;
+  border-color: #C8860A;
+  background: rgba(200, 134, 10, 0.06);
+}
+/* Culture chips inside panel */
+[data-theme="light"] .culture-chip {
+  background: rgba(200, 134, 10, 0.10);
+  border-color: rgba(200, 134, 10, 0.30);
+  color: #6B5010;
+}
+
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
