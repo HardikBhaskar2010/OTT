@@ -22,6 +22,15 @@ const ThemeContext = createContext<ThemeContextValue>({
   isLight: false,
 });
 
+/** Briefly add a shimmer overlay div that fades out after the wave completes */
+function spawnShimmer(next: Theme, x: number, y: number) {
+  const el = document.createElement('div');
+  el.className = `theme-shimmer-overlay theme-shimmer-overlay--${next}`;
+  document.body.appendChild(el);
+  // Remove after animation ends (540ms + a little buffer)
+  setTimeout(() => el.remove(), 600);
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark');
 
@@ -38,10 +47,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     (coords?: ToggleCoords) => {
       const next: Theme = theme === 'dark' ? 'light' : 'dark';
 
-      // ── Pin the wave origin on <html> as CSS custom props ──────────────
+      // ── Pin wave origin as CSS custom properties on <html> ─────────────
       const x = coords?.x ?? window.innerWidth / 2;
       const y = coords?.y ?? window.innerHeight / 2;
-      // Radius large enough to cover every corner of the viewport from (x, y)
+      // Radius large enough to cover every corner from (x, y)
       const radius = Math.hypot(
         Math.max(x, window.innerWidth - x),
         Math.max(y, window.innerHeight - y)
@@ -51,19 +60,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       root.style.setProperty('--theme-clip-y', `${y}px`);
       root.style.setProperty('--theme-clip-radius', `${Math.ceil(radius)}px`);
 
-      // ── Apply theme ────────────────────────────────────────────────────
+      // ── Apply theme + shimmer ───────────────────────────────────────────
       const applyTheme = () => {
         root.setAttribute('data-theme', next);
         localStorage.setItem('sunad-theme', next);
         setTheme(next);
+        // Spawn shimmer overlay (golden sunrise or indigo moonrise)
+        spawnShimmer(next, x, y);
       };
 
-      // Use View Transitions API when available (Chrome 111+, Edge 111+, Safari 18+)
+      // View Transitions API: circular clip-path reveal (Chrome 111+, Safari 18+)
       if (typeof document !== 'undefined' && 'startViewTransition' in document) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (document as any).startViewTransition(applyTheme);
       } else {
-        // Graceful fallback — instant swap, CSS transitions on body handle smoothness
+        // Graceful fallback — instant swap; CSS body transition handles smoothness
         applyTheme();
       }
     },

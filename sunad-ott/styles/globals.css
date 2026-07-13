@@ -212,40 +212,41 @@ body::before {
   }
 }
 
-/* 4. Switching TO light — add a golden-sunrise shimmer on the expanding edge */
-[data-theme="light"]::view-transition-new(root)::after {
-  content: '';
+/* 4. Shimmer overlay injected by JS (.theme-shimmer-overlay) */
+/*    Sits above everything during the transition, then fades out           */
+.theme-shimmer-overlay {
   position: fixed;
   inset: 0;
+  z-index: 99998;
   pointer-events: none;
-  background: radial-gradient(
-    circle at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%),
-    rgba(230, 154, 36, 0.18) 0%,
-    rgba(200, 134, 10, 0.06) 40%,
-    transparent 70%
-  );
-  animation: theme-shimmer-in 520ms ease-out forwards;
+  border-radius: 0;
+  animation: theme-shimmer-in 540ms ease-out forwards;
 }
 
-/* 5. Switching TO dark — deep moonrise ripple */
-[data-theme="dark"]::view-transition-new(root)::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+/* Golden sunrise (→ light theme) */
+.theme-shimmer-overlay--light {
   background: radial-gradient(
     circle at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%),
-    rgba(11, 9, 7, 0.25) 0%,
-    rgba(24, 43, 86, 0.10) 40%,
-    transparent 70%
+    rgba(230, 154, 36, 0.22) 0%,
+    rgba(200, 134, 10, 0.08) 40%,
+    transparent 68%
   );
-  animation: theme-shimmer-in 520ms ease-out forwards;
+}
+
+/* Indigo moonrise (→ dark theme) */
+.theme-shimmer-overlay--dark {
+  background: radial-gradient(
+    circle at var(--theme-clip-x, 50%) var(--theme-clip-y, 50%),
+    rgba(11, 9, 7, 0.28) 0%,
+    rgba(24, 43, 86, 0.12) 40%,
+    transparent 68%
+  );
 }
 
 @keyframes theme-shimmer-in {
-  from { opacity: 0; }
-  50%  { opacity: 1; }
-  to   { opacity: 0; }
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 /* ── Fallback: smooth CSS transitions for browsers without View Transitions ── */
