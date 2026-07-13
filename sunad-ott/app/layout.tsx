@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Fraunces, Mukta, Noto_Sans_Devanagari, Noto_Serif_Devanagari } from 'next/font/google';
 import '@/styles/globals.css';
 import { LangProvider } from '@/components/LangContext';
+import { ThemeProvider } from '@/components/ThemeContext';
 import { LenisProvider } from '@/components/LenisProvider';
 import TopNav from '@/components/TopNav';
 import Footer from '@/components/Footer';
@@ -155,26 +156,28 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <LangProvider>
-          <LenisProvider>
-            {/* Scroll reveal observer — no DOM output */}
-            <ScrollReveal />
+        <ThemeProvider>
+          <LangProvider>
+            <LenisProvider>
+              {/* Scroll reveal observer — no DOM output */}
+              <ScrollReveal />
 
-            {/* Landing onboarding modal gate */}
-            <LandingModal />
+              {/* Landing onboarding modal gate */}
+              <LandingModal />
 
-            {/* Fixed floating dock nav */}
-            <TopNav />
+              {/* Fixed floating dock nav */}
+              <TopNav />
 
-            {/* Main content — padded below fixed nav */}
-            <main className="main-content" id="main-content">
-              {children}
-            </main>
+              {/* Main content — padded below fixed nav */}
+              <main className="main-content" id="main-content">
+                {children}
+              </main>
 
-            {/* Footer */}
-            <Footer />
-          </LenisProvider>
-        </LangProvider>
+              {/* Footer */}
+              <Footer />
+            </LenisProvider>
+          </LangProvider>
+        </ThemeProvider>
 
         {/* Vercel Analytics — tracks page views & Core Web Vitals automatically */}
         <Analytics />

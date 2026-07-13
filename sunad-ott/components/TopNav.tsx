@@ -4,6 +4,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLang } from './LangContext';
+import { useTheme } from './ThemeContext';
 import { NAV_ITEMS } from '@/lib/mockData';
 import { trackLanguageSwitch, trackNavSignIn } from '@/lib/analytics';
 
@@ -89,6 +90,7 @@ export default function TopNav() {
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { lang, toggle, t } = useLang();
+  const { toggleTheme, isLight } = useTheme();
   const pathname = usePathname();
 
   // JS fallback for Firefox — CSS scroll-driven animation not supported
@@ -207,6 +209,54 @@ export default function TopNav() {
             </svg>
           </button>
 
+          {/* Theme Toggle */}
+          <button
+            className="nav-icon-btn nav-theme-toggle"
+            onClick={toggleTheme}
+            aria-label={isLight ? t('Switch to Dark theme', 'डार्क थीम पर जाएं') : t('Switch to White & Gold theme', 'व्हाइट & गोल्ड थीम पर जाएं')}
+            title={isLight ? t('Switch to Dark theme', 'डार्क थीम') : t('White & Gold theme', 'व्हाइट & गोल्ड थीम')}
+            style={{ position: 'relative', overflow: 'hidden' }}
+          >
+            <span
+              style={{
+                display: 'inline-flex',
+                transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.25s ease',
+                transform: isLight ? 'rotate(0deg) scale(1)' : 'rotate(-30deg) scale(0.8)',
+                opacity: isLight ? 1 : 0,
+                position: isLight ? 'static' : 'absolute',
+              }}
+              aria-hidden="true"
+            >
+              {/* Moon icon — shown in light mode to switch back to dark */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            </span>
+            <span
+              style={{
+                display: 'inline-flex',
+                transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.25s ease',
+                transform: isLight ? 'rotate(30deg) scale(0.8)' : 'rotate(0deg) scale(1)',
+                opacity: isLight ? 0 : 1,
+                position: isLight ? 'absolute' : 'static',
+              }}
+              aria-hidden="true"
+            >
+              {/* Sun icon — shown in dark mode to switch to light */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            </span>
+          </button>
+
           {/* Language Toggle */}
           <button
             className="lang-toggle nav-lang-toggle"
@@ -303,6 +353,32 @@ export default function TopNav() {
 
         {/* Mobile lang toggle + sign in */}
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+          {/* Mobile Theme Toggle */}
+          <button
+            className="lang-toggle"
+            onClick={toggleTheme}
+            style={{ width: '100%', justifyContent: 'center', gap: 'var(--space-1)' }}
+          >
+            {isLight ? (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+                {t('Switch to Dark Theme', 'डार्क थीम पर जाएं')}
+              </>
+            ) : (
+              <>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                {t('White & Gold Theme', 'व्हाइट & गोल्ड थीम')}
+              </>
+            )}
+          </button>
           <button className="lang-toggle" onClick={toggle} style={{ width: '100%', justifyContent: 'center' }}>
             {lang === 'en' ? 'Switch to हिंदी' : 'Switch to English'}
           </button>

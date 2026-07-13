@@ -54,6 +54,83 @@ body::before {
   opacity: 0.42;
 }
 
+/* ─── LIGHT THEME — BODY OVERRIDES ──────────────────────────────────────── */
+[data-theme="light"] body {
+  background:
+    linear-gradient(135deg, rgba(200, 134, 10, 0.06) 0 1px, transparent 1px 34px),
+    linear-gradient(45deg, rgba(200, 134, 10, 0.04) 0 1px, transparent 1px 28px),
+    linear-gradient(180deg, #FFFFFF 0%, #FFF8EA 46%, #FFFDF7 100%) fixed;
+  color: var(--color-text);
+  scrollbar-color: var(--color-gold) rgba(200,134,10,0.08);
+}
+
+[data-theme="light"] body::before {
+  background:
+    linear-gradient(90deg, rgba(200, 134, 10, 0.08), transparent 12%, transparent 88%, rgba(200, 134, 10, 0.06)),
+    repeating-linear-gradient(90deg, transparent 0 30px, rgba(200, 134, 10, 0.04) 30px 31px);
+  opacity: 0.6;
+}
+
+/* Light theme nav docked */
+[data-theme="light"] .site-nav.is-docked {
+  background: rgba(255, 252, 245, 0.88);
+  box-shadow:
+    0 0 0 1px rgba(200, 134, 10, 0.25),
+    0 8px 32px rgba(200, 134, 10, 0.12),
+    0 2px 8px rgba(180, 130, 10, 0.08);
+}
+
+/* Light theme mobile overlay */
+[data-theme="light"] .mobile-menu-overlay {
+  background: rgba(255, 252, 245, 0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Light theme nav sign-in button */
+[data-theme="light"] .nav-sign-in {
+  color: #1A1208;
+}
+
+/* Light theme hamburger lines */
+[data-theme="light"] .nav-hamburger span {
+  background: var(--color-text);
+}
+
+/* Light theme nav logo text */
+[data-theme="light"] .nav-logo__text {
+  color: #1A1208;
+}
+
+/* Light theme nav-icon-btn hover */
+[data-theme="light"] .nav-icon-btn:hover {
+  background: rgba(200, 134, 10, 0.10);
+  color: #C8860A;
+}
+
+/* Light theme nav-item hover */
+[data-theme="light"] .nav-item:hover {
+  background: rgba(200, 134, 10, 0.08);
+  color: #1A1208;
+}
+
+/* Light theme nav-item active */
+[data-theme="light"] .nav-item.active {
+  color: #C8860A;
+}
+
+/* Light theme lang-toggle hover */
+[data-theme="light"] .lang-toggle:hover {
+  background: rgba(200, 134, 10, 0.08);
+}
+
+/* Light theme page backdrop (CSS scroll animation nav) */
+@supports (animation-timeline: scroll()) {
+  [data-theme="light"] .site-nav {
+    --nav-docked-bg: rgba(255, 252, 245, 0.88);
+  }
+}
+
 /* ─── SCROLLBAR ──────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar          { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track    { background: transparent; }

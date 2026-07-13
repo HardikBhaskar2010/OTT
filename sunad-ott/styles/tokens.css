@@ -122,6 +122,58 @@
   --grid-outer-sm:      16px;
 }
 
+/* ─── WHITE & GOLD LIGHT THEME ───────────────────────────────────────────── */
+/*  Matches Sunad Broadcast letterhead: pure white bg + rich gold accents     */
+[data-theme="light"] {
+  /* ── Surfaces ── */
+  --color-bg:          #FFFFFF;
+  --color-bg-raised:   #FFF8EA;
+  --color-surface:     #FFF3D9;
+  --color-surface-2:   #FFF0CC;
+  --color-overlay:     rgba(255, 255, 255, 0.85);
+
+  /* ── Text ── */
+  --color-text:         #1A1208;      /* deep warm black — letterhead body text */
+  --color-text-dim:     #4A3B1A;      /* secondary text, muted */
+  --color-text-muted:   #8B7355;      /* captions, placeholders */
+  --color-text-on-gold: #FFFFFF;      /* white text on gold buttons */
+
+  /* ── Accent (unchanged — same gold palette) ── */
+  --color-gold:         #C8860A;      /* richer, darker gold for legibility on white */
+  --color-gold-hover:   #E69A24;      /* hover brightens back to original */
+  --color-gold-dim:     #D4A843;      /* muted variant */
+  --color-brass:        #A67C00;
+  --color-indigo:       #182B56;
+  --color-peacock:      #006D77;
+  --color-sindoor:      #C3342B;
+  --color-muted:        #C9B99A;
+
+  /* ── State ── */
+  --color-live:    #E63946;
+  --color-error:   #C4604B;
+  --color-success: #4A7A3D;
+
+  /* ── Borders ── */
+  --color-border:       rgba(200, 134, 10, 0.25);
+  --color-border-focus: #C8860A;
+  --color-border-gold:  rgba(200, 134, 10, 0.35);
+
+  /* ── Glassmorphism (adapted for light bg) ── */
+  --glass-bg:           rgba(255, 248, 234, 0.55);
+  --glass-bg-strong:    rgba(255, 243, 217, 0.80);
+  --glass-bg-subtle:    rgba(255, 255, 255, 0.30);
+  --color-glass-bg:     var(--glass-bg);
+  --color-glass-border: rgba(200, 134, 10, 0.18);
+  --glass-border:       1px solid rgba(200, 134, 10, 0.15);
+  --glass-border-gold:  1px solid rgba(200, 134, 10, 0.30);
+
+  /* ── Shadows (softer for light mode) ── */
+  --shadow-1:    0 2px 12px rgba(180, 130, 10, 0.12);
+  --shadow-2:    0 8px 32px rgba(180, 130, 10, 0.18);
+  --shadow-gold: 0 0 0 2px #C8860A;
+  --shadow-glow: 0 18px 55px rgba(200, 134, 10, 0.20);
+}
+
 /* ─── LAYER 3: TYPOGRAPHY ────────────────────────────────────────────────── */
 :root {
   /* ── Font Stacks ── */
