@@ -44,7 +44,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
 };
 
 export const metadata: Metadata = {
-  title: 'Home — Sunad OTT | Real Stories. Real Bharat.',
+  title: 'Home — CultureFlix | Real Stories. Real Bharat.',
   description:
     'Discover premium Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, yoga, tourism and more. Watch live TV and on-demand content in Hindi and English.',
 };
@@ -112,7 +112,7 @@ export default function HomePage() {
 
   return (
     <div className="home-experience">
-      <section className="home-hero" aria-label="Featured Sunad original">
+      <section className="home-hero" aria-label="Featured CultureFlix original">
         <div className="home-hero__media" aria-hidden="true">
           <Image
             src="/mystic_bharat.jpg"
@@ -223,8 +223,8 @@ export default function HomePage() {
           </div>
           <div>
             <p className="live-now-card__eyebrow">
-              <span className="lang-en-only">Live now from the Sunad mandap</span>
-              <span className="lang-hi-only" lang="hi">सुनाद मंडप से लाइव</span>
+              <span className="lang-en-only">Live now from the CultureFlix mandap</span>
+              <span className="lang-hi-only" lang="hi">कल्चरफ्लिक्स मंडप से लाइव</span>
             </p>
             <p className="live-now-card__title">
               <span className="lang-en-only">{liveShow.nameEn}</span>
@@ -279,8 +279,8 @@ export default function HomePage() {
               <Clock3 size={15} aria-hidden="true" /> Schedule
             </span>
             <h2 className="type-heading-2" id="next-up-heading" style={{ color: 'var(--primitive-white)', marginTop: 'var(--space-1)' }}>
-              <span className="lang-en-only">Next on Sunad</span>
-              <span className="lang-hi-only" lang="hi">आगे सुनाद पर</span>
+              <span className="lang-en-only">Next on CultureFlix</span>
+              <span className="lang-hi-only" lang="hi">आगे कल्चरफ्लिक्स पर</span>
             </h2>
             <div className="story-panel__grid">
               {nextUpShows.map((show) => (
@@ -316,10 +316,10 @@ export default function HomePage() {
             </h2>
             <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', lineHeight: 1.65 }}>
               <span className="lang-en-only">
-                Sunad connects films, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
+                CultureFlix connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
               </span>
               <span className="lang-hi-only" lang="hi">
-                सुनाद फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है, ताकि दर्शक कहानी के साथ शिल्प, स्वास्थ्य सामग्री और स्थानीय उत्पाद भी खोज सकें।
+                कल्चरफ्लिक्स फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है, ताकि दर्शक कहानी के साथ शिल्प, स्वास्थ्य सामग्री और स्थानीय उत्पाद भी खोज सकें।
               </span>
             </p>
             <div className="culture-chips">

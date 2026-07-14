@@ -82,7 +82,7 @@ export default function CookieBanner() {
             minWidth: '180px',
           }}
         >
-          We use cookies to improve your experience on Sunad OTT.{' '}
+          We use cookies to improve your experience on CultureFlix.{' '}
           <span
             lang="hi"
             style={{ fontFamily: 'var(--font-ui-hi)', fontSize: 'var(--type-hi-caption)' }}

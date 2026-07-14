@@ -122,7 +122,7 @@ export default function LandingModal() {
         >
           <img
             src="/sunad_logo.jpg"
-            alt="Sunad Brand Emblem"
+            alt="CultureFlix Brand Emblem"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
@@ -133,7 +133,7 @@ export default function LandingModal() {
           className="type-heading-2"
           style={{ color: 'var(--primitive-white)', margin: 0, fontSize: '1.5rem' }}
         >
-          {t('Welcome to Sunad', 'सुनाद में आपका स्वागत है')}
+          {t('Welcome to CultureFlix', 'कल्चरफ्लिक्स में आपका स्वागत है')}
         </h2>
         <p
           lang="hi"

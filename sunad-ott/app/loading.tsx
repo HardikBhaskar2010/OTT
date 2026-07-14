@@ -7,7 +7,7 @@
 export default function Loading() {
   return (
     <div
-      aria-label="Loading Sunad OTT…"
+      aria-label="Loading CultureFlix…"
       aria-busy="true"
       role="status"
       style={{
@@ -35,20 +35,22 @@ export default function Loading() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--space-1)',
+            gap: 'var(--space-2)',
           }}
         >
-          <span
+          <img
+            src="/sunad_logo.jpg"
+            alt=""
             style={{
-              fontSize: '2rem',
-              color: 'var(--color-gold)',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '1.5px solid var(--color-gold)',
               animation: 'wordmark-pulse 2s ease-in-out infinite',
-              lineHeight: 1,
             }}
             aria-hidden="true"
-          >
-            ◈
-          </span>
+          />
           <span
             lang="hi"
             style={{
@@ -61,7 +63,7 @@ export default function Loading() {
               animation: 'wordmark-pulse 2s ease-in-out infinite',
             }}
           >
-            सुनाद
+            कल्चरफ्लिक्स
           </span>
         </div>
         <p
