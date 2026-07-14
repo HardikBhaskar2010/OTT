@@ -1801,6 +1801,7 @@ h2[lang="hi"] {
       border-radius: 0px;
       background: transparent;
       box-shadow: none;
+      backdrop-filter: none;
     }
     to {
       width: clamp(280px, 92vw, 1280px);
@@ -1808,11 +1809,13 @@ h2[lang="hi"] {
       padding-inline: var(--space-2);
       height: 48px;
       border-radius: var(--radius-full);
-      background: color-mix(in oklch, var(--primitive-black) 80%, transparent);
-      box-shadow:
-        0 0 0 1px color-mix(in oklch, var(--primitive-gold) 20%, transparent),
-        0 8px 32px color-mix(in oklch, var(--primitive-black) 60%, transparent),
-        0 2px 8px color-mix(in oklch, var(--primitive-black) 40%, transparent);
+      background: var(--nav-docked-bg, rgba(14, 12, 10, 0.82));
+      box-shadow: var(--nav-docked-shadow,
+        0 0 0 1px rgba(200, 154, 36, 0.28),
+        inset 0 1px 0 rgba(255, 220, 120, 0.08),
+        0 12px 40px rgba(0, 0, 0, 0.55),
+        0 3px 10px rgba(0, 0, 0, 0.35));
+      backdrop-filter: blur(24px) saturate(180%);
     }
   }
 
