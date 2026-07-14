@@ -263,7 +263,219 @@ body::before {
   color: #6B5010;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT THEME — ALL PAGES COMPREHENSIVE FIXES
+   Fixes image brightness, hardcoded dark text, dark panel backgrounds,
+   and all component colors that don't adapt to the warm white light theme.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── Content Cards: Brighten images & lighten overlays ── */
+[data-theme="light"] .content-card__thumbnail {
+  filter: brightness(1.08) saturate(0.95);
+}
+[data-theme="light"] .content-card__overlay {
+  background: linear-gradient(to top, rgba(26, 18, 8, 0.75) 0%, rgba(26, 18, 8, 0.28) 40%, transparent 70%);
+}
+[data-theme="light"] .content-card {
+  border-color: rgba(200, 134, 10, 0.20);
+  box-shadow: 0 2px 12px rgba(180, 130, 10, 0.10);
+}
+[data-theme="light"] .content-card:hover {
+  border-color: rgba(200, 134, 10, 0.45);
+  box-shadow: 0 8px 28px rgba(180, 130, 10, 0.18), 0 0 0 1px rgba(200, 134, 10, 0.35);
+}
+/* Card text over images stays light (image is dark anyway) */
+[data-theme="light"] .content-card__title {
+  color: #F7EBD5;
+}
+[data-theme="light"] .content-card__meta {
+  color: rgba(247, 235, 213, 0.75);
+}
+
+/* ── Story Mini (schedule list items) ── */
+[data-theme="light"] .story-mini__title {
+  color: #1A1208;
+}
+[data-theme="light"] .story-mini__meta {
+  color: #6B5010;
+}
+[data-theme="light"] .story-mini {
+  background: rgba(200, 134, 10, 0.06);
+}
+[data-theme="light"] .story-mini:hover {
+  background: rgba(200, 134, 10, 0.12);
+}
+
+/* ── Story Panel / Schedule Panel (right-side panel on home) ── */
+[data-theme="light"] .story-panel {
+  background:
+    linear-gradient(160deg, rgba(200, 134, 10, 0.08), transparent 42%),
+    rgba(255, 248, 234, 0.92);
+  border-color: rgba(200, 134, 10, 0.22);
+}
+/* "Next on Sunad" heading — override inline var(--primitive-white) */
+[data-theme="light"] .story-panel h2,
+[data-theme="light"] .story-panel .type-heading-2 {
+  color: #1A1208 !important;
+}
+
+/* ── Culture Panel (Culture Commerce section) ── */
+[data-theme="light"] .culture-panel {
+  background:
+    linear-gradient(160deg, rgba(200, 134, 10, 0.06), transparent 42%),
+    rgba(255, 248, 234, 0.95);
+  border-color: rgba(200, 134, 10, 0.22);
+}
+/* "Watch the story..." heading override */
+[data-theme="light"] .culture-panel h2,
+[data-theme="light"] .culture-panel .type-display-m {
+  color: #1A1208 !important;
+}
+[data-theme="light"] .culture-panel p {
+  color: #4A3B1A !important;
+}
+/* Lighten the media side overlay so photo reads in light mode */
+[data-theme="light"] .culture-panel__media::after {
+  background:
+    linear-gradient(90deg, rgba(255, 248, 234, 0.80) 0%, rgba(255, 248, 234, 0.10) 45%),
+    linear-gradient(0deg, rgba(255, 248, 234, 0.55), transparent 55%);
+}
+/* Brighten the craftsman photo */
+[data-theme="light"] .culture-panel__media img {
+  filter: brightness(1.12) saturate(0.92) contrast(1.02);
+}
+
+/* ── Live-Now Card (banner below hero) ── */
+[data-theme="light"] .live-now-card {
+  background:
+    linear-gradient(90deg, rgba(196, 52, 43, 0.06), transparent 28%),
+    rgba(255, 248, 234, 0.90);
+  border-color: rgba(200, 134, 10, 0.28);
+  box-shadow: 0 4px 20px rgba(180, 130, 10, 0.12);
+}
+[data-theme="light"] .live-now-card__eyebrow {
+  color: #C8860A;
+}
+[data-theme="light"] .live-now-card__title {
+  color: #1A1208;
+}
+[data-theme="light"] .live-progress {
+  background: rgba(200, 134, 10, 0.15);
+}
+
+/* ── Mini Category Tiles (Browse by cultural path) ── */
+[data-theme="light"] .mini-category-tile {
+  border-color: rgba(200, 134, 10, 0.20);
+  filter: brightness(1.10) saturate(0.88);
+}
+[data-theme="light"] .mini-category-tile:hover {
+  border-color: rgba(200, 134, 10, 0.50);
+  filter: brightness(1.18) saturate(0.95);
+}
+/* Icon stays readable over gradient bg */
+[data-theme="light"] .mini-category-tile__icon {
+  color: #FFF8EA;
+  opacity: 0.92;
+}
+[data-theme="light"] .mini-category-tile__label {
+  background: rgba(26, 18, 8, 0.68);
+  color: #F7EBD5;
+}
+
+/* ── Badge gold-outline (TOP 1, PRIME badges on cards) ── */
+[data-theme="light"] .badge--gold-outline {
+  background: rgba(200, 134, 10, 0.85);
+  color: #FFFFFF;
+  border-color: rgba(200, 134, 10, 0.60);
+}
+
+/* ── Glass components in light mode ── */
+[data-theme="light"] .glass {
+  background: rgba(255, 248, 234, 0.60);
+  border-color: rgba(200, 134, 10, 0.18);
+}
+[data-theme="light"] .glass-strong {
+  background: rgba(255, 243, 217, 0.85);
+  border-color: rgba(200, 134, 10, 0.28);
+}
+[data-theme="light"] .glass-subtle {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+/* ── Section Headers & Kickers ── */
+[data-theme="light"] .section-header__title {
+  color: #1A1208;
+}
+[data-theme="light"] .section-kicker {
+  color: #C8860A;
+}
+
+/* ── General page h1 / headings that use var(--primitive-white) inline ──
+   These target the outer containers and cascade down to override inline
+   styles that hardcode var(--primitive-ivory) or var(--primitive-white)   */
+[data-theme="light"] .main-content h1 {
+  color: #1A1208 !important;
+}
+[data-theme="light"] .main-content h2 {
+  color: #1A1208 !important;
+}
+[data-theme="light"] .main-content h3 {
+  color: #2A1E0A !important;
+}
+/* Allow color-gold headings to keep their gold color */
+[data-theme="light"] .main-content h1[style*="color: var(--color-gold)"],
+[data-theme="light"] .main-content h2[style*="color: var(--color-gold)"],
+[data-theme="light"] .main-content h3[style*="color: var(--color-gold)"] {
+  color: var(--color-gold) !important;
+}
+
+/* ── Live Page specific overrides ── */
+/* EPG schedule row items */
+[data-theme="light"] .main-content [style*="var(--primitive-white)"],
+[data-theme="light"] .main-content [style*="var(--primitive-ivory)"] {
+  /* Handled by h1/h2/h3 rules above + glass panel rules */
+}
+/* Weekday selector buttons */
+[data-theme="light"] .main-content button[style*="var(--color-surface)"] {
+  background: rgba(255, 248, 234, 0.90) !important;
+}
+
+/* ── Originals Page: content card body below thumbnail ── */
+[data-theme="light"] .content-card > div[style*="padding"],
+[data-theme="light"] .content-card > div[style*="var(--space-3)"] {
+  background: rgba(255, 248, 234, 0.95);
+}
+
+/* ── Plans Page: plan cards ── */
+[data-theme="light"] .main-content .glass[style*="var(--color-surface)"] {
+  background: rgba(255, 248, 234, 0.88) !important;
+}
+/* Plan buttons (Select Plan) non-selected state */
+[data-theme="light"] .main-content button[style*="var(--primitive-white)"] {
+  color: #1A1208 !important;
+}
+
+/* ── EPG (Live Page) table rows ── */
+[data-theme="light"] .main-content table td,
+[data-theme="light"] .main-content table th {
+  color: #2A1E0A;
+}
+[data-theme="light"] .main-content table tr:hover td {
+  background: rgba(200, 134, 10, 0.06) !important;
+}
+
+/* ── Footer links in light mode ── */
+[data-theme="light"] .footer-link {
+  color: #4A3B1A;
+}
+[data-theme="light"] .footer-link-legal {
+  color: #8B7355;
+}
+
+/* ── Scrollbar in light mode ── */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: rgba(200, 134, 10, 0.06);
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    THEME WAVE TRANSITION — View Transitions API

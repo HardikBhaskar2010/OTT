@@ -138,6 +138,16 @@
   --color-text-muted:   #8B7355;      /* captions, placeholders */
   --color-text-on-gold: #FFFFFF;      /* white text on gold buttons */
 
+  /* ── Primitive overrides: ensure inline var(--primitive-*) text adapts ── */
+  /* These are used as text colors in many inline styles across pages.       */
+  /* In dark mode: var(--primitive-white) = #FFF on dark bg = correct.       */
+  /* In light mode: we remap them so white/ivory text becomes dark readable. */
+  --primitive-white:        #1A1208;  /* dark body text in light mode */
+  --primitive-ivory:        #1A1208;  /* headings / body that use ivory token */
+  --primitive-warm-white:   #2A1E0A;  /* slightly softer dark for body copy */
+  /* Keep stone/stone-light readable: they're already muted in both modes */
+  --primitive-stone-light:  #8B7355;
+
   /* ── Accent (unchanged — same gold palette) ── */
   --color-gold:         #C8860A;      /* richer, darker gold for legibility on white */
   --color-gold-hover:   #E69A24;      /* hover brightens back to original */
