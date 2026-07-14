@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLang } from './LangContext';
+import { useTheme } from './ThemeContext';
 import {
   trackModalImpression,
   trackModalSignIn,
@@ -19,6 +20,7 @@ import {
 export default function LandingModal() {
   const { t } = useLang();
   const router = useRouter();
+  const { isLight } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -114,14 +116,14 @@ export default function LandingModal() {
             height: '64px',
             borderRadius: '50%',
             overflow: 'hidden',
-            border: '2px solid var(--color-gold)',
-            boxShadow: '0 0 16px var(--color-gold-dim)',
+            border: isLight ? '2px solid var(--color-gold)' : '2px solid var(--color-gold)',
+            boxShadow: isLight ? '0 0 16px rgba(200, 134, 10, 0.25)' : '0 0 16px var(--color-gold-dim)',
             marginBottom: 'var(--space-4)',
-            background: 'var(--primitive-black)',
+            background: 'var(--color-bg)',
           }}
         >
           <img
-            src="/sunad_logo.jpg"
+            src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'}
             alt="CultureFlix Brand Emblem"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
