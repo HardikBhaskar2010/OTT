@@ -30,8 +30,11 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
     lenisRef.current = lenis;
 
-    // Expose lenis instance globally for CSS scroll-driven animation compatibility
-    // (Lenis intercepts native scroll events; scroll-driven animations need an update)
+    // Expose lenis instance globally for pausing scroll in modal/popups
+    if (typeof window !== 'undefined') {
+      (window as any).lenis = lenis;
+    }
+
     function raf(time: number) {
       lenis.raf(time);
       rafRef.current = requestAnimationFrame(raf);

@@ -7,8 +7,10 @@ import { LenisProvider } from '@/components/LenisProvider';
 import TopNav from '@/components/TopNav';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
-import LandingModal from '@/components/LandingModal';
+
+import OnboardingWizard from '@/components/OnboardingWizard';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import LeftSidebar from '@/components/LeftSidebar';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import CookieBanner from '@/components/CookieBanner';
@@ -159,19 +161,27 @@ export default function RootLayout({
         <ThemeProvider>
           <LangProvider>
             <LenisProvider>
+
+
               {/* Scroll reveal observer — no DOM output */}
               <ScrollReveal />
 
-              {/* Landing onboarding modal gate */}
-              <LandingModal />
+              {/* Onboarding wizard — first-visit modal gate (replaces LandingModal) */}
+              <OnboardingWizard />
 
               {/* Fixed floating dock nav */}
               <TopNav />
 
-              {/* Main content — padded below fixed nav */}
-              <main className="main-content" id="main-content">
-                {children}
-              </main>
+              {/* Sidebar + Main content layout */}
+              <div className="app-shell">
+                {/* Left sidebar (collapsible) */}
+                <LeftSidebar />
+
+                {/* Main content — padded below fixed nav */}
+                <main className="main-content" id="main-content">
+                  {children}
+                </main>
+              </div>
 
               {/* Footer */}
               <Footer />
