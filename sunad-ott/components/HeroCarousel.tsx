@@ -194,25 +194,25 @@ export default function HeroCarousel({ slides = HERO_SLIDES_V2 }: HeroCarouselPr
             <span className="lang-hi-only" lang="hi">और जानें</span>
           </Link>
         </div>
+      </div>
 
-        {/* Teaser status lane — always rendered to reserve height, prevents layout shift on hover */}
-        <div className="hero-carousel__teaser-status" aria-live="polite">
-          {isHovering && !teaserActive && (
-            <div className="teaser-indicator" aria-atomic="true" aria-label="Teaser preview loading">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ opacity: 0.7 }}>
-                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
-              </svg>
-              <div className="teaser-indicator__bar">
-                <div className="teaser-indicator__fill" style={{ animationDuration: `${TEASER_DELAY_MS}ms` }} />
-              </div>
+      {/* ── Teaser status — absolutely positioned, never affects content height ── */}
+      <div className="hero-carousel__teaser-status" aria-live="polite" aria-atomic="true">
+        {isHovering && !teaserActive && (
+          <div className="teaser-indicator" aria-label="Teaser preview loading">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ opacity: 0.7 }}>
+              <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+            </svg>
+            <div className="teaser-indicator__bar">
+              <div className="teaser-indicator__fill" style={{ animationDuration: `${TEASER_DELAY_MS}ms` }} />
             </div>
-          )}
-          {teaserActive && (
-            <div className="teaser-playing" aria-label="Teaser preview playing">
-              <span className="teaser-playing__dot" aria-hidden="true" />
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+        {teaserActive && (
+          <div className="teaser-playing" aria-label="Teaser preview playing">
+            <span className="teaser-playing__dot" aria-hidden="true" />
+          </div>
+        )}
       </div>
 
       {/* ── Prev / Next arrows ── */}

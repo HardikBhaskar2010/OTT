@@ -2544,7 +2544,7 @@ nextjs-portal,
 .hero-carousel__content {
   position: relative;
   z-index: 10;
-  padding: var(--space-8) var(--space-8) var(--space-12) 100px; /* 100px left padding on desktop to clear prev arrow */
+  padding: var(--space-8) var(--space-8) var(--space-6) 100px; /* bottom reduced space-12->space-6 to prevent overflow at short viewports */
   max-width: 640px;
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
@@ -2668,12 +2668,16 @@ nextjs-portal,
   padding: 11px 20px;
 }
 
-/* Teaser status container — always occupies space to prevent layout shift on hover */
+/* Teaser status container — absolutely positioned outside content flow, never causes layout shift */
 .hero-carousel__teaser-status {
-  min-height: 24px;
+  position: absolute;
+  bottom: 68px; /* Sits just above the dots row */
+  left: 100px;  /* Aligned with content left edge */
+  z-index: 20;
   display: flex;
   align-items: center;
-  margin-top: var(--space-2);
+  height: 24px;
+  pointer-events: none;
 }
 
 /* Teaser indicators */
