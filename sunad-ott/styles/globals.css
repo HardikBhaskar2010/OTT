@@ -2668,11 +2668,11 @@ nextjs-portal,
   padding: 11px 20px;
 }
 
-/* Teaser status container — absolutely positioned outside content flow, never causes layout shift */
+/* Teaser status container — bottom-right corner, away from all content and buttons */
 .hero-carousel__teaser-status {
   position: absolute;
-  bottom: 68px; /* Sits just above the dots row */
-  left: 100px;  /* Aligned with content left edge */
+  bottom: 28px;
+  right: 140px; /* Left of the scroll-cue chevron */
   z-index: 20;
   display: flex;
   align-items: center;
