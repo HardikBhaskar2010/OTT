@@ -2668,6 +2668,14 @@ nextjs-portal,
   padding: 11px 20px;
 }
 
+/* Teaser status container — always occupies space to prevent layout shift on hover */
+.hero-carousel__teaser-status {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-2);
+}
+
 /* Teaser indicators */
 .teaser-indicator {
   display: flex;
