@@ -94,7 +94,7 @@ export default function StorePage() {
             display: 'block',
             marginBottom: 'var(--space-1)'
           }}>
-            Sunad OTT Store / कल्चरफ्लिक्स स्टोर
+            Sunad Store / सुनाद स्टोर
           </span>
           <h1 className="type-display-l" style={{ color: 'var(--primitive-white)', margin: 0 }}>
             {t('Civilizational Commerce', 'सांस्कृतिक वाणिज्य')}
@@ -124,7 +124,7 @@ export default function StorePage() {
           }}
           className="btn-primary-hover"
         >
-          <CartIcon size={16} /> {t('Shopping Bag', 'झोला')} ({totalCartItems})
+          <CartIcon size={16} /> {t('Shopping Bag', 'कार्ट')} ({totalCartItems})
         </button>
       </header>
 
@@ -229,7 +229,7 @@ export default function StorePage() {
                     transition: 'all var(--motion-fast) var(--motion-easing)'
                   }}
                 >
-                  {p.inStock ? t('Add to Cart', 'झोले में डालें') : t('Out of Stock', 'स्टॉक में नहीं')}
+                  {p.inStock ? t('Add to Cart', 'कार्ट में जोड़ें') : t('Out of Stock', 'स्टॉक में नहीं')}
                 </button>
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function StorePage() {
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--color-border)', paddingBottom: 'var(--space-2)' }}>
               <h2 className="type-heading-2" style={{ color: 'var(--primitive-white)', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CartIcon size={20} /> {t('Your Shopping Bag', 'आपका झोला')}
+                <CartIcon size={20} /> {t('Your Shopping Bag', 'आपकी कार्ट')}
               </h2>
               <button
                 onClick={() => setShowCartDrawer(false)}
@@ -331,7 +331,7 @@ export default function StorePage() {
                   <div style={{ opacity: 0.25, display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-2)' }}>
                     <CartIcon size={48} />
                   </div>
-                  {t('Your bag is empty.', 'आपका झोला खाली है।')}
+                  {t('Your bag is empty.', 'आपकी कार्ट खाली है।')}
                 </div>
               )}
             </div>

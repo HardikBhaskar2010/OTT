@@ -183,10 +183,10 @@ export default function TopNav() {
         aria-label={t('Main navigation', 'मुख्य नेविगेशन')}
       >
         {/* ── Left: Logo ── */}
-        <Link href="/" className="nav-logo" aria-label={t('Sunad OTT — Home', 'सुनाद OTT — होम')}>
+        <Link href="/" className="nav-logo" aria-label={t('Sunad TV — Home', 'सुनाद टीवी — होम')}>
           <img src="/sunad_logo.jpg" alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" />
           <span className="nav-logo__text">Sunad</span>
-          <span className="nav-logo__badge">OTT</span>
+          <span className="nav-logo__badge">TV</span>
         </Link>
 
         {/* ── Center: Nav Links, Categories Dropdown & Search Bar ── */}

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from './ThemeContext';
 
 /**
- * CookieBanner — Informational notice for Sunad OTT.
+ * CookieBanner — Informational notice for Sunad TV.
  *
  * Analytics always run. This banner just informs users that
  * cookies are used to improve their experience.
@@ -86,7 +86,7 @@ export default function CookieBanner() {
             minWidth: '180px',
           }}
         >
-          We use cookies to improve your experience on Sunad OTT.{' '}
+          We use cookies to improve your experience on Sunad TV.{' '}
           <span
             lang="hi"
             style={{ fontFamily: 'var(--font-ui-hi)', fontSize: 'var(--type-hi-caption)' }}

@@ -6,7 +6,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import { ContentRail } from '@/components/ContentCard';
 
 export const metadata: Metadata = {
-  title: 'Home — Sunad OTT | Real Stories. Real Bharat.',
+  title: 'Home — Sunad TV | Real Stories. Real Bharat.',
   description:
     'Discover premium Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, yoga, tourism and more. Watch live TV and on-demand content across 22 Indian languages.',
 };
@@ -33,8 +33,8 @@ export default function HomePage() {
           </div>
           <div>
             <p className="live-now-card__eyebrow">
-              <span className="lang-en-only">Live now from the Sunad OTT mandap</span>
-              <span className="lang-hi-only" lang="hi">सुनाद OTT मंडप से लाइव</span>
+              <span className="lang-en-only">Live now from the Sunad TV mandap</span>
+              <span className="lang-hi-only" lang="hi">सुनाद टीवी मंडप से लाइव</span>
             </p>
             <p className="live-now-card__title">
               <span className="lang-en-only">{liveShow.nameEn}</span>
@@ -123,10 +123,10 @@ export default function HomePage() {
             </h2>
             <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', lineHeight: 1.65 }}>
               <span className="lang-en-only">
-                Sunad OTT connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
+                Sunad TV connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
               </span>
               <span className="lang-hi-only" lang="hi">
-                कल्चरफ्लिक्स फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है।
+                सुनाद टीवी फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है।
               </span>
             </p>
             <div className="culture-chips">
@@ -183,8 +183,8 @@ export default function HomePage() {
                 <Compass size={15} aria-hidden="true" /> Explore
               </span>
               <h2 className="section-header__title" id="categories-heading">
-                <span className="lang-en-only">Browse by cultural path</span>
-                <span className="lang-hi-only" lang="hi">सांस्कृतिक मार्ग से ब्राउज़ करें</span>
+                <span className="lang-en-only">Browse by Category</span>
+                <span className="lang-hi-only" lang="hi">श्रेणी के अनुसार ब्राउज़ करें</span>
               </h2>
             </div>
           </div>

@@ -55,17 +55,17 @@ const notoSerifDevanagari = Noto_Serif_Devanagari({
 export const metadata: Metadata = {
   metadataBase: new URL('https://sunadbroadcast.vercel.app'),
   title: {
-    template: '%s | Sunad OTT',
-    default: 'Sunad OTT — Real Stories. Real Bharat. Real Impact.',
+    template: '%s | Sunad TV',
+    default: 'Sunad TV — Real Stories. Real Bharat. Real Impact.',
   },
   description:
-    'Sunad OTT is a premium bilingual streaming platform celebrating Indian civilizational storytelling — documentaries, spiritual knowledge, history, culture, tourism, and more. Watch. Learn. Experience. Connect.',
+    'Sunad TV is a premium bilingual streaming platform celebrating Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, tourism, and more. Watch. Learn. Experience. Connect.',
   keywords: [
-    'Indian streaming', 'Sunad OTT', 'Indian documentaries', 'spiritual knowledge',
+    'Indian streaming', 'Sunad TV', 'Indian documentaries', 'spiritual knowledge',
     'Indian history', 'culture heritage', 'yoga ayurveda', 'Hindi streaming',
-    'bilingual OTT', 'Indian civilization', 'भारतीय स्ट्रीमिंग', 'सुनाद OTT',
+    'bilingual OTT', 'Indian civilization', 'भारतीय स्ट्रीमिंग', 'सुनाद टीवी',
   ],
-  authors: [{ name: 'Sunad OTT by Sunad Broadcast Pvt. Ltd.' }],
+  authors: [{ name: 'Sunad TV by Sunad Broadcast Pvt. Ltd.' }],
   creator: 'Sunad Broadcast Pvt. Ltd.',
   publisher: 'Sunad Broadcast Pvt. Ltd.',
   robots: {

@@ -78,8 +78,8 @@ export default function PrivacyPage() {
           <h2>{t('1. Introduction', '1. परिचय')}</h2>
           <p>
             {t(
-              'Welcome to Sunad OTT. Sunad OTT is operated by Sunad Broadcast Pvt. Ltd. ("we", "us", or "our"). We respect your privacy and are committed to protecting your personal data in accordance with the Digital Personal Data Protection Act, 2023 (DPDP Act) of India and applicable global standards.',
-              'कल्चरफ्लिक्स में आपका स्वागत है। कल्चरफ्लिक्स का संचालन सुनाद ब्रॉडकास्ट प्राइवेट लिमिटेड ("हम", "हमें", या "हमारा") द्वारा किया जाता है। हम आपकी गोपनीयता का सम्मान करते हैं और भारत के डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम, 2023 (डीपीडीपी अधिनियम) और लागू वैश्विक मानकों के अनुसार आपके व्यक्तिगत डेटा की सुरक्षा के लिए प्रतिबद्ध हैं।'
+              'Welcome to Sunad TV. Sunad TV is operated by Sunad Broadcast Pvt. Ltd. ("we", "us", or "our"). We respect your privacy and are committed to protecting your personal data in accordance with the Digital Personal Data Protection Act, 2023 (DPDP Act) of India and applicable global standards.',
+              'सुनाद टीवी में आपका स्वागत है। सुनाद टीवी का संचालन सुनाद ब्रॉडकास्ट प्राइवेट लिमिटेड ("हम", "हमें", या "हमारा") द्वारा किया जाता है। हम आपकी गोपनीयता का सम्मान करते हैं और भारत के डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम, 2023 (डीपीडीपी अधिनियम) और लागू वैश्विक मानकों के अनुसार आपके व्यक्तिगत डेटा की सुरक्षा के लिए प्रतिबद्ध हैं।'
             )}
           </p>
         </section>
@@ -103,8 +103,8 @@ export default function PrivacyPage() {
           <h2>{t('3. How We Use Your Information', '3. जानकारी का उपयोग')}</h2>
           <p>
             {t(
-              'We process your personal data based on your explicit consent for specified purposes, including to personalize your content feed, process subscription payments, deliver items ordered from the Sunad OTT Store, and ensure network security and compliance with Indian regulations.',
-              'हम विशिष्ट उद्देश्यों के लिए आपकी स्पष्ट सहमति के आधार पर आपके व्यक्तिगत डेटा को संसाधित करते हैं, जिसमें आपके कंटेंट फ़ीड को अनुकूलित करना, सदस्यता भुगतान संसाधित करना, कल्चरफ्लिक्स स्टोर से ऑर्डर की गई वस्तुओं को वितरित करना और नेटवर्क सुरक्षा और भारतीय नियमों का अनुपालन सुनिश्चित करना शामिल है।'
+              'We process your personal data based on your explicit consent for specified purposes, including to personalize your content feed, process subscription payments, deliver items ordered from the Sunad Store, and ensure network security and compliance with Indian regulations.',
+              'हम विशिष्ट उद्देश्यों के लिए आपकी स्पष्ट सहमति के आधार पर आपके व्यक्तिगत डेटा को संसाधित करते हैं, जिसमें आपके कंटेंट फ़ीड को अनुकूलित करना, सदस्यता भुगतान संसाधित करना, सुनाद स्टोर से ऑर्डर की गई वस्तुओं को वितरित करना और नेटवर्क सुरक्षा और भारतीय नियमों का अनुपालन सुनिश्चित करना शामिल है।'
             )}
           </p>
         </section>

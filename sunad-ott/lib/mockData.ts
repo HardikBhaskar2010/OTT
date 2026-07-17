@@ -36,7 +36,6 @@ export function getProgramThumbnail(categoryId: string): string {
     case 'arts':
       return '/thumb_crafts.jpg';
     case 'agriculture':
-    case 'entrepreneurship':
     default:
       return '/thumb_agriculture.jpg';
   }
@@ -145,8 +144,8 @@ export const PROGRAMS: Program[] = [
     id: 'success-india',
     nameEn: 'Success India',
     nameHi: 'सक्सेस इंडिया',
-    category: 'Entrepreneurship',
-    categoryId: 'entrepreneurship',
+    category: 'Education & Skills',
+    categoryId: 'education',
     startTime: '12:00',
     endTime: '13:00',
     description: 'Motivation & Innovation — Inspirational Personalities, Youth Icons, Startups, Skill Development.',
@@ -201,8 +200,8 @@ export const PROGRAMS: Program[] = [
     id: 'women-of-india',
     nameEn: 'Women of India',
     nameHi: 'भारत की महिलाएं',
-    category: 'Entrepreneurship',
-    categoryId: 'entrepreneurship',
+    category: 'Culture & Heritage',
+    categoryId: 'culture',
     startTime: '16:00',
     endTime: '17:00',
     description: 'Women Empowerment — Female Entrepreneurs, Health, Inspiration, Nari Shakti.',
@@ -400,14 +399,6 @@ export const CATEGORIES: Category[] = [
     gradient: 'linear-gradient(135deg, #001420 0%, #002040 100%)',
   },
   {
-    id: 'entrepreneurship',
-    nameEn: 'Entrepreneurship',
-    nameHi: 'उद्यमिता',
-    icon: '💡',
-    description: 'Leadership interviews, local business successes, and startups.',
-    gradient: 'linear-gradient(135deg, #1a1400 0%, #2d2000 100%)',
-  },
-  {
     id: 'family',
     nameEn: 'Family & Children',
     nameHi: 'परिवार और बच्चे',
@@ -555,7 +546,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'prod-12',
     nameEn: 'Handloom Khadi Meditation Shawl',
-    nameHi: 'हथकरघा खादी ध्यान शाल',
+    nameHi: 'हथकरघा खादी ध्यान शॉल',
     type: 'Artisan',
     price: 1799,
     linkedContentIds: ['prabhat-bharat', 'sanatan-gyan', 'spiritual-podcast'],
@@ -1566,9 +1557,9 @@ export const INDIAN_LANGUAGES: IndianLanguage[] = [
 
 /* ─── CONTINUE WATCHING (simulated — real data from user profile API) ─── */
 export const CONTINUE_WATCHING: ContentItem[] = [
-  { ...MOVIES[3], watchProgress: 45 },  // Dhrishyam 2 — 45%
-  { ...MOVIES[6], watchProgress: 70 },  // 3 Idiots — 70%
-  { ...SHOWS[0], watchProgress: 30 },   // Peaky Blinders — 30%
+  { ...MOVIES[1], watchProgress: 45 },  // Tantra Rahasya — 45%
+  { ...MOVIES[5], watchProgress: 70 },  // The Craftsmen — 70%
+  { ...SHOWS[0], watchProgress: 30 },   // Arogya Bharat — 30%
 ];
 
 /* Helper: get current FPC program based on current time */

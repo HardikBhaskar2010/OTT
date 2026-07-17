@@ -1,5 +1,5 @@
 /**
- * Loading skeleton for the Sunad OTT platform.
+ * Loading skeleton for the Sunad TV platform.
  * Cinematic dark skeleton with shimmer animation.
  * Gold pulsing wordmark centered.
  * Used by Next.js App Router as the Suspense loading UI.
@@ -7,7 +7,7 @@
 export default function Loading() {
   return (
     <div
-      aria-label="Loading Sunad OTT…"
+      aria-label="Loading Sunad TV…"
       aria-busy="true"
       role="status"
       style={{
@@ -63,7 +63,7 @@ export default function Loading() {
               animation: 'wordmark-pulse 2s ease-in-out infinite',
             }}
           >
-            कल्चरफ्लिक्स
+            सुनाद टीवी
           </span>
         </div>
         <p

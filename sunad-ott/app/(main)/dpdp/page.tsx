@@ -76,8 +76,8 @@ export default function DpdpPage() {
           <h2>{t('1. DPDP Overview', '1. डीपीडीपी सिंहावलोकन')}</h2>
           <p>
             {t(
-              'Under the Digital Personal Data Protection Act, 2023 ("DPDP Act") of India, Sunad OTT (operated by Sunad Broadcast Pvt. Ltd.) acts as a Data Fiduciary. This notice outlines your rights as a Data Principal regarding the digital processing of your personal data by our platform.',
-              'भारत के डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम, 2023 ("डीपीडीपी अधिनियम") के तहत, कल्चरफ्लिक्स (सुनाद ब्रॉडकास्ट प्राइवेट लिमिटेड द्वारा संचालित) एक डेटा फिडुशियरी के रूप में कार्य करता है। यह नोटिस हमारी वेबसाइट द्वारा आपके व्यक्तिगत डेटा के डिजिटल प्रसंस्करण के बारे में डेटा प्रिंसिपल के रूप में आपके अधिकारों को रेखांकित करता है।'
+              'Under the Digital Personal Data Protection Act, 2023 ("DPDP Act") of India, Sunad TV (operated by Sunad Broadcast Pvt. Ltd.) acts as a Data Fiduciary. This notice outlines your rights as a Data Principal regarding the digital processing of your personal data by our platform.',
+              'भारत के डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम, 2023 ("डीपीडीपी अधिनियम") के तहत, सुनाद टीवी (सुनाद ब्रॉडकास्ट प्राइवेट लिमिटेड द्वारा संचालित) एक डेटा फिडुशियरी के रूप में कार्य करता है। यह नोटिस हमारी वेबसाइट द्वारा आपके व्यक्तिगत डेटा के डिजिटल प्रसंस्करण के बारे में डेटा प्रिंसिपल के रूप में आपके अधिकारों को रेखांकित करता है।'
             )}
           </p>
         </section>

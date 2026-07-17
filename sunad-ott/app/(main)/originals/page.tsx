@@ -28,13 +28,13 @@ export default function OriginalsPage() {
           display: 'block',
           marginBottom: 'var(--space-1)'
         }}>
-          Sunad OTT Originals / कल्चरफ्लिक्स ओरिजिनल
+          Sunad TV Originals / सुनाद टीवी ओरिजिनल
         </span>
         <h1 className="type-display-l" style={{ color: 'var(--primitive-white)', margin: 0 }}>
           {t('Premium Civilizational Productions', 'उत्कृष्ट सांस्कृतिक प्रस्तुतियां')}
         </h1>
         <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', marginTop: '4px' }}>
-          {t('Prestige original documentary series, discourses and narrative journeys.', 'कल्चरफ्लिक्स द्वारा विशेष रूप से निर्मित मूल वृत्तचित्र और ज्ञान श्रृंखलाएं।')}
+          {t('Prestige original documentary series, discourses and narrative journeys.', 'सुनाद टीवी द्वारा विशेष रूप से निर्मित मूल वृत्तचित्र और ज्ञान श्रृंखलाएं।')}
         </p>
       </header>
 

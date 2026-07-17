@@ -9,31 +9,31 @@ import { CATEGORIES } from '@/lib/mockData';
 const FOOTER_IMAGES = [
   {
     src: '/thumb_spiritual.jpg',
-    alt: 'Spiritual knowledge — Sunad OTT',
+    alt: 'Spiritual knowledge — Sunad TV',
     label: 'Spiritual',
     labelHi: 'आध्यात्म',
   },
   {
     src: '/mystic_bharat.jpg',
-    alt: 'Mystic Bharat documentary — Sunad OTT',
+    alt: 'Mystic Bharat documentary — Sunad TV',
     label: 'Mystic Bharat',
     labelHi: 'मिस्टिक भारत',
   },
   {
     src: '/thumb_history.jpg',
-    alt: 'History & Civilisation — Sunad OTT',
+    alt: 'History & Civilisation — Sunad TV',
     label: 'History',
     labelHi: 'इतिहास',
   },
   {
     src: '/the_craftsmen.jpg',
-    alt: 'Indian craftsmen — Sunad OTT Store',
+    alt: 'Indian craftsmen — Sunad Store',
     label: 'Crafts',
     labelHi: 'शिल्पकला',
   },
   {
     src: '/thumb_agriculture.jpg',
-    alt: 'Agriculture & rural India — Sunad OTT',
+    alt: 'Agriculture & rural India — Sunad TV',
     label: 'Agriculture',
     labelHi: 'कृषि',
   },
@@ -56,7 +56,7 @@ export default function Footer() {
         marginTop: 'var(--space-12)',
       }}
       role="contentinfo"
-      aria-label="Sunad OTT Footer"
+      aria-label="Sunad TV Footer"
     >
 
       {/* ══ THEME-RESPONSIVE IMAGE MOSAIC STRIP ══════════════════════════════ */}
@@ -203,7 +203,7 @@ export default function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Image
               src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'}
-              alt="Sunad OTT"
+              alt="Sunad TV"
               width={38}
               height={38}
               style={{
@@ -229,7 +229,7 @@ export default function Footer() {
                 transition: 'all 0.4s ease',
               }}
             >
-              Sunad OTT
+              Sunad TV
             </span>
             <span
               style={{
@@ -248,7 +248,7 @@ export default function Footer() {
                 transition: 'all 0.4s ease',
               }}
             >
-              OTT
+              TV
             </span>
           </div>
 
@@ -294,7 +294,7 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              aria-label="Sunad OTT — Home"
+              aria-label="Sunad TV — Home"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -325,7 +325,7 @@ export default function Footer() {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Sunad OTT
+                Sunad TV
               </span>
               <span
                 style={{
@@ -339,7 +339,7 @@ export default function Footer() {
                   textTransform: 'uppercase',
                 }}
               >
-                OTT
+                TV
               </span>
             </Link>
             
@@ -479,7 +479,7 @@ export default function Footer() {
             <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
               {[
                 { nameEn: 'Live TV', nameHi: 'लाइव टीवी', href: '/live' },
-                { nameEn: 'Sunad OTT Store', nameHi: 'कल्चरफ्लिक्स स्टोर', href: '/store' },
+                { nameEn: 'Sunad Store', nameHi: 'सुनाद स्टोर', href: '/store' },
                 { nameEn: 'Subscription Plans', nameHi: 'सदस्यता योजनाएं', href: '/plans' },
                 { nameEn: 'Download App', nameHi: 'ऐप डाउनलोड करें', href: '/download' },
                 { nameEn: 'Become a Creator', nameHi: 'क्रिएटर बनें', href: '/creators' },

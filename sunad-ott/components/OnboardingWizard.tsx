@@ -9,11 +9,20 @@ const ONBOARDING_KEY = 'cf_onboarded';
 const LANG_PREF_KEY = 'cf_lang_prefs';
 const GENRE_PREF_KEY = 'cf_genre_prefs';
 
-const ALL_GENRES: GenreDef[] = [
+const ALL_GENRES_RAW: GenreDef[] = [
   ...MOVIE_GENRES.slice(0, 6),
   ...MUSIC_GENRES.slice(0, 3),
   ...SHOW_GENRES.slice(0, 5),
 ];
+
+const ALL_GENRES: GenreDef[] = [];
+const seenIds = new Set<string>();
+ALL_GENRES_RAW.forEach((g) => {
+  if (!seenIds.has(g.id)) {
+    seenIds.add(g.id);
+    ALL_GENRES.push(g);
+  }
+});
 
 /** Selectors for focusable elements inside the modal */
 const FOCUSABLE = [
@@ -157,7 +166,7 @@ export default function OnboardingWizard() {
       className="onboarding-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label="Welcome to Sunad OTT"
+      aria-label="Welcome to Sunad TV"
       aria-live="polite"
       // Clicking the dark backdrop does NOT close Step 1 (language must be chosen)
       // From step 2+ clicking backdrop is allowed to dismiss
