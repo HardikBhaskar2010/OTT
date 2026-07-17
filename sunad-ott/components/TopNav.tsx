@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useLang } from './LangContext';
 
 import { NAV_ITEMS } from '@/lib/mockData';
@@ -92,6 +92,41 @@ export default function TopNav() {
   const { lang, toggle, t } = useLang();
 
   const pathname = usePathname();
+  const router = useRouter();
+
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const dropdownRef = useRef<HTMLLIElement>(null);
+
+  // Close categories dropdown on navigation
+  useEffect(() => {
+    setCategoriesOpen(false);
+  }, [pathname]);
+
+  // Click outside to close dropdown
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setCategoriesOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
+  // Clear search query if navigating away from search page
+  useEffect(() => {
+    if (!pathname.startsWith('/search')) {
+      setSearchQuery('');
+    }
+  }, [pathname]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   // JS fallback for Firefox — CSS scroll-driven animation not supported
   useEffect(() => {
@@ -154,44 +189,101 @@ export default function TopNav() {
           <span className="nav-logo__badge">OTT</span>
         </Link>
 
-        {/* ── Center: Nav Links ── */}
-        <ul className="nav-links" role="list">
-          {mainNavItems.map((item) => {
-            const isActive = pathname === item.href ||
-              (item.href !== '/' && pathname.startsWith(item.href));
-            return (
-              <li key={item.id}>
-                <Link
-                  href={item.href}
-                  className={`nav-item${isActive ? ' active' : ''}`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <span className="nav-icon" aria-hidden="true">
-                    {ICONS[item.id] || item.icon}
-                  </span>
-                  <span className="nav-label">{t(item.nameEn, item.nameHi)}</span>
-                  {/* Live dot removed — single live indicator in the Live Now card below hero */}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        {/* ── Center: Nav Links, Categories Dropdown & Search Bar ── */}
+        <div className="nav-center-group">
+          <ul className="nav-links" role="list">
+            <li>
+              <Link href="/" className={`nav-item${pathname === '/' ? ' active' : ''}`}>
+                <span className="nav-label">{t('Home', 'होम')}</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/live" className={`nav-item${pathname === '/live' ? ' active' : ''}`}>
+                <span className="nav-label">{t('Live TV', 'लाइव टीवी')}</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/originals" className={`nav-item${pathname === '/originals' ? ' active' : ''}`}>
+                <span className="nav-label">{t('Originals', 'ओरिजिनल')}</span>
+              </Link>
+            </li>
+
+            {/* Collapsible Categories Dropdown */}
+            <li className="nav-item-dropdown" ref={dropdownRef}>
+              <button
+                className={`nav-item nav-dropdown-trigger${categoriesOpen ? ' active' : ''}`}
+                onClick={() => setCategoriesOpen(!categoriesOpen)}
+                aria-expanded={categoriesOpen}
+                aria-haspopup="true"
+                type="button"
+              >
+                <span className="nav-label">{t('Browse ▾', 'श्रेणियां ▾')}</span>
+              </button>
+              {categoriesOpen && (
+                <ul className="categories-dropdown-menu" role="menu">
+                  <li role="none">
+                    <Link href="/browse/movies" role="menuitem" className="dropdown-link">
+                      <span className="lang-en-only">Movies</span>
+                      <span className="lang-hi-only" lang="hi">फ़िल्में</span>
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link href="/browse/music" role="menuitem" className="dropdown-link">
+                      <span className="lang-en-only">Music</span>
+                      <span className="lang-hi-only" lang="hi">संगीत</span>
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link href="/browse/shows" role="menuitem" className="dropdown-link">
+                      <span className="lang-en-only">Shows</span>
+                      <span className="lang-hi-only" lang="hi">शोज़</span>
+                    </Link>
+                  </li>
+                  <li role="none">
+                    <Link href="/browse/documentaries" role="menuitem" className="dropdown-link">
+                      <span className="lang-en-only">Documentaries</span>
+                      <span className="lang-hi-only" lang="hi">वृत्तचित्र</span>
+                    </Link>
+                  </li>
+                  <li role="none" className="dropdown-divider" />
+                  <li role="none">
+                    <Link href="/history" role="menuitem" className="dropdown-link">
+                      <span className="lang-en-only">Watch History</span>
+                      <span className="lang-hi-only" lang="hi">देखने का इतिहास</span>
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          </ul>
+
+          {/* Centered Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="nav-search-form">
+            <div className="nav-search-input-wrapper">
+              <span className="nav-search-icon-inside" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.35-4.35" />
+                </svg>
+              </span>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t('Search movies, shows...', 'फ़िल्में, शो खोजें...')}
+                className="nav-search-input"
+              />
+              {searchQuery && (
+                <button type="button" onClick={() => setSearchQuery('')} className="nav-search-clear" aria-label={t('Clear search', 'खोज साफ़ करें')}>
+                  ✕
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
 
         {/* ── Right: Controls ── */}
         <div className="nav-controls">
-          {/* Search */}
-          <Link
-            href="/search"
-            className="nav-icon-btn"
-            aria-label={t('Search', 'खोजें')}
-            title={t('Search', 'खोजें')}
-            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'inherit' }}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-          </Link>
 
           {/* Bell / Notifications */}
           <button

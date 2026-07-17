@@ -25,11 +25,11 @@ export function ContentCard({ item, variant = 'portrait', rank }: ContentCardPro
   const handleMouseEnter = useCallback(() => {
     hoverRef.current = setTimeout(() => {
       if (videoRef.current) {
-        videoRef.current.play()
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch(() => {});
+        setIsPlaying(true);
+        videoRef.current.play().catch((err) => {
+          console.warn('Video playback failed:', err);
+          setIsPlaying(false);
+        });
       }
     }, 600); // 600ms responsive delay like premium platforms
   }, []);

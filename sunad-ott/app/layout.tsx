@@ -10,7 +10,6 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 import OnboardingWizard from '@/components/OnboardingWizard';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
-import LeftSidebar from '@/components/LeftSidebar';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import CookieBanner from '@/components/CookieBanner';
@@ -172,11 +171,8 @@ export default function RootLayout({
               {/* Fixed floating dock nav */}
               <TopNav />
 
-              {/* Sidebar + Main content layout */}
+              {/* Main content layout */}
               <div className="app-shell">
-                {/* Left sidebar (collapsible) */}
-                <LeftSidebar />
-
                 {/* Main content — padded below fixed nav */}
                 <main className="main-content" id="main-content">
                   {children}

@@ -1,13 +1,16 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LangContext';
 import { PROGRAMS, CATEGORIES, Program, getProgramThumbnail } from '@/lib/mockData';
+import { useSearchParams } from 'next/navigation';
 
-export default function SearchPage() {
+function SearchResults() {
   const { t } = useLang();
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get('q') || '';
+  const [query, setQuery] = useState(urlQuery);
   const [isPending, startTransition] = useTransition();
   const [results, setResults] = useState<Program[]>([]);
 
@@ -35,6 +38,12 @@ export default function SearchPage() {
       setResults(filtered);
     });
   };
+
+  useEffect(() => {
+    if (urlQuery) {
+      handleSearch(urlQuery);
+    }
+  }, [urlQuery]);
 
   const trendingSearches = [
     { en: 'Mystic Bharat', hi: 'प्रभात भारत' },
@@ -245,5 +254,17 @@ export default function SearchPage() {
         )}
       </section>
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ textAlign: 'center', padding: 'var(--space-12) 0', color: 'var(--color-text-dim)' }}>
+        Loading Search...
+      </div>
+    }>
+      <SearchResults />
+    </Suspense>
   );
 }
