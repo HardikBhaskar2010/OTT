@@ -357,7 +357,7 @@ export default function Footer() {
                 marginBottom: 'var(--space-1)',
               }}
             >
-              Real Stories. Real Bharat. Real Impact.
+              Connecting voices, Building Communities, Serving Humanities
             </p>
             {/* Tagline in Hindi */}
             <p
@@ -370,7 +370,7 @@ export default function Footer() {
                 marginBottom: 'var(--space-3)',
               }}
             >
-              एक भारत श्रेष्ठ भारत — सशक्त कहानियाँ, जीवन से जोड़ती हैं।
+              आवाज़ों को जोड़ना, समुदायों का निर्माण, मानवता की सेवा
             </p>
 
             {/* WATCH. LEARN. EXPERIENCE. CONNECT. */}
