@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
 import type { ContentItem } from '@/lib/mockData';
 
@@ -20,15 +20,23 @@ interface ContentCardProps {
 export function ContentCard({ item, variant = 'portrait', rank }: ContentCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hoverRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handleMouseEnter = useCallback(() => {
     hoverRef.current = setTimeout(() => {
-      videoRef.current?.play().catch(() => {});
-    }, 3000);
+      if (videoRef.current) {
+        videoRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(() => {});
+      }
+    }, 600); // 600ms responsive delay like premium platforms
   }, []);
 
   const handleMouseLeave = useCallback(() => {
     if (hoverRef.current) clearTimeout(hoverRef.current);
+    setIsPlaying(false);
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
@@ -51,10 +59,10 @@ export function ContentCard({ item, variant = 'portrait', rank }: ContentCardPro
         style={{ background: item.posterGradient }}
         aria-hidden="true"
       >
-        {/* Teaser video on hover (3s delay) */}
+        {/* Teaser video on hover */}
         <video
           ref={videoRef}
-          className="content-card-v2__teaser"
+          className={`content-card-v2__teaser${isPlaying ? ' is-playing' : ''}`}
           src={teaserSrc}
           muted
           loop

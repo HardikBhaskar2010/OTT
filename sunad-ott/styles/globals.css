@@ -2835,14 +2835,15 @@ nextjs-portal,
   color: var(--color-text);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
   flex-shrink: 0;
+  will-change: transform;
 }
 
 .content-card-v2:hover {
-  transform: scale(1.04) translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  transform: scale(1.12) translateY(-8px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.7);
+  z-index: 10;
 }
 
 /* Portrait (2:3 ratio — movies/trending) */
@@ -2884,8 +2885,8 @@ nextjs-portal,
   z-index: 1;
 }
 
-.content-card-v2:hover .content-card-v2__teaser {
-  /* Video only shows if JS has called play() */
+.content-card-v2__teaser.is-playing {
+  opacity: 1;
 }
 
 /* Badges */
@@ -3041,7 +3042,10 @@ nextjs-portal,
   display: flex;
   gap: var(--space-3);
   overflow-x: auto;
-  padding-bottom: var(--space-3);
+  padding-top: 16px;
+  padding-bottom: 24px;
+  margin-top: -16px;
+  margin-bottom: -12px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
