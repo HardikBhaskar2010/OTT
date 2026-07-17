@@ -9,7 +9,7 @@ export default function TermsPage() {
     { id: 'acceptance', label: '1. Acceptance of Terms', labelHi: '1. शर्तों की स्वीकृति' },
     { id: 'eligibility', label: '2. Eligibility & Accounts', labelHi: '2. पात्रता और खाते' },
     { id: 'content', label: '3. Streaming Content', labelHi: '3. स्ट्रीमिंग सामग्री' },
-    { id: 'commerce', label: '4. CultureFlix Store Transactions', labelHi: '4. कल्चरफ्लिक्स स्टोर लेनदेन' },
+    { id: 'commerce', label: '4. Sunad OTT Store Transactions', labelHi: '4. कल्चरफ्लिक्स स्टोर लेनदेन' },
     { id: 'conduct', label: '5. User Conduct & IP', labelHi: '5. उपयोगकर्ता आचरण और आईपी' },
     { id: 'termination', label: '6. Suspension & Termination', labelHi: '6. निलंबन और समाप्ति' },
     { id: 'jurisdiction', label: '7. Governing Law', labelHi: '7. शासी कानून' },
@@ -78,7 +78,7 @@ export default function TermsPage() {
           <h2>{t('1. Acceptance of Terms', '1. शर्तों की स्वीकृति')}</h2>
           <p>
             {t(
-              'By accessing or using CultureFlix website, mobile applications, and online store (collectively, the "Services"), you agree to be bound by these Terms of Service. The Services are owned and operated by Sunad Broadcast Pvt. Ltd. If you do not agree, please do not use the Services.',
+              'By accessing or using Sunad OTT website, mobile applications, and online store (collectively, the "Services"), you agree to be bound by these Terms of Service. The Services are owned and operated by Sunad Broadcast Pvt. Ltd. If you do not agree, please do not use the Services.',
               'कल्चरफ्लिक्स वेबसाइट, मोबाइल एप्लिकेशन और ऑनलाइन स्टोर (सामूहिक रूप से, "सेवाएं") का उपयोग करके, आप इन सेवा शर्तों से बंधे होने के लिए सहमत हैं। ये सेवाएं सुनाद ब्रॉडकास्ट प्राइवेट लिमिटेड के स्वामित्व और संचालन में हैं। यदि आप सहमत नहीं हैं, तो कृपया सेवाओं का उपयोग न करें।'
             )}
           </p>
@@ -105,10 +105,10 @@ export default function TermsPage() {
         </section>
 
         <section id="commerce">
-          <h2>{t('4. CultureFlix Store Transactions', '4. कल्चरफ्लिक्स स्टोर लेनदेन')}</h2>
+          <h2>{t('4. Sunad OTT Store Transactions', '4. कल्चरफ्लिक्स स्टोर लेनदेन')}</h2>
           <p>
             {t(
-              'Products on the CultureFlix Store are sourced directly from traditional artisans and regional producers of India. Purchases are governed by our shipping and refund policy. Prices and availability are subject to change without notice.',
+              'Products on the Sunad OTT Store are sourced directly from traditional artisans and regional producers of India. Purchases are governed by our shipping and refund policy. Prices and availability are subject to change without notice.',
               'कल्चरफ्लिक्स स्टोर पर उत्पाद सीधे भारत के पारंपरिक कारीगरों और क्षेत्रीय उत्पादकों से मंगवाए जाते हैं। खरीदारी हमारी शिपिंग और रिफंड नीति द्वारा शासित होती है। कीमतें और उपलब्धता बिना किसी सूचना के परिवर्तन के अधीन हैं।'
             )}
           </p>

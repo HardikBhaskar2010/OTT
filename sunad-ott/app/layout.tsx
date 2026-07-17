@@ -56,17 +56,17 @@ const notoSerifDevanagari = Noto_Serif_Devanagari({
 export const metadata: Metadata = {
   metadataBase: new URL('https://sunadbroadcast.vercel.app'),
   title: {
-    template: '%s | CultureFlix',
-    default: 'CultureFlix — Real Stories. Real Bharat. Real Impact.',
+    template: '%s | Sunad OTT',
+    default: 'Sunad OTT — Real Stories. Real Bharat. Real Impact.',
   },
   description:
-    'CultureFlix is a premium bilingual streaming platform celebrating Indian civilizational storytelling — documentaries, spiritual knowledge, history, culture, tourism, and more. Watch. Learn. Experience. Connect.',
+    'Sunad OTT is a premium bilingual streaming platform celebrating Indian civilizational storytelling — documentaries, spiritual knowledge, history, culture, tourism, and more. Watch. Learn. Experience. Connect.',
   keywords: [
-    'Indian streaming', 'CultureFlix', 'Indian documentaries', 'spiritual knowledge',
+    'Indian streaming', 'Sunad OTT', 'Indian documentaries', 'spiritual knowledge',
     'Indian history', 'culture heritage', 'yoga ayurveda', 'Hindi streaming',
-    'bilingual OTT', 'Indian civilization', 'भारतीय स्ट्रीमिंग', 'कल्चरफ्लिक्स',
+    'bilingual OTT', 'Indian civilization', 'भारतीय स्ट्रीमिंग', 'सुनाद OTT',
   ],
-  authors: [{ name: 'CultureFlix by Sunad Broadcast Pvt. Ltd.' }],
+  authors: [{ name: 'Sunad OTT by Sunad Broadcast Pvt. Ltd.' }],
   creator: 'Sunad Broadcast Pvt. Ltd.',
   publisher: 'Sunad Broadcast Pvt. Ltd.',
   robots: {
@@ -78,8 +78,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     alternateLocale: 'hi_IN',
-    siteName: 'CultureFlix',
-    title: 'CultureFlix — Real Stories. Real Bharat. Real Impact.',
+    siteName: 'Sunad OTT',
+    title: 'Sunad OTT — Real Stories. Real Bharat. Real Impact.',
     description:
       'Premium bilingual streaming platform celebrating Indian civilizational storytelling.',
     images: [
@@ -87,13 +87,13 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'CultureFlix — Rooted in Bharat. Reaching the World.',
+        alt: 'Sunad OTT — Rooted in Bharat. Reaching the World.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CultureFlix',
+    title: 'Sunad OTT',
     description: 'Real Stories. Real Bharat. Real Impact.',
     images: ['/og-image.jpg'],
   },

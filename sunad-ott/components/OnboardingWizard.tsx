@@ -157,7 +157,7 @@ export default function OnboardingWizard() {
       className="onboarding-overlay"
       role="dialog"
       aria-modal="true"
-      aria-label="Welcome to CultureFlix"
+      aria-label="Welcome to Sunad OTT"
       aria-live="polite"
       // Clicking the dark backdrop does NOT close Step 1 (language must be chosen)
       // From step 2+ clicking backdrop is allowed to dismiss
@@ -211,7 +211,7 @@ export default function OnboardingWizard() {
             {/* Logo */}
             <div className="onboarding-logo" aria-hidden="true">
               <img src="/sunad_logo.jpg" alt="" style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-gold)' }} />
-              <span>CultureFlix</span>
+              <span>Sunad OTT</span>
             </div>
 
             <h1 className="onboarding-title">
@@ -289,7 +289,7 @@ export default function OnboardingWizard() {
             {/* Right: Registration form */}
             <div className="onboarding-form">
               <h2 className="onboarding-title">Create Your Account</h2>
-              <p className="onboarding-subtitle">Join CultureFlix to save your watchlist and get personalized recommendations.</p>
+              <p className="onboarding-subtitle">Join Sunad OTT to save your watchlist and get personalized recommendations.</p>
 
               {/* Social sign-in */}
               <div className="onboarding-social">
@@ -380,7 +380,7 @@ export default function OnboardingWizard() {
           <div className="onboarding-step">
             <h2 className="onboarding-title">What do you love to watch?</h2>
             <p className="onboarding-subtitle">
-              Pick at least 3 genres to personalize your CultureFlix experience.
+              Pick at least 3 genres to personalize your Sunad OTT experience.
             </p>
 
             <div className="genre-grid" role="list" aria-label="Genre selection">
@@ -435,7 +435,7 @@ export default function OnboardingWizard() {
             <div className="onboarding-welcome-icon" aria-hidden="true">🎬</div>
             <h2 className="onboarding-title">You&apos;re all set!</h2>
             <p className="onboarding-subtitle">
-              Welcome to CultureFlix. Your personalized experience awaits — in your language, your genres, your stories.
+              Welcome to Sunad OTT. Your personalized experience awaits — in your language, your genres, your stories.
             </p>
 
             <div className="onboarding-welcome-stats" aria-label="Platform highlights">
@@ -459,7 +459,7 @@ export default function OnboardingWizard() {
               id="onboarding-enter"
               type="button"
             >
-              Enter CultureFlix ✨
+              Enter Sunad OTT ✨
             </button>
           </div>
         )}

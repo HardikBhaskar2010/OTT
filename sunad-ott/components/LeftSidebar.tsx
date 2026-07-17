@@ -109,7 +109,8 @@ export default function LeftSidebar() {
       <button
         className={`left-sidebar__pull-tab${isExpanded ? ' is-active' : ''}`}
         onClick={togglePin}
-        aria-label={isExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
+        aria-label={isExpanded ? 'Collapse category sidebar' : 'Browse content categories'}
+        title={isExpanded ? 'Collapse sidebar' : 'Browse categories'}
         aria-expanded={isExpanded}
       >
         <svg
@@ -156,7 +157,7 @@ export default function LeftSidebar() {
 
       {/* Bottom watermark */}
       <div className="left-sidebar__watermark" aria-hidden="true">
-        <span>CF</span>
+        <span>SUNAD</span>
       </div>
     </aside>
   );

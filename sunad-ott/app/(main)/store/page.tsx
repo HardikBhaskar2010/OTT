@@ -94,7 +94,7 @@ export default function StorePage() {
             display: 'block',
             marginBottom: 'var(--space-1)'
           }}>
-            CultureFlix Store / कल्चरफ्लिक्स स्टोर
+            Sunad OTT Store / कल्चरफ्लिक्स स्टोर
           </span>
           <h1 className="type-display-l" style={{ color: 'var(--primitive-white)', margin: 0 }}>
             {t('Civilizational Commerce', 'सांस्कृतिक वाणिज्य')}

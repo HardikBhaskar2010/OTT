@@ -817,8 +817,8 @@ h2[lang="hi"] {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 13px;
+  gap: 5px;
+  padding: 6px 10px;
   border-radius: var(--radius-full);
   color: var(--color-text-dim);
   font-size: var(--type-label);
@@ -884,7 +884,7 @@ h2[lang="hi"] {
 .nav-controls {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 4px;
   flex-shrink: 0;
 }
 
@@ -920,7 +920,7 @@ h2[lang="hi"] {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 14px;
+  padding: 5px 10px;
   border-radius: var(--radius-full);
   border: 1px solid var(--color-border);
   background: transparent;
@@ -930,7 +930,7 @@ h2[lang="hi"] {
   font-family: var(--font-ui-en);
   cursor: pointer;
   transition: all var(--motion-fast) var(--motion-easing);
-  min-height: 36px;
+  min-height: 32px;
   white-space: nowrap;
 }
 .lang-toggle:hover {
@@ -947,7 +947,7 @@ h2[lang="hi"] {
   background: transparent;
   color: var(--color-text);
   border: 1.5px solid var(--color-border);
-  padding: 7px 20px;
+  padding: 5px 14px;
   border-radius: var(--radius-full);
   font-size: var(--type-label);
   font-weight: var(--weight-semibold);
@@ -956,7 +956,7 @@ h2[lang="hi"] {
   text-decoration: none;
   display: flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 32px;
   transition: all var(--motion-fast) var(--motion-easing);
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -1052,6 +1052,38 @@ h2[lang="hi"] {
 }
 .btn-primary:active  { transform: scale(0.98); }
 .btn-primary:focus-visible { outline: 2px solid var(--color-border-focus); outline-offset: 3px; }
+
+/* Live CTA — sindoor red, visually distinct from gold Watch Now */
+.btn-live {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  background: var(--color-sindoor, #C4342B);
+  color: var(--primitive-white);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-ui-en);
+  font-size: var(--type-body-m);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 44px;
+  white-space: nowrap;
+  transition:
+    background var(--motion-base) var(--motion-easing),
+    transform var(--motion-fast) var(--motion-easing),
+    box-shadow var(--motion-base) var(--motion-easing);
+}
+.btn-live:hover {
+  background: #d94040;
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(196, 52, 43, 0.38);
+}
+.btn-live:active  { transform: scale(0.98); }
+.btn-live:focus-visible { outline: 2px solid var(--color-sindoor, #C4342B); outline-offset: 3px; }
 
 .btn-ghost {
   display: inline-flex;
@@ -1345,6 +1377,26 @@ h2[lang="hi"] {
   grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.68fr);
   gap: var(--space-6);
   align-items: end;
+}
+
+/* Scroll cue chevron — subtle animated bounce at bottom-right of hero */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 28px;
+  right: var(--space-8);
+  z-index: 20;
+  color: rgba(255, 255, 255, 0.45);
+  animation: scroll-bounce 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50%       { transform: translateY(6px); opacity: 0.7; }
+}
+
+@media (max-width: 768px) {
+  .hero-scroll-cue { display: none; }
 }
 
 .live-now-card {
@@ -2357,12 +2409,13 @@ nextjs-portal,
 
 .left-sidebar__watermark {
   padding: var(--space-4) var(--space-3);
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: rgba(230, 154, 36, 0.25);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: rgba(230, 154, 36, 0.15);
   text-align: center;
   flex-shrink: 0;
+  text-transform: uppercase;
 }
 
 /* Main content shifted right to account for sidebar */
@@ -2705,11 +2758,11 @@ nextjs-portal,
   left: auto; /* Reset left */
 }
 
-/* Slide dots */
+/* Slide dots — aligned with content left edge */
 .hero-dots {
   position: absolute;
-  bottom: 24px;
-  left: var(--space-8);
+  bottom: 28px;
+  left: 80px; /* Aligned with hero content left padding */
   z-index: 20;
   display: flex;
   align-items: center;

@@ -148,9 +148,9 @@ export default function TopNav() {
         aria-label={t('Main navigation', 'मुख्य नेविगेशन')}
       >
         {/* ── Left: Logo ── */}
-        <Link href="/" className="nav-logo" aria-label={t('CultureFlix — Home', 'कल्चरफ्लिक्स — होम')}>
+        <Link href="/" className="nav-logo" aria-label={t('Sunad OTT — Home', 'सुनाद OTT — होम')}>
           <img src="/sunad_logo.jpg" alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" />
-          <span className="nav-logo__text">CultureFlix</span>
+          <span className="nav-logo__text">Sunad</span>
           <span className="nav-logo__badge">OTT</span>
         </Link>
 
@@ -170,9 +170,7 @@ export default function TopNav() {
                     {ICONS[item.id] || item.icon}
                   </span>
                   <span className="nav-label">{t(item.nameEn, item.nameHi)}</span>
-                  {item.isLive && (
-                    <span className="nav-live-dot" aria-label={t('Live', 'लाइव')} title={t('Live', 'लाइव')} />
-                  )}
+                  {/* Live dot removed — single live indicator in the Live Now card below hero */}
                 </Link>
               </li>
             );
@@ -260,7 +258,7 @@ export default function TopNav() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
           <Link href="/" className="nav-logo" onClick={closeMenu}>
             <span className="nav-logo__icon">◈</span>
-            <span className="nav-logo__text">CultureFlix</span>
+            <span className="nav-logo__text">Sunad</span>
             <span className="nav-logo__badge">OTT</span>
           </Link>
           <button

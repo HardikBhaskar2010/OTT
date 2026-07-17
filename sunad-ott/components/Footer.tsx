@@ -9,31 +9,31 @@ import { CATEGORIES } from '@/lib/mockData';
 const FOOTER_IMAGES = [
   {
     src: '/thumb_spiritual.jpg',
-    alt: 'Spiritual knowledge — CultureFlix',
+    alt: 'Spiritual knowledge — Sunad OTT',
     label: 'Spiritual',
     labelHi: 'आध्यात्म',
   },
   {
     src: '/mystic_bharat.jpg',
-    alt: 'Mystic Bharat documentary — CultureFlix',
+    alt: 'Mystic Bharat documentary — Sunad OTT',
     label: 'Mystic Bharat',
     labelHi: 'मिस्टिक भारत',
   },
   {
     src: '/thumb_history.jpg',
-    alt: 'History & Civilisation — CultureFlix',
+    alt: 'History & Civilisation — Sunad OTT',
     label: 'History',
     labelHi: 'इतिहास',
   },
   {
     src: '/the_craftsmen.jpg',
-    alt: 'Indian craftsmen — CultureFlix Store',
+    alt: 'Indian craftsmen — Sunad OTT Store',
     label: 'Crafts',
     labelHi: 'शिल्पकला',
   },
   {
     src: '/thumb_agriculture.jpg',
-    alt: 'Agriculture & rural India — CultureFlix',
+    alt: 'Agriculture & rural India — Sunad OTT',
     label: 'Agriculture',
     labelHi: 'कृषि',
   },
@@ -56,7 +56,7 @@ export default function Footer() {
         marginTop: 'var(--space-12)',
       }}
       role="contentinfo"
-      aria-label="CultureFlix Footer"
+      aria-label="Sunad OTT Footer"
     >
 
       {/* ══ THEME-RESPONSIVE IMAGE MOSAIC STRIP ══════════════════════════════ */}
@@ -203,7 +203,7 @@ export default function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Image
               src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'}
-              alt="CultureFlix"
+              alt="Sunad OTT"
               width={38}
               height={38}
               style={{
@@ -229,7 +229,7 @@ export default function Footer() {
                 transition: 'all 0.4s ease',
               }}
             >
-              CultureFlix
+              Sunad OTT
             </span>
             <span
               style={{
@@ -294,7 +294,7 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              aria-label="CultureFlix — Home"
+              aria-label="Sunad OTT — Home"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -325,7 +325,7 @@ export default function Footer() {
                   letterSpacing: '-0.02em',
                 }}
               >
-                CultureFlix
+                Sunad OTT
               </span>
               <span
                 style={{
@@ -479,7 +479,7 @@ export default function Footer() {
             <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
               {[
                 { nameEn: 'Live TV', nameHi: 'लाइव टीवी', href: '/live' },
-                { nameEn: 'CultureFlix Store', nameHi: 'कल्चरफ्लिक्स स्टोर', href: '/store' },
+                { nameEn: 'Sunad OTT Store', nameHi: 'कल्चरफ्लिक्स स्टोर', href: '/store' },
                 { nameEn: 'Subscription Plans', nameHi: 'सदस्यता योजनाएं', href: '/plans' },
                 { nameEn: 'Download App', nameHi: 'ऐप डाउनलोड करें', href: '/download' },
                 { nameEn: 'Become a Creator', nameHi: 'क्रिएटर बनें', href: '/creators' },
@@ -548,7 +548,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Follow CultureFlix on ${social.label}`}
+                  aria-label={`Follow Sunad OTT on ${social.label}`}
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -586,7 +586,7 @@ export default function Footer() {
         >
           {/* Copyright */}
           <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-muted)' }}>
-            © {currentYear} CultureFlix by Sunad Broadcast Pvt. Ltd. All rights reserved. /
+            © {currentYear} Sunad OTT by Sunad Broadcast Pvt. Ltd. All rights reserved. /
             <span lang="hi" style={{ fontFamily: 'var(--font-ui-hi)', marginLeft: '4px' }}>
               सर्वाधिकार सुरक्षित।
             </span>

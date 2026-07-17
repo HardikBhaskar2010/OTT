@@ -195,21 +195,22 @@ export default function HeroCarousel({ slides = HERO_SLIDES_V2 }: HeroCarouselPr
           </Link>
         </div>
 
-        {/* Teaser status lane (moved below buttons to clear the CTA row) */}
+        {/* Teaser status lane — icon-only, no visible text labels */}
         {(isHovering || teaserActive) && (
           <div className="hero-carousel__teaser-status">
             {isHovering && !teaserActive && (
-              <div className="teaser-indicator" aria-live="polite" aria-atomic="true">
+              <div className="teaser-indicator" aria-live="polite" aria-atomic="true" aria-label="Teaser preview loading">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ opacity: 0.7 }}>
+                  <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" />
+                </svg>
                 <div className="teaser-indicator__bar">
                   <div className="teaser-indicator__fill" style={{ animationDuration: `${TEASER_DELAY_MS}ms` }} />
                 </div>
-                <span>Teaser loading…</span>
               </div>
             )}
             {teaserActive && (
-              <div className="teaser-playing" aria-live="polite">
+              <div className="teaser-playing" aria-live="polite" aria-label="Teaser preview playing">
                 <span className="teaser-playing__dot" aria-hidden="true" />
-                <span>Teaser playing</span>
               </div>
             )}
           </div>
@@ -239,6 +240,13 @@ export default function HeroCarousel({ slides = HERO_SLIDES_V2 }: HeroCarouselPr
           <polyline points="9 18 15 12 9 6"/>
         </svg>
       </button>
+
+      {/* ── Scroll cue chevron ── */}
+      <div className="hero-scroll-cue" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
 
       {/* ── Slide dots ── */}
       <div className="hero-dots" role="tablist" aria-label="Slide navigation">

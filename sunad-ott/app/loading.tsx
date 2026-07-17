@@ -7,7 +7,7 @@
 export default function Loading() {
   return (
     <div
-      aria-label="Loading CultureFlix…"
+      aria-label="Loading Sunad OTT…"
       aria-busy="true"
       role="status"
       style={{

@@ -6,7 +6,7 @@ import HeroCarousel from '@/components/HeroCarousel';
 import { ContentRail } from '@/components/ContentCard';
 
 export const metadata: Metadata = {
-  title: 'Home — CultureFlix | Real Stories. Real Bharat.',
+  title: 'Home — Sunad OTT | Real Stories. Real Bharat.',
   description:
     'Discover premium Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, yoga, tourism and more. Watch live TV and on-demand content across 22 Indian languages.',
 };
@@ -33,8 +33,8 @@ export default function HomePage() {
           </div>
           <div>
             <p className="live-now-card__eyebrow">
-              <span className="lang-en-only">Live now from the CultureFlix mandap</span>
-              <span className="lang-hi-only" lang="hi">कल्चरफ्लिक्स मंडप से लाइव</span>
+              <span className="lang-en-only">Live now from the Sunad OTT mandap</span>
+              <span className="lang-hi-only" lang="hi">सुनाद OTT मंडप से लाइव</span>
             </p>
             <p className="live-now-card__title">
               <span className="lang-en-only">{liveShow.nameEn}</span>
@@ -42,7 +42,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="live-actions">
-            <Link href="/live" className="btn-primary">
+            <Link href="/live" className="btn-live">
               <Tv size={18} aria-hidden="true" />
               <span className="lang-en-only">Tune In</span>
               <span className="lang-hi-only" lang="hi">लाइव देखें</span>
@@ -123,7 +123,7 @@ export default function HomePage() {
             </h2>
             <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', lineHeight: 1.65 }}>
               <span className="lang-en-only">
-                CultureFlix connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
+                Sunad OTT connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
               </span>
               <span className="lang-hi-only" lang="hi">
                 कल्चरफ्लिक्स फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है।

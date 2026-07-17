@@ -28,7 +28,7 @@ export default function OriginalsPage() {
           display: 'block',
           marginBottom: 'var(--space-1)'
         }}>
-          CultureFlix Originals / कल्चरफ्लिक्स ओरिजिनल
+          Sunad OTT Originals / कल्चरफ्लिक्स ओरिजिनल
         </span>
         <h1 className="type-display-l" style={{ color: 'var(--primitive-white)', margin: 0 }}>
           {t('Premium Civilizational Productions', 'उत्कृष्ट सांस्कृतिक प्रस्तुतियां')}

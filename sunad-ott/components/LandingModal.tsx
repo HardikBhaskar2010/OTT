@@ -124,7 +124,7 @@ export default function LandingModal() {
         >
           <img
             src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'}
-            alt="CultureFlix Brand Emblem"
+            alt="Sunad OTT Brand Emblem"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
@@ -135,7 +135,7 @@ export default function LandingModal() {
           className="type-heading-2"
           style={{ color: 'var(--primitive-white)', margin: 0, fontSize: '1.5rem' }}
         >
-          {t('Welcome to CultureFlix', 'कल्चरफ्लिक्स में आपका स्वागत है')}
+          {t('Welcome to Sunad OTT', 'कल्चरफ्लिक्स में आपका स्वागत है')}
         </h2>
         <p
           lang="hi"
