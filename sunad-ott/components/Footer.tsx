@@ -229,7 +229,7 @@ export default function Footer() {
                 transition: 'all 0.4s ease',
               }}
             >
-              Sunad TV
+              Sunad
             </span>
             <span
               style={{
@@ -325,7 +325,7 @@ export default function Footer() {
                   letterSpacing: '-0.02em',
                 }}
               >
-                Sunad TV
+                Sunad
               </span>
               <span
                 style={{
