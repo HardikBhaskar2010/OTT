@@ -7,6 +7,7 @@ import { useLang, SUPPORTED_LANGUAGES } from './LangContext';
 
 import { NAV_ITEMS } from '@/lib/mockData';
 import { trackLanguageSwitch, trackNavSignIn } from '@/lib/analytics';
+import FloatingMenu from './FloatingMenu';
 
 const ICONS: Record<string, React.ReactNode> = {
   home: (
@@ -330,22 +331,8 @@ export default function TopNav() {
             )}
           </div>
 
-          {/* Sign In */}
-          <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
-            {t('Sign In', 'साइन इन')}
-          </Link>
-
-          {/* Mobile Hamburger */}
-          <button
-            className="nav-hamburger"
-            aria-label={t('Open navigation menu', 'नेविगेशन मेनू खोलें')}
-            aria-expanded="false"
-            onClick={openMenu}
-          >
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </button>
+          {/* Floating Morphed Framer Hamburger Menu */}
+          <FloatingMenu className="nav-floating-menu" />
         </div>
       </nav>
 
