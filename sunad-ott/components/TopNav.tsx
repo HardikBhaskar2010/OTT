@@ -3,7 +3,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useLang } from './LangContext';
+import { useLang, SUPPORTED_LANGUAGES } from './LangContext';
 
 import { NAV_ITEMS } from '@/lib/mockData';
 import { trackLanguageSwitch, trackNavSignIn } from '@/lib/analytics';
@@ -78,36 +78,35 @@ const ICONS: Record<string, React.ReactNode> = {
 
 /**
  * TopNav — Floating dock navigation bar.
- *
- * Behavior:
- * - At page top: full-width, transparent, 72px tall
- * - On scroll (>80px): contracts to a centered glassmorphic pill (~52px tall)
- * - CSS Scroll-Driven Animation handles morph in Chromium/Safari
- * - JS scroll listener fallback for Firefox (no scroll-driven anim support)
- * - Mobile: compact pill + hamburger opens full-screen glass overlay
  */
 export default function TopNav() {
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const { lang, toggle, t } = useLang();
+  const { lang, setLang, t } = useLang();
 
   const pathname = usePathname();
   const router = useRouter();
 
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef<HTMLLIElement>(null);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close categories dropdown on navigation
   useEffect(() => {
     setCategoriesOpen(false);
+    setLangDropdownOpen(false);
   }, [pathname]);
 
-  // Click outside to close dropdown
+  // Click outside to close dropdowns
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setCategoriesOpen(false);
+      }
+      if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) {
+        setLangDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleOutsideClick);
@@ -130,7 +129,6 @@ export default function TopNav() {
 
   // JS fallback for Firefox — CSS scroll-driven animation not supported
   useEffect(() => {
-    // Only activate fallback if browser lacks scroll-driven animation support
     if (CSS.supports('animation-timeline', 'scroll()')) return;
 
     const onScroll = () => {
@@ -140,7 +138,6 @@ export default function TopNav() {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    // Run once on mount to set initial state
     onScroll();
 
     return () => window.removeEventListener('scroll', onScroll);
@@ -165,14 +162,16 @@ export default function TopNav() {
   // Close on Escape key
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') closeMenu();
+      if (e.key === 'Escape') {
+        closeMenu();
+        setLangDropdownOpen(false);
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [closeMenu]);
 
-  // Visible nav items (first 6 for desktop center links)
-  const mainNavItems = NAV_ITEMS.slice(0, 6);
+  const currentLangObj = SUPPORTED_LANGUAGES.find((l) => l.code === lang) || SUPPORTED_LANGUAGES[0];
 
   return (
     <>
@@ -223,33 +222,28 @@ export default function TopNav() {
                 <ul className="categories-dropdown-menu" role="menu">
                   <li role="none">
                     <Link href="/browse/movies" role="menuitem" className="dropdown-link">
-                      <span className="lang-en-only">Movies</span>
-                      <span className="lang-hi-only" lang="hi">फ़िल्में</span>
+                      <span>{t('Movies', 'फ़िल्में')}</span>
                     </Link>
                   </li>
                   <li role="none">
                     <Link href="/browse/music" role="menuitem" className="dropdown-link">
-                      <span className="lang-en-only">Music</span>
-                      <span className="lang-hi-only" lang="hi">संगीत</span>
+                      <span>{t('Music', 'संगीत')}</span>
                     </Link>
                   </li>
                   <li role="none">
                     <Link href="/browse/shows" role="menuitem" className="dropdown-link">
-                      <span className="lang-en-only">Shows</span>
-                      <span className="lang-hi-only" lang="hi">शोज़</span>
+                      <span>{t('Shows', 'शोज़')}</span>
                     </Link>
                   </li>
                   <li role="none">
                     <Link href="/browse/documentaries" role="menuitem" className="dropdown-link">
-                      <span className="lang-en-only">Documentaries</span>
-                      <span className="lang-hi-only" lang="hi">वृत्तचित्र</span>
+                      <span>{t('Documentaries', 'वृत्तचित्र')}</span>
                     </Link>
                   </li>
                   <li role="none" className="dropdown-divider" />
                   <li role="none">
                     <Link href="/history" role="menuitem" className="dropdown-link">
-                      <span className="lang-en-only">Watch History</span>
-                      <span className="lang-hi-only" lang="hi">देखने का इतिहास</span>
+                      <span>{t('Watch History', 'देखने का इतिहास')}</span>
                     </Link>
                   </li>
                 </ul>
@@ -284,7 +278,6 @@ export default function TopNav() {
 
         {/* ── Right: Controls ── */}
         <div className="nav-controls">
-
           {/* Bell / Notifications */}
           <button
             className="nav-icon-btn nav-bell"
@@ -297,27 +290,45 @@ export default function TopNav() {
             </svg>
           </button>
 
+          {/* 22-Language Selector Dropdown */}
+          <div className="lang-dropdown-wrapper" ref={langDropdownRef}>
+            <button
+              className={`lang-toggle nav-lang-toggle${langDropdownOpen ? ' active' : ''}`}
+              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+              aria-label="Select Language"
+              aria-expanded={langDropdownOpen}
+              type="button"
+            >
+              <span>{currentLangObj.nativeName}</span>
+              <span aria-hidden="true" style={{ fontSize: '0.7rem' }}>▾</span>
+            </button>
 
-          {/* Language Toggle */}
-          <button
-            className="lang-toggle nav-lang-toggle"
-            onClick={() => {
-              const next = lang === 'en' ? 'hi' : 'en';
-              trackLanguageSwitch(next);
-              toggle();
-            }}
-            aria-label={lang === 'en'
-              ? 'Switch to Hindi — हिंदी में देखें'
-              : 'Switch to English — Switch to English'
-            }
-            aria-pressed={lang === 'hi'}
-          >
-            {lang === 'en' ? (
-              <>EN <span aria-hidden="true">▾</span></>
-            ) : (
-              <>हिं <span aria-hidden="true">▾</span></>
+            {langDropdownOpen && (
+              <div className="lang-dropdown-menu" role="menu">
+                <div className="lang-dropdown-header">
+                  <span>{t('Select Language', 'अपनी भाषा चुनें')}</span>
+                  <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>22 Languages</span>
+                </div>
+                <div className="lang-dropdown-grid">
+                  {SUPPORTED_LANGUAGES.map((l) => (
+                    <button
+                      key={l.code}
+                      className={`lang-dropdown-item${lang === l.code ? ' active' : ''}`}
+                      onClick={() => {
+                        setLang(l.code);
+                        trackLanguageSwitch(l.code);
+                        setLangDropdownOpen(false);
+                      }}
+                      role="menuitem"
+                    >
+                      <span className="lang-dropdown-native">{l.nativeName}</span>
+                      <span className="lang-dropdown-english">{l.englishName}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             )}
-          </button>
+          </div>
 
           {/* Sign In */}
           <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
@@ -392,11 +403,29 @@ export default function TopNav() {
           </ul>
         </nav>
 
-        {/* Mobile lang toggle + sign in */}
+        {/* Mobile 22-language grid selection */}
+        <div className="mobile-lang-section">
+          <p className="mobile-lang-title">{t('Select Platform Language', 'अपनी भाषा चुनें')}</p>
+          <div className="mobile-lang-grid">
+            {SUPPORTED_LANGUAGES.map((l) => (
+              <button
+                key={l.code}
+                className={`mobile-lang-btn${lang === l.code ? ' active' : ''}`}
+                onClick={() => {
+                  setLang(l.code);
+                  trackLanguageSwitch(l.code);
+                  closeMenu();
+                }}
+              >
+                <span className="native">{l.nativeName}</span>
+                <span className="eng">{l.englishName}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile sign in */}
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-          <button className="lang-toggle" onClick={toggle} style={{ width: '100%', justifyContent: 'center' }}>
-            {lang === 'en' ? 'Switch to हिंदी' : 'Switch to English'}
-          </button>
           <Link href="/signin" className="btn-primary" style={{ justifyContent: 'center' }} onClick={closeMenu}>
             {t('Sign In', 'साइन इन')}
           </Link>
@@ -405,3 +434,4 @@ export default function TopNav() {
     </>
   );
 }
+

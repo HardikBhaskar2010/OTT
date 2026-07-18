@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
+import { useLang } from './LangContext';
 import { INDIAN_LANGUAGES, MOVIE_GENRES, MUSIC_GENRES, SHOW_GENRES } from '@/lib/mockData';
 import type { IndianLanguage, GenreDef } from '@/lib/mockData';
 
@@ -35,6 +36,7 @@ const FOCUSABLE = [
 ].join(',');
 
 export default function OnboardingWizard() {
+  const { setLang } = useLang();
   const [visible, setVisible] = useState(false);
   const [step, setStep] = useState(1);
   const [selectedLangs, setSelectedLangs] = useState<string[]>([]);
@@ -267,7 +269,12 @@ export default function OnboardingWizard() {
               </p>
               <button
                 className={`btn-primary onboarding-cta${selectedLangs.length === 0 ? ' btn-disabled' : ''}`}
-                onClick={() => selectedLangs.length > 0 && setStep(2)}
+                onClick={() => {
+                  if (selectedLangs.length > 0) {
+                    setLang(selectedLangs[0] as any);
+                    setStep(2);
+                  }
+                }}
                 disabled={selectedLangs.length === 0}
                 aria-disabled={selectedLangs.length === 0}
                 id="onboarding-lang-continue"

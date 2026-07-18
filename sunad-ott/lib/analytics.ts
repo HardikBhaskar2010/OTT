@@ -36,8 +36,8 @@ export function trackWatchNow(contentId: string, contentTitle: string, section: 
   });
 }
 
-/** Fired when user switches language EN ↔ HI */
-export function trackLanguageSwitch(toLanguage: 'en' | 'hi') {
+/** Fired when user switches language */
+export function trackLanguageSwitch(toLanguage: string) {
   trackEvent('language_switch', { to_language: toLanguage });
 }
 
