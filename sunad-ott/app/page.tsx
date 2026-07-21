@@ -4,6 +4,7 @@ import { Radio, Tv, ShoppingBag, Compass, IndianRupee, Languages } from 'lucide-
 import { PROGRAMS, CATEGORIES, MOVIES, SHOWS, MUSIC_CONTENT, DOCUMENTARIES, CONTINUE_WATCHING } from '@/lib/mockData';
 import HeroCarousel from '@/components/HeroCarousel';
 import { ContentRail } from '@/components/ContentCard';
+import CulturePanel from '@/components/CulturePanel';
 
 export const metadata: Metadata = {
   title: 'Home — Sunad TV | Real Stories. Real Bharat.',
@@ -81,41 +82,8 @@ export default function HomePage() {
           />
         </div>
 
-        {/* Culture Commerce panel (kept from original) */}
-        <section className="culture-panel reveal" aria-labelledby="culture-commerce-heading">
-          <div className="culture-panel__copy">
-            <span className="section-kicker">
-              <IndianRupee size={15} aria-hidden="true" /> Culture Commerce
-            </span>
-            <h2 className="type-display-m" id="culture-commerce-heading" style={{ color: 'var(--primitive-white)', margin: 'var(--space-2) 0' }}>
-              <span className="lang-en-only">Watch the story, support the hands behind it.</span>
-              <span className="lang-hi-only" lang="hi">कहानी देखें, कारीगरों का साथ दें।</span>
-            </h2>
-            <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-body-l)', lineHeight: 1.65 }}>
-              <span className="lang-en-only">
-                Sunad TV connects movies, field reporting, and a Bharat-first store so viewers can discover crafts, wellness goods, and regional producers from the same story world.
-              </span>
-              <span className="lang-hi-only" lang="hi">
-                सुनाद टीवी फिल्मों, फील्ड रिपोर्टिंग और भारत-प्रथम स्टोर को जोड़ता है।
-              </span>
-            </p>
-            <div className="culture-chips">
-              <span className="culture-chip"><ShoppingBag size={14} aria-hidden="true" /> Artisan Store</span>
-              <span className="culture-chip"><Compass size={14} aria-hidden="true" /> Heritage Trails</span>
-              <span className="culture-chip"><Languages size={14} aria-hidden="true" /> 22 Languages</span>
-            </div>
-            <div className="card-actions" style={{ marginTop: 'var(--space-4)' }}>
-              <Link href="/store" className="btn-primary">
-                <ShoppingBag size={18} aria-hidden="true" />
-                <span className="lang-en-only">Visit Store</span>
-                <span className="lang-hi-only" lang="hi">स्टोर देखें</span>
-              </Link>
-            </div>
-          </div>
-          <div className="culture-panel__media" aria-hidden="true"
-            style={{ background: 'linear-gradient(135deg, #1a0800 0%, #3d1500 50%, #6b2500 100%)' }}
-          />
-        </section>
+        {/* Culture Commerce panel (animated with GSAP) */}
+        <CulturePanel />
 
         {/* Music Highlights */}
         {newMusic.length > 0 && (
