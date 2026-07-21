@@ -25,36 +25,6 @@ export default function HomePage() {
       {/* ── HERO CAROUSEL ── */}
       <HeroCarousel />
 
-      {/* ── LIVE NOW BANNER ── */}
-      {liveShow && (
-        <section className="live-now-card reveal" aria-label="Live TV now playing">
-          <div className="live-signal" aria-hidden="true">
-            <Radio size={23} />
-          </div>
-          <div>
-            <p className="live-now-card__eyebrow">
-              <span className="lang-en-only">Live now from the Sunad TV mandap</span>
-              <span className="lang-hi-only" lang="hi">सुनाद टीवी मंडप से लाइव</span>
-            </p>
-            <p className="live-now-card__title">
-              <span className="lang-en-only">{liveShow.nameEn}</span>
-              <span className="lang-hi-only" lang="hi">{liveShow.nameHi}</span>
-            </p>
-          </div>
-          <div className="live-actions">
-            <Link href="/live" className="btn-live">
-              <Tv size={18} aria-hidden="true" />
-              <span className="lang-en-only">Tune In</span>
-              <span className="lang-hi-only" lang="hi">लाइव देखें</span>
-            </Link>
-            <Link href={`/watch/${liveShow.id}`} className="btn-glass">
-              <span className="lang-en-only">Details</span>
-              <span className="lang-hi-only" lang="hi">विवरण</span>
-            </Link>
-          </div>
-        </section>
-      )}
-
       {/* ── HOME CONTENT RAILS ── */}
       <div className="home-content">
 

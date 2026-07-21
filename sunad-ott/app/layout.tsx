@@ -4,6 +4,7 @@ import '@/styles/globals.css';
 import { LangProvider } from '@/components/LangContext';
 import { ThemeProvider } from '@/components/ThemeContext';
 import { LenisProvider } from '@/components/LenisProvider';
+import { GSAPProvider } from '@/components/GSAPProvider';
 import TopNav from '@/components/TopNav';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -160,7 +161,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LangProvider>
             <LenisProvider>
-
+              <GSAPProvider>
 
               {/* Scroll reveal observer — no DOM output */}
               <ScrollReveal />
@@ -181,6 +182,7 @@ export default function RootLayout({
 
               {/* Footer */}
               <Footer />
+              </GSAPProvider>
             </LenisProvider>
           </LangProvider>
         </ThemeProvider>

@@ -48,7 +48,7 @@ export function ContentCard({ item, variant = 'portrait', rank }: ContentCardPro
   return (
     <Link
       href={item.watchHref}
-      className={`content-card-v2 content-card-v2--${variant}`}
+      className={`content-card-v2 content-card-v2--${variant} reveal-card`}
       aria-label={`${item.titleEn} — ${item.year} · ${item.rating} · ${item.duration}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -85,13 +85,26 @@ export function ContentCard({ item, variant = 'portrait', rank }: ContentCardPro
           <span className="card-badge card-badge--type">SERIES</span>
         )}
 
-        {/* Hover overlay */}
-        <div className="content-card-v2__overlay" aria-hidden="true">
-          <div className="content-card-v2__play">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        {/* Glassmorphism play overlay — fade+scale on hover (micro-interaction skill) */}
+        <div className="content-card-v2__play-overlay" aria-hidden="true">
+          <div className="content-card-v2__play" style={{
+            width: 48,
+            height: 48,
+            borderRadius: '50%',
+            background: 'rgba(230, 154, 36, 0.9)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(230, 154, 36, 0.4)',
+          }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#0B0907" aria-hidden="true">
               <polygon points="5 3 19 12 5 21 5 3"/>
             </svg>
           </div>
+        </div>
+
+        {/* Original hover overlay — title/meta on hover */}
+        <div className="content-card-v2__overlay" aria-hidden="true">
           <div className="content-card-v2__info">
             <p className="content-card-v2__title">{item.titleEn}</p>
             <div className="content-card-v2__meta">

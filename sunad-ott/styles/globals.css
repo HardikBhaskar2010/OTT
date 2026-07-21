@@ -685,19 +685,17 @@ h2[lang="hi"] {
 
 /* Reveal animations are driven by IntersectionObserver adding .is-visible class */
 
-/* ─── FLOATING DOCK NAV ──────────────────────────────────────────────────── */
+/* ─── FLOATING DOCK NAV (Pop out Pill) ───────────────────────────────────── */
 .site-nav {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 300; /* Raised to be on top of the full length sidebar logo area */
+  top: 0;
+  z-index: 300; 
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  /* Expanded (at top) state */
   width: 100vw;
-  top: 0px;
   padding-inline: var(--space-6);
   height: 72px;
   border-radius: 0px;
@@ -707,7 +705,6 @@ h2[lang="hi"] {
   border: none;
   box-shadow: none;
 
-  /* Smooth morph transition */
   transition:
     width var(--motion-slow) var(--motion-easing),
     top var(--motion-slow) var(--motion-easing),
@@ -715,7 +712,8 @@ h2[lang="hi"] {
     border-radius var(--motion-slow) var(--motion-easing),
     background var(--motion-slow) var(--motion-easing),
     box-shadow var(--motion-slow) var(--motion-easing),
-    padding-inline var(--motion-slow) var(--motion-easing);
+    padding-inline var(--motion-slow) var(--motion-easing),
+    border-bottom var(--motion-slow) var(--motion-easing);
 }
 
 /* CSS Scroll-Driven Animation for nav morph */
@@ -756,7 +754,7 @@ h2[lang="hi"] {
   }
 }
 
-/* ── JS fallback class for Firefox ── */
+/* ── JS fallback class for Safari/Firefox & GSAP trigger ── */
 .site-nav.is-docked {
   width: clamp(280px, 92vw, 1320px);
   top: 12px;
@@ -843,36 +841,14 @@ h2[lang="hi"] {
   font-weight: 600;
   background: color-mix(in oklch, var(--color-gold) 8%, transparent);
 }
-/* Active indicator dot below icon when docked */
-.site-nav.is-docked .nav-item.active::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-gold);
-  opacity: 0.9;
-}
 .nav-item:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 2px;
 }
 
-/* Nav label fade on dock */
+/* Nav label visibility */
 .nav-label {
-  transition:
-    opacity var(--motion-base) var(--motion-easing),
-    max-width var(--motion-base) var(--motion-easing);
-  overflow: hidden;
-  max-width: 120px;
-}
-.site-nav.is-docked .nav-label {
-  opacity: 0;
-  max-width: 0;
-  pointer-events: none;
+  display: inline-block;
 }
 
 /* Center Group for Nav & Search */
@@ -1010,13 +986,9 @@ h2[lang="hi"] {
   color: var(--primitive-white);
 }
 
-/* Make it look compact on docked state */
-.site-nav.is-docked .nav-search-form {
-  max-width: 240px;
-}
-
+/* Docked state adjustments */
 .site-nav.is-docked .nav-search-input {
-  padding-block: 5px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -4022,3 +3994,481 @@ nextjs-portal,
   color: #FFFFFF;
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATION & MOTION UPGRADE
+   Skills: glassmorphism, motion-design (LottieFiles), gsap-react,
+           micro-interaction, gsap-scrolltrigger
+   Motion Personality: PREMIUM — 350–600ms, cubic-bezier(0.4,0,0.2,1)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── NAV: Glassmorphism (scroll-aware via GSAP) ────────────────────────── */
+/* Per glassmorphism skill: four ingredients — frost + translucency + edge + depth */
+/* CSS custom property --nav-bg is animated by GSAP ScrollTrigger */
+.site-nav {
+  background: var(--nav-bg, rgba(11, 9, 7, 0)) !important;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%); /* Safari required */
+  border-bottom: 1px solid rgba(230, 154, 36, 0);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0),
+    inset 0 1px 0 rgba(255, 255, 255, 0);
+  transition:
+    border-color var(--motion-standard) var(--motion-easing),
+    box-shadow var(--motion-standard) var(--motion-easing);
+}
+
+.site-nav.is-docked {
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),           /* float shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.06); /* top rim highlight */
+}
+
+/* Nav link hover — GPU-composited transform only (micro-interaction skill) */
+.nav-item {
+  transition:
+    color var(--motion-quick) var(--motion-easing),
+    transform var(--motion-quick) var(--motion-ease-spring);
+  will-change: transform;
+}
+.nav-item:hover {
+  transform: translateY(-1px);
+}
+.nav-item:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* Active nav underline — animated gold line */
+.nav-item.active {
+  position: relative;
+}
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: nav-underline-enter 0.35s cubic-bezier(0.05, 0.7, 0.1, 1) forwards;
+}
+
+@keyframes nav-underline-enter {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ─── HERO: Progress bar (GSAP-animated scaleX) ─────────────────────────── */
+.hero-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 8;
+  overflow: hidden;
+}
+
+.hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--primitive-gold), var(--primitive-gold-bright));
+  transform: scaleX(0);
+  transform-origin: left center;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Hero overlay layers — three depth layers */
+.hero-overlay--top,
+.hero-overlay--left,
+.hero-overlay--bottom {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Hero scroll cue — GSAP bounce loop */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.45);
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* ─── CONTENT CARDS: Micro-interactions ─────────────────────────────────── */
+/* Per micro-interaction skill: transform + opacity only (GPU-composited)   */
+/* Per motion-design skill: Card entrance — medium weight, 200–350ms        */
+
+.content-card-v2 {
+  /* GPU layer promotion for smooth hover */
+  will-change: transform;
+  transform: translateY(0);
+  transition:
+    transform var(--motion-standard) var(--motion-ease-entrance),
+    box-shadow var(--motion-standard) var(--motion-easing);
+}
+
+.content-card-v2:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(230, 154, 36, 0.2);  /* subtle gold ring on hover */
+}
+
+.content-card-v2:active {
+  transform: translateY(-2px) scale(0.99);
+  transition-duration: 100ms;
+}
+
+/* Thumbnail scale on card hover */
+.content-card-v2__poster {
+  overflow: hidden;
+  transition: transform var(--motion-standard) var(--motion-ease-entrance);
+}
+.content-card-v2:hover .content-card-v2__poster {
+  transform: scale(1.04);
+}
+
+/* Play button overlay — glassmorphism + fade */
+.content-card-v2__play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(11, 9, 7, 0.35);
+  backdrop-filter: blur(4px) saturate(120%);
+  -webkit-backdrop-filter: blur(4px) saturate(120%);
+  opacity: 0;
+  transform: scale(0.88);
+  transition:
+    opacity 180ms var(--motion-ease-entrance),
+    transform 180ms var(--motion-ease-entrance);
+}
+
+.content-card-v2:hover .content-card-v2__play-overlay {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Rank badge — scale pop entrance (handled by GSAP batch, CSS fallback) */
+.card-badge--rank {
+  transition: transform var(--motion-quick) var(--motion-ease-spring);
+}
+.content-card-v2:hover .card-badge--rank {
+  transform: scale(1.08);
+}
+
+/* ─── LIVE NOW: Pulsing signal dot + entrance ───────────────────────────── */
+/* Per motion-design skill: Ambient layer — background life                 */
+
+.live-signal {
+  position: relative;
+}
+
+.live-signal::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(230, 57, 70, 0.2);
+  animation: live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50%       { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* Live now card — glassmorphism */
+.live-now-card {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition:
+    transform var(--motion-standard) var(--motion-ease-entrance),
+    box-shadow var(--motion-standard) var(--motion-easing);
+}
+
+.live-now-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ─── SECTION KICKERS: Gold entrance animation ──────────────────────────── */
+/* Per motion-design skill: Secondary layer supporting the section header   */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated gold underline bar on kicker */
+.section-kicker::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(to right, var(--color-gold), transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s var(--motion-ease-entrance);
+}
+
+.section-kicker.is-visible::after,
+:is(.reveal-fast, .reveal).is-revealed .section-kicker::after {
+  transform: scaleX(1);
+}
+
+/* ─── CATEGORY TILES: Hover gradient shift ──────────────────────────────── */
+.mini-category-tile,
+.category-tile {
+  transition:
+    transform var(--motion-standard) var(--motion-ease-entrance),
+    box-shadow var(--motion-standard) var(--motion-easing),
+    background-position 0.6s var(--motion-easing) !important;
+  background-size: 200% 200% !important;
+  background-position: bottom right !important;
+  will-change: transform;
+}
+
+.mini-category-tile:hover,
+.category-tile:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 154, 36, 0.25);
+  background-position: top left !important;
+}
+
+.mini-category-tile:active,
+.category-tile:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: 100ms;
+}
+
+/* ─── BUTTONS: Premium micro-interactions ───────────────────────────────── */
+/* Per micro-interaction skill: press feedback must feel instant (<150ms)   */
+.btn-primary,
+.btn-glass,
+.btn-live {
+  transition:
+    transform var(--motion-quick) var(--motion-ease-spring),
+    box-shadow var(--motion-quick) var(--motion-easing),
+    background var(--motion-quick) var(--motion-easing),
+    border-color var(--motion-quick) var(--motion-easing);
+  will-change: transform;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(230, 154, 36, 0.35);
+}
+
+.btn-primary:active,
+.btn-glass:active,
+.btn-live:active {
+  transform: translateY(0) scale(0.96);
+  transition-duration: 80ms;
+}
+
+.btn-glass {
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  background: rgba(255, 255, 255, 0.07) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition:
+    transform var(--motion-quick) var(--motion-ease-spring),
+    background var(--motion-quick) var(--motion-easing),
+    box-shadow var(--motion-quick) var(--motion-easing);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+/* ─── CULTURE COMMERCE PANEL: Ambient parallax ──────────────────────────── */
+.culture-panel {
+  transition: transform var(--motion-slow) var(--motion-easing);
+}
+
+/* ─── @starting-style: Above-fold native entrances (no JS needed) ───────── */
+/* Per micro-interaction skill: CSS-native enter for above-the-fold         */
+@starting-style {
+  .live-now-card {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.live-now-card {
+  transition:
+    opacity 0.5s var(--motion-ease-entrance),
+    transform 0.5s var(--motion-ease-entrance),
+    border-color var(--motion-standard) var(--motion-easing),
+    box-shadow var(--motion-standard) var(--motion-easing);
+  transition-behavior: allow-discrete;
+}
+
+/* ─── REDUCED MOTION: non-negotiable accessibility ─────────────────────── */
+/* Per motion-design skill quality rules + micro-interaction skill          */
+/* Per accessible-animation skill: gate non-essential motion               */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /* Keep glass effect but remove frost animation */
+  .site-nav,
+  .live-now-card,
+  .btn-glass {
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+
+  /* Keep transform but remove motion */
+  .content-card-v2,
+  .mini-category-tile,
+  .category-tile,
+  .btn-primary,
+  .btn-glass,
+  .btn-live {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  /* Ensure all reveals show immediately */
+  .reveal,
+  .reveal-fast,
+  .reveal-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Stop live dot pulse */
+  .live-signal::before {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+/* ─── @supports: backdrop-filter fallback ───────────────────────────────── */
+/* Per glassmorphism skill: always provide opaque fallback                  */
+@supports not (backdrop-filter: blur(1px)) {
+  .site-nav.is-docked {
+    background: rgba(11, 9, 7, 0.96) !important;
+  }
+  .live-now-card {
+    background: rgba(11, 9, 7, 0.92) !important;
+  }
+  .btn-glass {
+    background: rgba(30, 24, 18, 0.88) !important;
+  }
+  .content-card-v2__play-overlay {
+    background: rgba(11, 9, 7, 0.72) !important;
+    backdrop-filter: none;
+  }
+}
+
+/* ─── HERO OVERHAUL: Mandap Glass Card Layout ───────────────────────────── */
+
+/* The wrapper containing both the card and the dots */
+.hero-carousel__mandap-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-8) var(--space-8) var(--space-6) var(--space-8);
+  z-index: 10;
+  max-width: 1536px;
+  margin: 0 auto;
+}
+
+/* The distinct architectural glass card for the hero content */
+.hero-carousel__mandap-card {
+  max-width: 640px;
+  background: rgba(14, 12, 10, 0.45);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 220, 120, 0.12);
+  border-top: 1px solid rgba(255, 220, 120, 0.25);
+  border-radius: 20px;
+  padding: 44px;
+  box-shadow: 
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Red prominent live badge */
+.hero-badge--live {
+  color: #FCA5A5 !important;
+  border-color: rgba(248, 113, 113, 0.35) !important;
+  background: rgba(248, 113, 113, 0.12) !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.hero-badge__icon.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Highlighted metadata (air time) */
+.hero-meta__highlight {
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+/* High Contrast CTA Button */
+.btn-primary--high-contrast {
+  background: #FDF6E3 !important;
+  color: #1A1208 !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(253, 246, 227, 0.25) !important;
+  font-weight: 700 !important;
+}
+.btn-primary--high-contrast:hover {
+  background: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Adjust dots to align with the new Mandap card */
+.hero-carousel__mandap-wrapper .hero-dots {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  justify-content: flex-start;
+  margin-top: var(--space-4);
+  padding-left: 2px;
+}

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useCallback, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLang, SUPPORTED_LANGUAGES } from './LangContext';
@@ -127,37 +129,99 @@ export default function TopNav() {
     }
   };
 
-  // JS fallback for Firefox — CSS scroll-driven animation not supported
+  // GSAP ScrollTrigger — scroll-aware glassmorphism transition
+  // Per glassmorphism skill: four ingredients (frost + translucency + edge + depth)
+  // Per gsap-react skill: register plugin client-side only, cleanup on unmount
   useEffect(() => {
-    if (CSS.supports('animation-timeline', 'scroll()')) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const nav = navRef.current;
+    if (!nav) return;
 
-    const onScroll = () => {
-      if (!navRef.current) return;
-      const docked = window.scrollY > 80;
-      navRef.current.classList.toggle('is-docked', docked);
-    };
+    // Set initial transparent state
+    gsap.set(nav, {
+      '--nav-bg': 'rgba(11, 9, 7, 0)',
+      '--nav-blur': '0px',
+      '--nav-border-opacity': '0',
+      '--nav-shadow-opacity': '0',
+    });
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    const st = ScrollTrigger.create({
+      start: 'top+=80 top',
+      end: 'top+=81 top',
+      onEnter: () => {
+        gsap.to(nav, {
+          '--nav-bg': 'rgba(11, 9, 7, 0.82)',
+          duration: 0.45,
+          ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        });
+        nav.classList.add('is-docked');
+      },
+      onLeaveBack: () => {
+        gsap.to(nav, {
+          '--nav-bg': 'rgba(11, 9, 7, 0)',
+          duration: 0.35,
+          ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        });
+        nav.classList.remove('is-docked');
+      },
+    });
 
-    return () => window.removeEventListener('scroll', onScroll);
+    // prefers-reduced-motion: skip animation, always show docked
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mq.matches) {
+      nav.classList.add('is-docked');
+      gsap.set(nav, { '--nav-bg': 'rgba(11, 9, 7, 0.9)' });
+    }
+
+    return () => st.kill();
   }, []);
 
-  // Mobile menu toggle
+  // Mobile menu — state-driven for clean animated transitions
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const openMenu = useCallback(() => {
-    mobileMenuRef.current?.classList.add('is-open');
+    setMobileMenuOpen(true);
     document.body.style.overflow = 'hidden';
+    // GSAP entrance: slide from right, premium ease
+    requestAnimationFrame(() => {
+      if (mobileMenuRef.current) {
+        gsap.fromTo(
+          mobileMenuRef.current,
+          { x: '100%', opacity: 0 },
+          {
+            x: '0%',
+            opacity: 1,
+            duration: 0.4,
+            ease: 'cubic-bezier(0.05, 0.7, 0.1, 1)',
+          }
+        );
+      }
+    });
   }, []);
 
   const closeMenu = useCallback(() => {
-    mobileMenuRef.current?.classList.remove('is-open');
-    document.body.style.overflow = '';
+    if (mobileMenuRef.current) {
+      gsap.to(mobileMenuRef.current, {
+        x: '100%',
+        opacity: 0,
+        duration: 0.3,
+        ease: 'cubic-bezier(0.3, 0, 1, 1)',
+        onComplete: () => {
+          setMobileMenuOpen(false);
+          document.body.style.overflow = '';
+        },
+      });
+    } else {
+      setMobileMenuOpen(false);
+      document.body.style.overflow = '';
+    }
   }, []);
 
   // Close menu on route change
   useEffect(() => {
-    closeMenu();
-  }, [pathname, closeMenu]);
+    if (mobileMenuOpen) closeMenu();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   // Close on Escape key
   useEffect(() => {

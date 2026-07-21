@@ -739,9 +739,33 @@ export interface HeroSlideV2 {
   watchHref: string;
   infoHref: string;
   teaserUrl: string;        // Points to CDN: process.env.NEXT_PUBLIC_CDN_BASE_URL + teaserUrl
+  liveStatus?: 'live' | 'upcoming' | 'vod';
+  airTime?: string;         // e.g., '05:00 AM'
+  schedule?: string;        // e.g., 'Daily Live'
 }
 
 export const HERO_SLIDES_V2: HeroSlideV2[] = [
+  {
+    id: 'prabhat-bharat',
+    type: 'show',
+    badge: 'MORNING YOGA', // Will be overridden by the layout to say 🔴 LIVE NOW
+    titleEn: 'Prabhat Bharat',
+    titleHi: 'प्रभात भारत',
+    tagline: 'Start your day with live morning Aarti, Mantras, Meditation and Yoga.',
+    year: 2024,
+    rating: 'U',
+    duration: '1 Hour',
+    genres: ['Devotion', 'Yoga', 'Meditation'],
+    gradientOverlay: 'linear-gradient(105deg, rgba(14,10,5,0.98) 0%, rgba(14,10,5,0.9) 45%, rgba(14,10,5,0.5) 68%, transparent 100%)',
+    posterGradient: 'url(/prabhat_bharat_hero.jpg) center/cover no-repeat',
+    posterColor: '#D97706',
+    watchHref: '/live',
+    infoHref: '/info/prabhat-bharat',
+    teaserUrl: '',
+    liveStatus: 'live',
+    airTime: '05:00 AM',
+    schedule: 'Daily Live',
+  },
   {
     id: 'mystic-bharat',
     type: 'documentary',
