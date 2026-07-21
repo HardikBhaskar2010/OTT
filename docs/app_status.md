@@ -67,13 +67,15 @@ All 12 documents are written, cross-linked, and internally consistent:
 |---|---|---|
 | `TopNav.tsx` | Persistent navigation bar + language toggle | ✅ Built (18KB) |
 | `Footer.tsx` | Site footer with sitemap links | ✅ Built (22KB) |
-| `HeroCarousel.tsx` | Full-bleed homepage hero | ✅ Built (9.7KB) |
-| `ContentCard.tsx` | Reusable title/content card | ✅ Built (6.5KB) |
-| `OnboardingWizard.tsx` | Language picker + interest onboarding | ✅ Built (20KB) |
-| `LandingModal.tsx` | Guest landing modal/CTA | ✅ Built (6.5KB) |
-| `LangContext.tsx` | Language state management (22 langs) | ✅ Built (6.7KB) |
+| `HeroCarousel.tsx` | Full-bleed homepage hero | ✅ Built (Mandap Glass Layout, dynamic live badges) |
+| `ContentCard.tsx` | Reusable title/content card | ✅ Built |
+| `MobileBottomNav.tsx`| Thumb-zone mobile tab bar | ✅ Built (Bilingual labels, responsive hide) |
+| `CulturePanel.tsx` | Parallax commerce section | ✅ Built (GSAP Scrub & Stagger animations) |
+| `OnboardingWizard.tsx` | Language picker + interest onboarding | ✅ Built |
+| `LandingModal.tsx` | Guest landing modal/CTA | ✅ Built |
+| `LangContext.tsx` | Language state management (22 langs) | ✅ Built |
 | `ThemeContext.tsx` | Theme context | ✅ Built |
-| `CookieBanner.tsx` | GDPR/DPDP cookie consent | ✅ Built (4.5KB) |
+| `CookieBanner.tsx` | GDPR/DPDP cookie consent | ✅ Built |
 | `ScrollReveal.tsx` | Scroll animation wrapper | ✅ Built |
 | `LenisProvider.tsx` | Smooth scroll provider | ✅ Built |
 | `GoogleAnalytics.tsx` | GA4 event tracking | ✅ Built |
@@ -83,9 +85,11 @@ All 12 documents are written, cross-linked, and internally consistent:
 ## 5. Design System Implementation
 
 - ✅ `styles/tokens.css` — color tokens, typography scale, spacing, motion tokens (matching `09_Design_System.md`)
-- ✅ `styles/globals.css` — full component CSS library (106KB — extensive)
+- ✅ `styles/globals.css` — full component CSS library (extensive mobile optimizations)
 - ✅ Font system: Fraunces + General Sans (Latin), Tiro Devanagari + Mukta (Devanagari) — per `03_Design.md §5.2`
 - ✅ Dark theme: warm near-black `#0E0D0C` base with antique gold `#BFA05B` accent
+- ✅ Mobile UI constraints: Thumb-zone native Bottom Tab bar added, heavy TopNav collapsed.
+- ✅ Advanced Animations: GSAP `ScrollTrigger` parallax and stagger patterns implemented via `gsap-master` MCP.
 
 ---
 
