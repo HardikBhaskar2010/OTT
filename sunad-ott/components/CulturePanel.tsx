@@ -15,42 +15,67 @@ export default function CulturePanel() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    // Parallax effect on the media image using scrub
-    if (mediaRef.current && panelRef.current) {
-      gsap.fromTo(mediaRef.current,
-        { backgroundPosition: '50% 0%' },
-        {
-          backgroundPosition: '50% 100%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: panelRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 0.5,
-          }
-        }
-      );
-    }
+    let mm = gsap.matchMedia();
 
-    // Staggered entrance for the copy text
-    if (copyRef.current && panelRef.current) {
-      const elements = copyRef.current.children;
-      gsap.fromTo(elements,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: panelRef.current,
-            start: 'top 75%',
-            toggleActions: 'play none none reverse',
+    // Only add animations if the user doesn't prefer reduced motion
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      // Parallax effect on the media image using scrub
+      if (mediaRef.current && panelRef.current) {
+        gsap.fromTo(mediaRef.current,
+          { backgroundPosition: '50% 0%' },
+          {
+            backgroundPosition: '50% 100%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panelRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.5,
+            }
           }
-        }
-      );
-    }
+        );
+      }
+
+      // Staggered entrance for the copy text
+      if (copyRef.current && panelRef.current) {
+        const elements = copyRef.current.children;
+        gsap.fromTo(elements,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: panelRef.current,
+              start: 'top 75%',
+              toggleActions: 'play none none reverse',
+            }
+          }
+        );
+      }
+    });
+
+    // Fallback for reduced motion (just fade in cleanly)
+    mm.add("(prefers-reduced-motion: reduce)", () => {
+      if (copyRef.current && panelRef.current) {
+        gsap.fromTo(copyRef.current.children,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.5,
+            scrollTrigger: {
+              trigger: panelRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+            }
+          }
+        );
+      }
+    });
+
+    return () => mm.revert(); // Cleanup matchMedia
   }, { scope: panelRef });
 
   return (
