@@ -4472,3 +4472,124 @@ nextjs-portal,
   margin-top: var(--space-4);
   padding-left: 2px;
 }
+
+
+/* ─── MOBILE OVERRIDES: Mandap Glass Card ───────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-carousel__mandap-wrapper {
+    padding: var(--space-4) var(--space-4) var(--space-6) var(--space-4);
+    justify-content: flex-end;
+  }
+  .hero-carousel__mandap-card {
+    padding: 24px 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+  }
+  .hero-carousel__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-3);
+  }
+  .hero-carousel__actions .btn-primary,
+  .hero-carousel__actions .btn-glass {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-carousel__mandap-wrapper .hero-dots {
+    justify-content: center;
+    padding-left: 0;
+    margin-top: var(--space-5);
+  }
+}
+
+
+/* ─── MOBILE BOTTOM NAV ─────────────────────────────────────────────────── */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: rgba(11, 9, 7, 0.85);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 8px;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-item.is-active {
+    color: var(--color-gold);
+  }
+
+  .mobile-nav-item__icon {
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-nav-item.is-active .mobile-nav-item__icon {
+    transform: translateY(-2px);
+  }
+
+  .mobile-nav-item__label {
+    font-size: 0.65rem;
+    font-weight: 500;
+  }
+
+  .mobile-nav-item__indicator {
+    position: absolute;
+    bottom: 4px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-item.is-active .mobile-nav-item__indicator {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Hide center and right TopNav elements on mobile */
+  .site-nav .nav-center-group,
+  .site-nav .nav-sign-in {
+    display: none !important;
+  }
+  
+  /* Ensure TopNav is still accessible for logo but less heavy */
+  .site-nav {
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* Add padding to bottom of app shell so content isnt hidden behind nav */
+  .app-shell {
+    padding-bottom: 64px;
+  }
+}

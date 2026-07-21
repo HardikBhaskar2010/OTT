@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/ThemeContext';
 import { LenisProvider } from '@/components/LenisProvider';
 import { GSAPProvider } from '@/components/GSAPProvider';
 import TopNav from '@/components/TopNav';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
 
@@ -171,6 +172,7 @@ export default function RootLayout({
 
               {/* Fixed floating dock nav */}
               <TopNav />
+              <MobileBottomNav />
 
               {/* Main content layout */}
               <div className="app-shell">
