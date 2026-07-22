@@ -300,13 +300,20 @@ export default function OnboardingWizard() {
           <div className="onboarding-step onboarding-step--two-col">
             {/* Left: Cinematic panel */}
             <div className="onboarding-cinema" aria-hidden="true">
-              <div className="onboarding-cinema__image" style={{ backgroundImage: 'linear-gradient(135deg, #0a001a 0%, #1a0030 40%, #2d0050 100%)' }} />
+              <div
+                className="onboarding-cinema__image"
+                style={{
+                  backgroundImage: 'url(/mystic_bharat.jpg)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
               <div className="onboarding-cinema__overlay" />
               <div className="onboarding-cinema__text">
                 <p className="onboarding-cinema__quote">
-                  &ldquo;Begin your journey into Bharat&rsquo;s stories&rdquo;
+                  &ldquo;Connecting voices, Building Communities, Serving Humanities&rdquo;
                 </p>
-                <p className="onboarding-cinema__tagline">Real Stories. Real Bharat. Real Impact.</p>
+                <p className="onboarding-cinema__tagline">REAL STORIES · REAL BHARAT · REAL IMPACT</p>
               </div>
             </div>
 

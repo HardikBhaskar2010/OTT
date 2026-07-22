@@ -4358,27 +4358,51 @@ nextjs-portal,
   flex-direction: column;
   justify-content: flex-end;
   padding: 24px;
-  min-height: 220px;
-  background: linear-gradient(135deg, #1a0030 0%, #0a0014 100%);
+  min-height: 280px;
   border: 1px solid rgba(230, 154, 36, 0.25);
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.onboarding-cinema__image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.onboarding-cinema:hover .onboarding-cinema__image {
+  transform: scale(1.04);
+}
+
+.onboarding-cinema__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(14, 11, 7, 0.95) 30%, rgba(14, 11, 7, 0.45) 70%, rgba(14, 11, 7, 0.1) 100%);
+}
+
+.onboarding-cinema__text {
+  position: relative;
+  z-index: 2;
 }
 
 .onboarding-cinema__quote {
   font-family: var(--font-display-en);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   color: var(--primitive-white);
   margin-bottom: 8px;
   font-style: italic;
-  line-height: 1.3;
+  line-height: 1.35;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .onboarding-cinema__tagline {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--color-gold);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .onboarding-form {
