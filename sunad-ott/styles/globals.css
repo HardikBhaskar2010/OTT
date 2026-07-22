@@ -4110,15 +4110,15 @@ nextjs-portal,
 .onboarding-modal {
   width: 100%;
   max-width: 480px;
-  height: 90vh;
-  max-height: calc(100vh - 40px);
-  background: rgba(20, 16, 10, 0.6);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 230, 140, 0.1);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-5);
+  height: 85vh;
+  max-height: 600px;
+  background: rgba(14, 11, 7, 0.75);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(230, 154, 36, 0.2);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -4134,7 +4134,7 @@ nextjs-portal,
 .onboarding-steps {
   display: flex;
   gap: 8px;
-  margin-bottom: var(--space-6);
+  margin-bottom: 20px;
   justify-content: center;
   flex-shrink: 0;
 }
@@ -4150,24 +4150,24 @@ nextjs-portal,
   width: 32px;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   transition: all var(--motion-base) ease;
 }
 
 .onboarding-step-dot.active {
   background: var(--color-gold);
   width: 48px;
-  box-shadow: 0 0 12px rgba(200, 134, 10, 0.4);
+  box-shadow: 0 0 12px rgba(230, 154, 36, 0.5);
 }
 
 .onboarding-step-dot.done {
-  background: rgba(200, 134, 10, 0.4);
+  background: rgba(230, 154, 36, 0.4);
 }
 
 .onboarding-skip {
   position: absolute;
-  top: var(--space-4);
-  right: var(--space-4);
+  top: 20px;
+  right: 20px;
   background: transparent;
   border: none;
   color: var(--color-text-dim);
@@ -4184,65 +4184,78 @@ nextjs-portal,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-family: var(--font-display-en);
+  font-size: 1.35rem;
+  font-weight: 700;
   color: var(--primitive-white);
   letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 
 .onboarding-title {
-  font-size: var(--type-heading-1);
-  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-family: var(--font-display-en);
   color: var(--primitive-white);
   text-align: center;
-  margin-bottom: var(--space-2);
-  line-height: 1.1;
+  margin-bottom: 6px;
+  line-height: 1.2;
   flex-shrink: 0;
 }
 
 .onboarding-title__hi {
   display: block;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--color-gold);
-  margin-top: 4px;
+  margin-top: 2px;
   font-weight: 500;
 }
 
 .onboarding-subtitle {
   text-align: center;
   color: var(--color-text-dim);
-  font-size: var(--type-body-m);
-  margin-bottom: var(--space-4);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
   flex-shrink: 0;
+  line-height: 1.4;
 }
 
 .lang-grid, .genre-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
+  gap: 12px;
+  margin-bottom: 12px;
   overflow-y: auto;
   flex: 1 1 0%;
   min-height: 0;
-  padding-right: 8px;
+  padding-right: 6px;
+  padding-bottom: 12px;
 }
 
 .onboarding-footer {
   margin-top: auto;
   flex-shrink: 0;
-  background: linear-gradient(to top, rgba(20, 16, 10, 1) 40%, rgba(20, 16, 10, 0));
-  padding-top: var(--space-2);
+  background: linear-gradient(to top, rgba(14, 11, 7, 0.95) 70%, rgba(14, 11, 7, 0));
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.onboarding-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  text-align: center;
 }
 
 /* Custom Scrollbar for grids */
 .lang-grid::-webkit-scrollbar, .genre-grid::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 .lang-grid::-webkit-scrollbar-track, .genre-grid::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.04);
   border-radius: 4px;
 }
 .lang-grid::-webkit-scrollbar-thumb, .genre-grid::-webkit-scrollbar-thumb {
@@ -4251,10 +4264,10 @@ nextjs-portal,
 }
 
 .lang-btn, .genre-btn {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3);
+  border-radius: 12px;
+  padding: 12px;
   color: var(--color-text);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -4265,47 +4278,54 @@ nextjs-portal,
 }
 
 .lang-btn:hover, .genre-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(230, 154, 36, 0.4);
   transform: translateY(-2px);
 }
 
 .lang-btn.selected, .genre-btn.selected {
-  background: rgba(200, 134, 10, 0.15);
+  background: rgba(230, 154, 36, 0.16);
   border-color: var(--color-gold);
-  box-shadow: 0 0 20px rgba(200, 134, 10, 0.1);
+  box-shadow: 0 0 16px rgba(230, 154, 36, 0.18);
 }
 
 .lang-btn__en {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .lang-btn__native {
   color: var(--color-gold);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .onboarding-action {
   width: 100%;
-  padding: var(--space-4);
-  border-radius: var(--radius-pill);
-  background: var(--color-gold);
-  color: var(--primitive-black);
+  height: 48px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #E69A24 0%, #D48816 100%);
+  color: #0B0907;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 8px 24px rgba(200, 134, 10, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 20px rgba(230, 154, 36, 0.3);
 }
 
 .onboarding-action:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(200, 134, 10, 0.35);
+  box-shadow: 0 10px 28px rgba(230, 154, 36, 0.45);
+  background: linear-gradient(135deg, #FFB83D 0%, #E69A24 100%);
 }
 
 .onboarding-action:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
   box-shadow: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
 }
