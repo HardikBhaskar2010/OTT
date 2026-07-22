@@ -15,20 +15,36 @@ function getFallbackContentList(): ContentItem[] {
   return ALL_MOCK_CONTENT;
 }
 
+// Helper to map backend schema to frontend ContentItem schema
+function mapBackendItem(item: any): ContentItem {
+  return {
+    ...item,
+    id: item.id,
+    type: item.type || 'movie',
+    titleEn: item.titleEn || item.title || '',
+    titleHi: item.titleHi || '',
+    description: item.description || '',
+    categoryId: item.categoryId || item.type || 'movies',
+    genres: item.genres || [],
+    posterUrl: item.posterUrl || item.thumbnailUrl,
+    youtubeVideoId: item.youtubeVideoId || item.videoUrl,
+  };
+}
+
 /**
  * Fetch all catalog content items from custom Node.js API
  */
 export async function getAllContentFromFirestore(): Promise<ContentItem[]> {
   try {
     const response = await fetch(`${API_URL}/api/content`, {
-      // Next.js caching optimization: Revalidate every hour since catalog doesn't change often
-      next: { revalidate: 3600 } 
+      // Next.js caching optimization: Revalidate every 60s for testing
+      next: { revalidate: 60 } 
     });
     
     if (response.ok) {
       const result = await response.json();
       if (result.data && result.data.length > 0) {
-        return result.data;
+        return result.data.map(mapBackendItem);
       }
     }
   } catch (err) {
@@ -43,13 +59,13 @@ export async function getAllContentFromFirestore(): Promise<ContentItem[]> {
 export async function getContentByIdFromFirestore(id: string): Promise<ContentItem | null> {
   try {
     const response = await fetch(`${API_URL}/api/content/${id}`, {
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     });
 
     if (response.ok) {
       const result = await response.json();
       if (result.data) {
-        return result.data;
+        return mapBackendItem(result.data);
       }
     }
   } catch (err) {
