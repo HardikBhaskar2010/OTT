@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Film, Sparkles, Check } from 'lucide-react';
 import { useLang, Lang } from './LangContext';
 import { useAuth } from './AuthContext';
 import { INDIAN_LANGUAGES, MOVIE_GENRES, MUSIC_GENRES, SHOW_GENRES } from '@/lib/mockData';
@@ -495,7 +496,9 @@ export default function OnboardingWizard() {
         {/* ══════════════════════════════════════ */}
         {step === 4 && (
           <div className="onboarding-step onboarding-step--welcome">
-            <div className="onboarding-welcome-icon" aria-hidden="true">🎬</div>
+            <div className="onboarding-welcome-icon" aria-hidden="true" style={{ display: 'flex', justifyContent: 'center' }}>
+              <Film size={56} style={{ color: 'var(--color-gold)' }} />
+            </div>
             <h2 className="onboarding-title">You&apos;re all set!</h2>
             <p className="onboarding-subtitle">
               Welcome to Sunad OTT. Your personalized experience awaits — in your language, your genres, your stories.
@@ -521,8 +524,10 @@ export default function OnboardingWizard() {
               onClick={complete}
               id="onboarding-enter"
               type="button"
+              style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
             >
-              Enter Sunad OTT ✨
+              <span>Enter Sunad OTT</span>
+              <Sparkles size={18} aria-hidden="true" />
             </button>
           </div>
         )}

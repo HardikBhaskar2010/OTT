@@ -70,7 +70,7 @@ export default async function HomePage() {
           <ContentRail
             title="Trending Now"
             titleHi="ट्रेंडिंग"
-            kicker="🔥 Most Watched"
+            kicker="Most Watched"
             items={trendingMovies.length > 0 ? trendingMovies : effectiveMovies}
             variant="portrait"
             viewAllHref="/browse/movies"
@@ -84,7 +84,7 @@ export default async function HomePage() {
             <ContentRail
               title="New Releases"
               titleHi="नई रिलीज़"
-              kicker="⭐ Just Added"
+              kicker="Just Added"
               items={newMovies}
               variant="portrait"
               viewAllHref="/browse/movies"
@@ -97,7 +97,7 @@ export default async function HomePage() {
           <ContentRail
             title="Top Shows"
             titleHi="टॉप शोज़"
-            kicker="📺 Binge-Worthy"
+            kicker="Binge-Worthy"
             items={trendingShows.length > 0 ? trendingShows : effectiveShows}
             variant="portrait"
             viewAllHref="/browse/shows"
@@ -113,7 +113,7 @@ export default async function HomePage() {
             <ContentRail
               title="Music & Ragas"
               titleHi="संगीत और राग"
-              kicker="🎵 Now Playing"
+              kicker="Now Playing"
               items={effectiveMusic}
               variant="portrait"
               viewAllHref="/browse/music"
@@ -127,7 +127,7 @@ export default async function HomePage() {
             <ContentRail
               title="Documentaries"
               titleHi="वृत्तचित्र"
-              kicker="🎥 Deep Dives"
+              kicker="Deep Dives"
               items={featuredDocs.length > 0 ? featuredDocs : effectiveDocs}
               variant="portrait"
               viewAllHref="/browse/documentaries"

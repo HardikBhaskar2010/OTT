@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Tv, Globe, Zap, Film, Bookmark, Clock, LogOut, Sparkles } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useLang, SUPPORTED_LANGUAGES } from '@/components/LangContext';
 
@@ -44,15 +45,18 @@ export default function ProfilePage() {
             background: 'radial-gradient(circle at top, rgba(230, 154, 36, 0.12), rgba(14, 11, 7, 0.95))'
           }}
         >
-          <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🎭</div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+            <Tv size={48} style={{ color: 'var(--color-gold)' }} />
+          </div>
           <h1 className="type-heading-1" style={{ color: 'var(--primitive-white)', marginBottom: '8px' }}>
             {t('Sign In to Sunad TV', 'सुनाद टीवी में साइन इन करें')}
           </h1>
           <p style={{ color: 'var(--color-text-dim)', marginBottom: '24px', fontSize: '0.9rem', lineHeight: 1.5 }}>
             {t('Unlock your personalized watchlist, 4K streaming preferences, and cultural recommendations.', 'अपनी पसंदीदा वॉचलिस्ट, 4K स्ट्रीमिंग और व्यक्तिगत अनुशंसाएं अनलॉक करें।')}
           </p>
-          <Link href="/signin?redirect=/profile" className="onboarding-action" style={{ textDecoration: 'none' }}>
-            {t('Sign In Now ✨', 'अभी साइन इन करें ✨')}
+          <Link href="/signin?redirect=/profile" className="onboarding-action" style={{ textDecoration: 'none', gap: '6px' }}>
+            <span>{t('Sign In Now', 'अभी साइन इन करें')}</span>
+            <Sparkles size={16} aria-hidden="true" />
           </Link>
         </div>
       </main>
@@ -202,8 +206,8 @@ export default function ProfilePage() {
               <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-gold)', fontWeight: 800, display: 'block' }}>
                 {t('Membership Tier', 'सदस्यता स्तर')}
               </span>
-              <strong style={{ fontSize: '1.25rem', color: '#FFF', display: 'block', marginTop: '4px', fontFamily: 'var(--font-display-en)' }}>
-                Bharat Pass ✨
+              <strong style={{ fontSize: '1.2rem', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', marginTop: '4px', fontFamily: 'var(--font-display-en)' }}>
+                Bharat Pass <Sparkles size={14} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
               </strong>
               <Link
                 href="/plans"
@@ -261,7 +265,7 @@ export default function ProfilePage() {
           {/* App Language Selector */}
           <div className="glass-strong" style={{ padding: '24px', borderRadius: '20px', border: '1px solid rgba(230, 154, 36, 0.2)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <span style={{ fontSize: '1.3rem' }}>🌐</span>
+              <Globe size={20} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
               <div>
                 <h3 style={{ fontSize: '1.05rem', color: 'var(--primitive-white)', margin: 0 }}>
                   {t('Interface Language', 'इंटरफ़ेस भाषा')}
@@ -304,7 +308,7 @@ export default function ProfilePage() {
           {/* Streaming & Playback Preferences */}
           <div className="glass-strong" style={{ padding: '24px', borderRadius: '20px', border: '1px solid rgba(230, 154, 36, 0.2)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-              <span style={{ fontSize: '1.3rem' }}>⚡</span>
+              <Zap size={20} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
               <div>
                 <h3 style={{ fontSize: '1.05rem', color: 'var(--primitive-white)', margin: 0 }}>
                   {t('Playback Quality', 'प्लेबैक गुणवत्ता')}
@@ -359,8 +363,9 @@ export default function ProfilePage() {
             marginBottom: 'var(--space-6)'
           }}
         >
-          <h3 style={{ fontSize: '1.1rem', color: 'var(--primitive-white)', margin: '0 0 14px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span>🍿</span> {t('My Content & Watchlist', 'मेरी सामग्री और वॉचलिस्ट')}
+          <h3 style={{ fontSize: '1.1rem', color: 'var(--primitive-white)', margin: '0 0 14px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Film size={20} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+            <span>{t('My Content & Watchlist', 'मेरी सामग्री और वॉचलिस्ट')}</span>
           </h3>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 'var(--space-3)' }}>
@@ -383,7 +388,7 @@ export default function ProfilePage() {
               className="hover-card-bg"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span>📌</span>
+                <Bookmark size={18} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
                 <span>{t('Saved Watchlist', 'सहेजी गई वॉचलिस्ट')}</span>
               </div>
               <span style={{ fontSize: '0.8rem', color: 'var(--color-gold)', background: 'rgba(230, 154, 36, 0.15)', padding: '2px 8px', borderRadius: '10px' }}>
@@ -410,7 +415,7 @@ export default function ProfilePage() {
               className="hover-card-bg"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <span>⏱️</span>
+                <Clock size={18} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
                 <span>{t('Watch History', 'देखने का इतिहास')}</span>
               </div>
               <span style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.6)', background: 'rgba(255, 255, 255, 0.08)', padding: '2px 8px', borderRadius: '10px' }}>
@@ -471,7 +476,7 @@ export default function ProfilePage() {
               </>
             ) : (
               <>
-                <span>🚪</span>
+                <LogOut size={16} aria-hidden="true" />
                 {t('Sign Out', 'साइन आउट')}
               </>
             )}
