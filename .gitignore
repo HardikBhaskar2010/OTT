@@ -11,7 +11,18 @@ sunad-ott/*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+firebase-debug.log*
+firestore-debug.log*
+*.log
 
 # system files
 .DS_Store
 Thumbs.db
+
+# Agent/workspace customizations
+.agents/
+
+# Generated map files
+youtube_video_map.json
+sunad-ott/youtube_video_map.json
+sunad-ott/lib/seeded-catalog.json

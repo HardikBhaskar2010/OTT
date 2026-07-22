@@ -4,6 +4,7 @@
  * Gold pulsing wordmark centered.
  * Used by Next.js App Router as the Suspense loading UI.
  */
+import Image from 'next/image';
 export default function Loading() {
   return (
     <div
@@ -38,18 +39,19 @@ export default function Loading() {
             gap: 'var(--space-2)',
           }}
         >
-          <img
+          <Image
             src="/sunad_logo.jpg"
             alt=""
+            width={40}
+            height={40}
             style={{
-              width: '40px',
-              height: '40px',
               borderRadius: '50%',
               objectFit: 'cover',
               border: '1.5px solid var(--color-gold)',
               animation: 'wordmark-pulse 2s ease-in-out infinite',
             }}
             aria-hidden="true"
+            priority={false}
           />
           <span
             lang="hi"

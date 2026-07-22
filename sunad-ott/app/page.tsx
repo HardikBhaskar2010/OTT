@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Radio, Tv, ShoppingBag, Compass, IndianRupee, Languages } from 'lucide-react';
-import { PROGRAMS, CATEGORIES, MOVIES, SHOWS, MUSIC_CONTENT, DOCUMENTARIES, CONTINUE_WATCHING } from '@/lib/mockData';
+import { Compass } from 'lucide-react';
+import { CATEGORIES, MOVIES, SHOWS, MUSIC_CONTENT, DOCUMENTARIES, CONTINUE_WATCHING, type HeroSlideV2 } from '@/lib/mockData';
+import { getAllContentFromFirestore } from '@/lib/firestoreCatalog';
 import HeroCarousel from '@/components/HeroCarousel';
 import { ContentRail } from '@/components/ContentCard';
 import CulturePanel from '@/components/CulturePanel';
+import ContinueWatchingRail from '@/components/ContinueWatchingRail';
 
 export const metadata: Metadata = {
   title: 'Home — Sunad TV | Real Stories. Real Bharat.',
@@ -12,36 +14,56 @@ export const metadata: Metadata = {
     'Discover premium Indian civilizational storytelling — documentaries, spiritual wisdom, history, culture, yoga, tourism and more. Watch live TV and on-demand content across 22 Indian languages.',
 };
 
-export default function HomePage() {
-  const liveShow = PROGRAMS.find((p) => p.isLive);
-  const trendingMovies = MOVIES.filter(m => m.isTrending).sort((a, b) => (a.trendingRank ?? 99) - (b.trendingRank ?? 99));
-  const newMovies = MOVIES.filter(m => m.isNew);
-  const trendingShows = SHOWS.filter(s => s.isTrending);
-  const newMusic = MUSIC_CONTENT.filter(m => m.isNew);
-  const featuredDocs = DOCUMENTARIES.filter(d => d.isTrending);
+export default async function HomePage() {
+  const catalog = await getAllContentFromFirestore();
+
+  const movies = catalog.filter((c) => c.type === 'movie' || c.categoryId === 'movies');
+  const shows = catalog.filter((c) => c.type === 'show' || c.categoryId === 'shows');
+  const music = catalog.filter((c) => c.type === 'music' || c.categoryId === 'music');
+  const docs = catalog.filter((c) => c.type === 'documentary' || c.categoryId === 'documentaries');
+
+  const effectiveMovies = movies.length > 0 ? movies : MOVIES;
+  const effectiveShows = shows.length > 0 ? shows : SHOWS;
+  const effectiveMusic = music.length > 0 ? music : MUSIC_CONTENT;
+  const effectiveDocs = docs.length > 0 ? docs : DOCUMENTARIES;
+
+  const trendingMovies = effectiveMovies
+    .filter((m) => m.isTrending)
+    .sort((a, b) => (a.trendingRank ?? 99) - (b.trendingRank ?? 99));
+  const newMovies = effectiveMovies.filter((m) => m.isNew);
+  const trendingShows = effectiveShows.filter((s) => s.isTrending);
+  const featuredDocs = effectiveDocs.filter((d) => d.isTrending);
+
+  const heroSlides: HeroSlideV2[] = [...trendingMovies, ...trendingShows].slice(0, 4).map((c) => ({
+    id: c.id,
+    type: c.type === 'movie' || c.type === 'show' || c.type === 'documentary' ? c.type : 'original',
+    badge: c.isNew ? 'NEW RELEASE' : 'MUST WATCH',
+    titleEn: c.titleEn,
+    titleHi: c.titleHi,
+    tagline: c.description,
+    year: c.year,
+    rating: c.rating,
+    duration: c.duration,
+    genres: c.genres,
+    gradientOverlay: 'linear-gradient(135deg, rgba(30,15,5,0.8) 0%, rgba(11,9,7,0.95) 100%)',
+    posterGradient: c.posterUrl ? `url(${c.posterUrl}) center/cover no-repeat` : c.posterGradient,
+    posterColor: c.posterColor,
+    watchHref: c.watchHref || `/watch/${c.id}`,
+    infoHref: `/info/${c.id}`,
+    teaserUrl: c.teaserUrl || '',
+  }));
 
   return (
     <div className="home-experience">
 
       {/* ── HERO CAROUSEL ── */}
-      <HeroCarousel />
+      <HeroCarousel slides={heroSlides.length > 0 ? heroSlides : undefined} />
 
       {/* ── HOME CONTENT RAILS ── */}
       <div className="home-content">
 
         {/* Continue Watching */}
-        {CONTINUE_WATCHING.length > 0 && (
-          <div className="reveal">
-            <ContentRail
-              title="Continue Watching"
-              titleHi="जहाँ छोड़ा था"
-              kicker="Resume"
-              items={CONTINUE_WATCHING}
-              variant="wide"
-              viewAllHref="/history"
-            />
-          </div>
-        )}
+        <ContinueWatchingRail fallbackItems={CONTINUE_WATCHING} />
 
         {/* Trending Movies */}
         <div className="reveal">
@@ -49,7 +71,7 @@ export default function HomePage() {
             title="Trending Now"
             titleHi="ट्रेंडिंग"
             kicker="🔥 Most Watched"
-            items={trendingMovies}
+            items={trendingMovies.length > 0 ? trendingMovies : effectiveMovies}
             variant="portrait"
             viewAllHref="/browse/movies"
             showRank
@@ -76,7 +98,7 @@ export default function HomePage() {
             title="Top Shows"
             titleHi="टॉप शोज़"
             kicker="📺 Binge-Worthy"
-            items={trendingShows}
+            items={trendingShows.length > 0 ? trendingShows : effectiveShows}
             variant="portrait"
             viewAllHref="/browse/shows"
           />
@@ -86,13 +108,13 @@ export default function HomePage() {
         <CulturePanel />
 
         {/* Music Highlights */}
-        {newMusic.length > 0 && (
+        {effectiveMusic.length > 0 && (
           <div className="reveal">
             <ContentRail
               title="Music & Ragas"
               titleHi="संगीत और राग"
               kicker="🎵 Now Playing"
-              items={MUSIC_CONTENT}
+              items={effectiveMusic}
               variant="portrait"
               viewAllHref="/browse/music"
             />
@@ -100,13 +122,13 @@ export default function HomePage() {
         )}
 
         {/* Featured Documentaries */}
-        {featuredDocs.length > 0 && (
+        {effectiveDocs.length > 0 && (
           <div className="reveal">
             <ContentRail
               title="Documentaries"
               titleHi="वृत्तचित्र"
               kicker="🎥 Deep Dives"
-              items={DOCUMENTARIES}
+              items={featuredDocs.length > 0 ? featuredDocs : effectiveDocs}
               variant="portrait"
               viewAllHref="/browse/documentaries"
             />

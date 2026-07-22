@@ -20,6 +20,7 @@ export interface Program {
   isLive?: boolean;
   isPrimeTime?: boolean;
   tags: string[];
+  youtubeVideoId?: string;
 }
 
 export function getProgramThumbnail(categoryId: string): string {
@@ -935,6 +936,9 @@ export interface ContentItem {
   trendingRank?: number;
   teaserUrl: string;
   watchHref: string;
+  youtubeVideoId?: string;
+  posterUrl?: string;
+  youtubeTitleFallback?: string;
 }
 
 /* ─── MOVIES ─── */

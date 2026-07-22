@@ -22,14 +22,7 @@ const ThemeContext = createContext<ThemeContextValue>({
   isLight: false,
 });
 
-/** Briefly add a shimmer overlay div that fades out after the wave completes */
-function spawnShimmer(next: Theme, x: number, y: number) {
-  const el = document.createElement('div');
-  el.className = `theme-shimmer-overlay theme-shimmer-overlay--${next}`;
-  document.body.appendChild(el);
-  // Remove after animation ends (540ms + a little buffer)
-  setTimeout(() => el.remove(), 600);
-}
+
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme] = useState<Theme>('dark');
@@ -40,7 +33,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleTheme = useCallback(
-    (coords?: ToggleCoords) => {
+    (_coords?: ToggleCoords) => {
       // Do nothing permanently
     },
     []
@@ -58,3 +51,4 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 export function useTheme() {
   return useContext(ThemeContext);
 }
+

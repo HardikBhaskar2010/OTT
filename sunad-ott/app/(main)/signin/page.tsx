@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { useLang } from '@/components/LangContext';
 import { CATEGORIES } from '@/lib/mockData';
+import {
+  auth,
+  googleProvider,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
+  signInWithPopup,
+} from '@/lib/firebase/client';
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   documentaries: (
@@ -85,51 +93,122 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   )
 };
 
-export default function SignInPage() {
+function SignInContent() {
   const { t } = useLang();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect') || '/';
 
-  // Authentication states: 'request' | 'verify' | 'onboarding'
-  const [step, setStep] = useState<'request' | 'verify' | 'onboarding'>('request');
+  // Authentication states: 'request' | 'link-sent' | 'onboarding'
+  const [step, setStep] = useState<'request' | 'link-sent' | 'onboarding'>('request');
   const [identifier, setIdentifier] = useState('');
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [error, setError] = useState('');
+  const [infoMessage, setInfoMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Request OTP validation
-  const handleRequestOtp = (e: React.FormEvent) => {
+  // Process passwordless magic link landing
+  useEffect(() => {
+    async function checkMagicLink() {
+      if (typeof window === 'undefined') return;
+
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem('emailForSignIn');
+        if (!email) {
+          email = window.prompt(t('Please enter your email for verification:', 'सत्यापन के लिए कृपया अपना ईमेल दर्ज करें:'));
+        }
+
+        if (!email) {
+          setError(t('Email is required to complete magic link sign in.', 'मैजिक लिंक साइन इन पूरा करने के लिए ईमेल आवश्यक है।'));
+          return;
+        }
+
+        try {
+          setLoading(true);
+          const result = await signInWithEmailLink(auth, email, window.location.href);
+          window.localStorage.removeItem('emailForSignIn');
+
+          if (result.user) {
+            const idToken = await result.user.getIdToken();
+            await fetch('/api/auth/session', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken }),
+            });
+            setStep('onboarding');
+          }
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : 'Sign in with magic link failed';
+          setError(msg);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+
+    checkMagicLink();
+  }, [t]);
+
+  // Request passwordless magic link email
+  const handleSendMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier.trim()) {
-      setError(t('Please enter a valid mobile number or email.', 'कृपया एक वैध मोबाइल नंबर या ईमेल दर्ज करें।'));
+      setError(t('Please enter a valid email address.', 'कृपया एक वैध ईमेल पता दर्ज करें।'));
       return;
     }
-    setError('');
-    setStep('verify');
-  };
 
-  // OTP verify handler
-  const handleVerifyOtp = (e: React.FormEvent) => {
-    e.preventDefault();
-    const joinedOtp = otp.join('');
-    if (joinedOtp.length < 6) {
-      setError(t('Please enter a complete 6-digit code.', 'कृपया पूरा 6-अंकीय कोड दर्ज करें।'));
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(identifier.trim())) {
+      setError(t('Please enter a valid email address (e.g. user@domain.com).', 'कृपया एक वैध ईमेल दर्ज करें।'));
       return;
     }
-    setError('');
-    // Proceed to onboarding interest picker
-    setStep('onboarding');
+
+    try {
+      setLoading(true);
+      setError('');
+      const email = identifier.trim();
+      const actionCodeSettings = {
+        url: window.location.origin + '/signin?redirect=' + encodeURIComponent(redirectUrl),
+        handleCodeInApp: true,
+      };
+
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      window.localStorage.setItem('emailForSignIn', email);
+      setInfoMessage(
+        t(
+          `Magic sign-in link has been sent to ${email}. Check your inbox!`,
+          `मैजिक साइन-इन लिंक ${email} पर भेज दिया गया है। अपना इनबॉक्स जांचें!`
+        )
+      );
+      setStep('link-sent');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to send magic link';
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleOtpChange = (index: number, val: string) => {
-    if (isNaN(Number(val))) return;
-    const nextOtp = [...otp];
-    nextOtp[index] = val;
-    setOtp(nextOtp);
-
-    // Auto-focus next field
-    if (val && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      nextInput?.focus();
+  // Google OAuth sign-in
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const result = await signInWithPopup(auth, googleProvider);
+      if (result.user) {
+        const idToken = await result.user.getIdToken();
+        await fetch('/api/auth/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken }),
+        });
+        setStep('onboarding');
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Google sign-in failed';
+      setError(msg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -144,9 +223,7 @@ export default function SignInPage() {
       setError(t('Please select at least 2 interests to personalize your feed.', 'अपना फ़ीड निजीकृत करने के लिए कम से कम 2 श्रेणियां चुनें।'));
       return;
     }
-    // Complete login, redirect to homepage
-    alert(t('Account verified successfully!', 'खाता सफलतापूर्वक सत्यापित किया गया!'));
-    router.push('/');
+    router.push(redirectUrl);
   };
 
   return (
@@ -167,16 +244,16 @@ export default function SignInPage() {
         boxShadow: 'var(--shadow-2)',
         animation: 'fadeIn var(--motion-base) var(--motion-easing)'
       }}>
-        {/* ─── STEP 1: REQUEST OTP ─── */}
+        {/* ─── STEP 1: REQUEST MAGIC LINK / GOOGLE OAUTH ─── */}
         {step === 'request' && (
-          <form onSubmit={handleRequestOtp} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <form onSubmit={handleSendMagicLink} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <div style={{ textAlign: 'center', marginBottom: 'var(--space-2)' }}>
-              <img src="/sunad_logo.jpg" alt="" style={{ width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)', display: 'block', margin: '0 auto' }} />
+              <Image src="/sunad_logo.jpg" alt="" width={56} height={56} style={{ borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)', display: 'block', margin: '0 auto' }} aria-hidden="true" priority={false} />
               <h1 className="type-heading-1" style={{ color: 'var(--primitive-white)', marginTop: 'var(--space-1)', marginBottom: '4px' }}>
                 {t('Sign In / Register', 'साइन इन / पंजीकरण')}
               </h1>
               <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-label)' }}>
-                {t('Enter your credentials to receive a secure OTP code.', 'सुरक्षित ओटीपी प्राप्त करने के लिए अपना विवरण दर्ज करें।')}
+                {t('Sign in with a passwordless magic link or your Google account.', 'पासवर्ड रहित मैजिक लिंक या गूगल खाते से साइन इन करें।')}
               </p>
             </div>
 
@@ -186,16 +263,56 @@ export default function SignInPage() {
               </div>
             )}
 
+            {/* Google OAuth Button */}
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '10px',
+                width: '100%',
+                padding: '12px',
+                borderRadius: 'var(--radius-md)',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                color: 'var(--primitive-white)',
+                fontSize: 'var(--type-body-m)',
+                fontWeight: 600,
+                opacity: loading ? 0.7 : 1
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+              </svg>
+              {t('Continue with Google', 'गूगल के साथ आगे बढ़ें')}
+            </button>
+
+            <div style={{ display: 'flex', alignItems: 'center', margin: 'var(--space-1) 0' }}>
+              <div style={{ flex: 1, borderBottom: '1px solid var(--color-border)' }} />
+              <span style={{ padding: '0 10px', fontSize: 'var(--type-caption)', color: 'var(--color-text-dim)' }}>
+                {t('OR', 'या')}
+              </span>
+              <div style={{ flex: 1, borderBottom: '1px solid var(--color-border)' }} />
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label htmlFor="identifier" style={{ fontSize: 'var(--type-label)', fontWeight: 600, color: 'var(--primitive-ivory)' }}>
-                {t('Mobile Number or Email / मोबाइल नंबर या ईमेल', 'मोबाइल नंबर या ईमेल')}
+                {t('Email Address / ईमेल पता', 'ईमेल पता')}
               </label>
               <input
-                type="text"
+                type="email"
                 id="identifier"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="+91 98765 43210 or email@domain.com"
+                placeholder="email@domain.com"
+                required
                 style={{
                   background: 'var(--color-surface)',
                   border: '1px solid var(--color-border)',
@@ -208,69 +325,35 @@ export default function SignInPage() {
               />
             </div>
 
-            <button type="submit" className="btn-primary" style={{ border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'center' }}>
-              {t('Send OTP', 'ओटीपी भेजें')}
+            <button type="submit" disabled={loading} className="btn-primary" style={{ border: 'none', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', justifyContent: 'center', opacity: loading ? 0.7 : 1 }}>
+              {loading ? t('Sending...', 'भेजा जा रहा है...') : t('Send Magic Link', 'मैजिक लिंक भेजें')}
             </button>
           </form>
         )}
 
-        {/* ─── STEP 2: VERIFY OTP ─── */}
-        {step === 'verify' && (
-          <form onSubmit={handleVerifyOtp} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            <div style={{ textAlign: 'center', marginBottom: 'var(--space-2)' }}>
-              <h1 className="type-heading-1" style={{ color: 'var(--primitive-white)', margin: 0 }}>
-                {t('Verification', 'सत्यापन')}
-              </h1>
-              <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-label)', marginTop: '4px' }}>
-                {t(`Enter the 6-digit code sent to ${identifier}`, `विवरण ${identifier} पर भेजे गए ६-अंकीय कोड को दर्ज करें`)}
-              </p>
-            </div>
-
-            {error && (
-              <div style={{ color: 'var(--color-error)', fontSize: 'var(--type-label)', padding: 'var(--space-1) var(--space-2)', border: '1px solid var(--color-error)', borderRadius: 'var(--radius-sm)', background: 'rgba(196,96,75,0.05)' }}>
-                {error}
-              </div>
-            )}
-
-            {/* Verification Inputs */}
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', margin: 'var(--space-2) 0' }}>
-              {otp.map((digit, idx) => (
-                <input
-                  key={idx}
-                  id={`otp-${idx}`}
-                  type="text"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleOtpChange(idx, e.target.value)}
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    textAlign: 'center',
-                    background: 'var(--color-surface)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    color: 'var(--primitive-white)',
-                    fontSize: 'var(--type-body-l)',
-                    fontWeight: 700,
-                    outline: 'none'
-                  }}
-                />
-              ))}
-            </div>
-
-            <button type="submit" className="btn-primary" style={{ border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'center' }}>
-              {t('Verify & Proceed', 'सत्यापित करें और आगे बढ़ें')}
+        {/* ─── STEP 2: LINK SENT ─── */}
+        {step === 'link-sent' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', textAlign: 'center' }}>
+            <h1 className="type-heading-1" style={{ color: 'var(--primitive-white)', margin: 0 }}>
+              {t('Check Your Email', 'अपना ईमेल जांचें')}
+            </h1>
+            <p style={{ color: 'var(--color-gold)', fontSize: 'var(--type-body-m)', margin: 'var(--space-2) 0' }}>
+              {infoMessage}
+            </p>
+            <p style={{ color: 'var(--color-text-dim)', fontSize: 'var(--type-label)' }}>
+              {t('Click the link in the email to automatically sign in. You can close this window after clicking.', 'साइन इन करने के लिए ईमेल में दिए गए लिंक पर क्लिक करें।')}
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setStep('request');
+                setInfoMessage('');
+              }}
+              style={{ background: 'transparent', border: 'none', color: 'var(--color-gold)', cursor: 'pointer', marginTop: 'var(--space-2)' }}
+            >
+              ← {t('Use a different email', 'दूसरे ईमेल का प्रयोग करें')}
             </button>
-
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--type-caption)', color: 'var(--color-text-dim)' }}>
-              <button type="button" onClick={() => setStep('request')} style={{ background: 'transparent', border: 'none', color: 'var(--color-text-dim)', cursor: 'pointer' }}>
-                ← {t('Change details', 'विवरण बदलें')}
-              </button>
-              <button type="button" onClick={() => alert(t('New OTP sent!', 'नया ओटीपी भेजा गया!'))} style={{ background: 'transparent', border: 'none', color: 'var(--color-gold)', cursor: 'pointer' }}>
-                {t('Resend OTP', 'ओटीपी पुनः भेजें')}
-              </button>
-            </div>
-          </form>
+          </div>
         )}
 
         {/* ─── STEP 3: INTERACTIVE ONBOARDING INTEREST PICKER ─── */}
@@ -349,5 +432,13 @@ export default function SignInPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<div style={{ textAlign: 'center', padding: '50px', color: 'var(--color-gold)' }}>Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }

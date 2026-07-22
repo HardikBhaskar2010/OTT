@@ -2,9 +2,16 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { useLang } from './LangContext';
+import Image from 'next/image';
+import { useLang, Lang } from './LangContext';
 import { INDIAN_LANGUAGES, MOVIE_GENRES, MUSIC_GENRES, SHOW_GENRES } from '@/lib/mockData';
 import type { IndianLanguage, GenreDef } from '@/lib/mockData';
+
+declare global {
+  interface Window {
+    __sunadLenis: import('lenis').default | null;
+  }
+}
 
 const ONBOARDING_KEY = 'cf_onboarded';
 const LANG_PREF_KEY = 'cf_lang_prefs';
@@ -58,6 +65,8 @@ export default function OnboardingWizard() {
 
   // ── Initial mount: check localStorage ──────────────────────────────────────
   useEffect(() => {
+    // Standard SSR hydration guard — setMounted prevents localStorage access on server
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const onboarded = localStorage.getItem(ONBOARDING_KEY);
     if (!onboarded) {
@@ -80,9 +89,9 @@ export default function OnboardingWizard() {
     document.body.style.paddingRight = `${scrollbarW}px`; // prevent layout shift
 
     // 2. Pause Lenis smooth scroll if active
-    if (typeof window !== 'undefined' && (window as any).lenis) {
+    if (typeof window !== 'undefined' && window.__sunadLenis) {
       try {
-        (window as any).lenis.stop();
+        window.__sunadLenis.stop();
       } catch (err) {
         console.warn('Failed to stop Lenis:', err);
       }
@@ -138,9 +147,9 @@ export default function OnboardingWizard() {
       document.body.style.paddingRight = prevPaddingRight;
 
       // Resume Lenis smooth scroll
-      if (typeof window !== 'undefined' && (window as any).lenis) {
+      if (typeof window !== 'undefined' && window.__sunadLenis) {
         try {
-          (window as any).lenis.start();
+          window.__sunadLenis.start();
         } catch (err) {
           console.warn('Failed to start Lenis:', err);
         }
@@ -221,7 +230,7 @@ export default function OnboardingWizard() {
           <div className="onboarding-step">
             {/* Logo */}
             <div className="onboarding-logo" aria-hidden="true">
-              <img src="/sunad_logo.jpg" alt="" style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-gold)' }} />
+              <Image src="/sunad_logo.jpg" alt="" width={40} height={40} style={{ borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-gold)' }} aria-hidden="true" priority={false} />
               <span>Sunad OTT</span>
             </div>
 
@@ -242,7 +251,6 @@ export default function OnboardingWizard() {
                     key={lang.code}
                     className={`lang-tile${isSelected ? ' lang-tile--selected' : ''}${lang.rtl ? ' lang-tile--rtl' : ''}`}
                     onClick={() => toggleLang(lang.code)}
-                    role="listitem"
                     aria-pressed={isSelected}
                     aria-label={`${lang.englishName} - ${lang.nativeName}`}
                     style={{
@@ -271,7 +279,7 @@ export default function OnboardingWizard() {
                 className={`btn-primary onboarding-cta${selectedLangs.length === 0 ? ' btn-disabled' : ''}`}
                 onClick={() => {
                   if (selectedLangs.length > 0) {
-                    setLang(selectedLangs[0] as any);
+                    setLang(selectedLangs[0] as Lang);
                     setStep(2);
                   }
                 }}
@@ -407,7 +415,6 @@ export default function OnboardingWizard() {
                     key={genre.id}
                     className={`genre-tile${isSelected ? ' genre-tile--selected' : ''}`}
                     onClick={() => toggleGenre(genre.id)}
-                    role="listitem"
                     aria-pressed={isSelected}
                     style={isSelected ? { borderColor: genre.color, background: `${genre.color}22` } : {}}
                   >

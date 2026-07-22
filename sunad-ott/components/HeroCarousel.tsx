@@ -278,10 +278,19 @@ export default function HeroCarousel({ slides = HERO_SLIDES_V2 }: HeroCarouselPr
           </div>
 
           {/* Title */}
-          <h1 className="hero-carousel__title">
+          <h1 
+            className="hero-carousel__title"
+            style={{ 
+              display: '-webkit-box', 
+              WebkitLineClamp: 2, 
+              WebkitBoxOrient: 'vertical', 
+              overflow: 'hidden',
+              fontSize: slide.titleEn.length > 30 ? 'clamp(1.2rem, 2.5vw, 2rem)' : undefined
+            }}
+          >
             {slide.titleEn}
-            {slide.titleHi && (
-              <span className="hero-carousel__title-hi lang-hi-only" lang="hi">{slide.titleHi}</span>
+            {slide.titleHi && slide.titleHi !== slide.titleEn && (
+              <span className="hero-carousel__title-hi" lang="hi">{slide.titleHi}</span>
             )}
           </h1>
 

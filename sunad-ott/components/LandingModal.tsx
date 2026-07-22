@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useLang } from './LangContext';
 import { useTheme } from './ThemeContext';
 import {
@@ -122,10 +123,13 @@ export default function LandingModal() {
             background: 'var(--color-bg)',
           }}
         >
-          <img
+          <Image
             src={isLight ? '/sunad_logo_light.png' : '/sunad_logo.jpg'}
             alt="Sunad TV Brand Emblem"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            width={64}
+            height={64}
+            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            priority={false}
           />
         </div>
 

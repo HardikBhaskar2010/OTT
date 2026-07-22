@@ -3,6 +3,7 @@ import { Fraunces, Mukta, Noto_Sans_Devanagari, Noto_Serif_Devanagari } from 'ne
 import '@/styles/globals.css';
 import { LangProvider } from '@/components/LangContext';
 import { ThemeProvider } from '@/components/ThemeContext';
+import { AuthProvider } from '@/components/AuthContext';
 import { LenisProvider } from '@/components/LenisProvider';
 import { GSAPProvider } from '@/components/GSAPProvider';
 import TopNav from '@/components/TopNav';
@@ -12,6 +13,7 @@ import ScrollReveal from '@/components/ScrollReveal';
 
 import OnboardingWizard from '@/components/OnboardingWizard';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import FirebaseAnalytics from '@/components/FirebaseAnalytics';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import CookieBanner from '@/components/CookieBanner';
@@ -55,7 +57,7 @@ const notoSerifDevanagari = Noto_Serif_Devanagari({
 
 /* ─── METADATA ────────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sunadbroadcast.vercel.app'),
+  metadataBase: new URL('https://sunadtv.com'),
   title: {
     template: '%s | Sunad TV',
     default: 'Sunad TV — Real Stories. Real Bharat. Real Impact.',
@@ -128,8 +130,9 @@ export default function RootLayout({
       ].join(' ')}
     >
       <head>
-        {/* Google Analytics 4 — loads after interactive, no render blocking */}
+        {/* Google Analytics 4 & Firebase Analytics — initialized client-side */}
         <GoogleAnalytics />
+        <FirebaseAnalytics />
         {/*
           Tiro Devanagari Hindi — loaded via <link> as it's not available
           through next/font/google's standard subset list.
@@ -145,6 +148,8 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* Tiro Devanagari Hindi — not available via next/font/google, must use CDN link */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
           rel="stylesheet"
@@ -161,31 +166,33 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <LangProvider>
-            <LenisProvider>
-              <GSAPProvider>
+            <AuthProvider>
+              <LenisProvider>
+                <GSAPProvider>
 
-              {/* Scroll reveal observer — no DOM output */}
-              <ScrollReveal />
+                {/* Scroll reveal observer — no DOM output */}
+                <ScrollReveal />
 
-              {/* Onboarding wizard — first-visit modal gate (replaces LandingModal) */}
-              <OnboardingWizard />
+                {/* Onboarding wizard — first-visit modal gate (replaces LandingModal) */}
+                <OnboardingWizard />
 
-              {/* Fixed floating dock nav */}
-              <TopNav />
-              <MobileBottomNav />
+                {/* Fixed floating dock nav */}
+                <TopNav />
+                <MobileBottomNav />
 
-              {/* Main content layout */}
-              <div className="app-shell">
-                {/* Main content — padded below fixed nav */}
-                <main className="main-content" id="main-content">
-                  {children}
-                </main>
-              </div>
+                {/* Main content layout */}
+                <div className="app-shell">
+                  {/* Main content — padded below fixed nav */}
+                  <main className="main-content" id="main-content">
+                    {children}
+                  </main>
+                </div>
 
-              {/* Footer */}
-              <Footer />
-              </GSAPProvider>
-            </LenisProvider>
+                {/* Footer */}
+                <Footer />
+                </GSAPProvider>
+              </LenisProvider>
+            </AuthProvider>
           </LangProvider>
         </ThemeProvider>
 

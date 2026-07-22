@@ -1,16 +1,15 @@
-import createNextIntlPlugin from 'next-intl/plugin';
-
-const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
-
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    // Allow images from your own CDN server
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**.sunadbroadcast.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.sunadtv.com',
       },
     ],
   },
@@ -19,4 +18,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;

@@ -1,0 +1,27 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. content collection: public read; write only for users with role: "admin" claim
+    match /content/{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.role == "admin";
+    }
+
+    // 2. users/{uid}/**: read and write only for matching authenticated user
+    match /users/{uid}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // 3. auditLog collection: no client access (Admin SDK bypasses rules)
+    match /auditLog/{document=**} {
+      allow read, write: if false;
+    }
+
+    // 4. analyticsEvents collection: append-only write-only for clients
+    match /analyticsEvents/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}

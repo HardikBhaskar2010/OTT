@@ -1,0 +1,16 @@
+{
+  "name": "Sunad TV",
+  "short_name": "Sunad TV",
+  "description": "Premium Indian civilizational storytelling",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0907",
+  "theme_color": "#D97706",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

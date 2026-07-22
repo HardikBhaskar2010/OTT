@@ -3,53 +3,79 @@
 import { useState, useTransition, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useLang } from '@/components/LangContext';
-import { PROGRAMS, CATEGORIES, Program, getProgramThumbnail } from '@/lib/mockData';
+import { useAuth } from '@/components/AuthContext';
+import { CATEGORIES, ContentItem, getProgramThumbnail } from '@/lib/mockData';
+import { getAllContentFromFirestore } from '@/lib/firestoreCatalog';
 import { useSearchParams } from 'next/navigation';
+import { trackSearchQuery } from '@/lib/analytics';
 
 function SearchResults() {
   const { t } = useLang();
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get('q') || '';
   const [query, setQuery] = useState(urlQuery);
   const [isPending, startTransition] = useTransition();
-  const [results, setResults] = useState<Program[]>([]);
+  const [results, setResults] = useState<ContentItem[]>([]);
+  const [contentList, setContentList] = useState<ContentItem[]>([]);
 
-  // Simple search match logic (English & Hindi)
-  const handleSearch = (val: string) => {
-    setQuery(val);
-    startTransition(() => {
-      if (!val.trim()) {
-        setResults([]);
-        return;
-      }
-
-      const lowerVal = val.toLowerCase();
-      const filtered = PROGRAMS.filter((p) => {
-        return (
-          p.nameEn.toLowerCase().includes(lowerVal) ||
-          p.nameHi.includes(lowerVal) ||
-          p.description.toLowerCase().includes(lowerVal) ||
-          p.descriptionHi.includes(lowerVal) ||
-          p.category.toLowerCase().includes(lowerVal) ||
-          p.tags.some(tag => tag.toLowerCase().includes(lowerVal))
-        );
+  // Load Firestore collection content on mount
+  useEffect(() => {
+    getAllContentFromFirestore()
+      .then((items) => {
+        if (items && items.length > 0) {
+          setContentList(items);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to load search catalog from Firestore:', err);
       });
+  }, []);
 
-      setResults(filtered);
+  // Title and genre search match logic against Firestore content collection
+  const performSearch = (val: string, catalog: ContentItem[]): ContentItem[] => {
+    const q = val.trim().toLowerCase();
+    if (!q) return [];
+
+    return catalog.filter((item) => {
+      const matchTitleEn = item.titleEn ? item.titleEn.toLowerCase().includes(q) : false;
+      const matchTitleHi = item.titleHi ? item.titleHi.toLowerCase().includes(q) : false;
+      const matchGenre = item.genres ? item.genres.some((g) => g.toLowerCase().includes(q)) : false;
+      const matchCategory = item.categoryId ? item.categoryId.toLowerCase().includes(q) : false;
+      const matchDesc = item.description ? item.description.toLowerCase().includes(q) : false;
+
+      return matchTitleEn || matchTitleHi || matchGenre || matchCategory || matchDesc;
     });
   };
 
+  const handleSearch = (val: string) => {
+    setQuery(val);
+    startTransition(() => {
+      const filtered = performSearch(val, contentList);
+      setResults(filtered);
+      if (val.trim()) {
+        trackSearchQuery(val.trim(), filtered.length, user?.uid);
+      }
+    });
+  };
+
+  // Sync URL query param → local state on mount / navigation
   useEffect(() => {
     if (urlQuery) {
-      handleSearch(urlQuery);
+      startTransition(() => {
+        setQuery(urlQuery);
+        const filtered = performSearch(urlQuery, contentList);
+        setResults(filtered);
+        trackSearchQuery(urlQuery.trim(), filtered.length, user?.uid);
+      });
     }
-  }, [urlQuery]);
+  }, [urlQuery, contentList, user?.uid]);
 
   const trendingSearches = [
-    { en: 'Mystic Bharat', hi: 'प्रभात भारत' },
+    { en: 'Mystic Bharat', hi: 'मिस्टिक भारत' },
     { en: 'Vedas', hi: 'वेद' },
     { en: 'Ayurveda', hi: 'आयुर्वेद' },
-    { en: 'Civilization', hi: 'सभ्यता' }
+    { en: 'Civilization', hi: 'सभ्यता' },
   ];
 
   return (
@@ -72,19 +98,21 @@ function SearchResults() {
               fontSize: 'var(--type-body-l)',
               outline: 'none',
               transition: 'border-color var(--motion-fast) var(--motion-easing)',
-              boxShadow: 'var(--shadow-1)'
+              boxShadow: 'var(--shadow-1)',
             }}
             className="search-input-focus"
           />
           {/* Search Icon */}
-          <span style={{
-            position: 'absolute',
-            left: '20px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            color: 'var(--color-text-dim)',
-            fontSize: '1.25rem'
-          }}>
+          <span
+            style={{
+              position: 'absolute',
+              left: '20px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: 'var(--color-text-dim)',
+              fontSize: '1.25rem',
+            }}
+          >
             🔍
           </span>
 
@@ -101,7 +129,7 @@ function SearchResults() {
                 border: 'none',
                 color: 'var(--color-text-dim)',
                 cursor: 'pointer',
-                fontSize: '1rem'
+                fontSize: '1rem',
               }}
             >
               ✕
@@ -131,7 +159,7 @@ function SearchResults() {
                     color: 'var(--primitive-ivory)',
                     cursor: 'pointer',
                     fontSize: 'var(--type-label)',
-                    transition: 'all var(--motion-fast) var(--motion-easing)'
+                    transition: 'all var(--motion-fast) var(--motion-easing)',
                   }}
                   className="chip-hover"
                 >
@@ -143,11 +171,13 @@ function SearchResults() {
             <h2 className="type-heading-2" style={{ color: 'var(--primitive-white)', marginBottom: 'var(--space-3)' }}>
               {t('Explore Categories', 'श्रेणियां देखें')}
             </h2>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-              gap: 'var(--space-2)'
-            }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                gap: 'var(--space-2)',
+              }}
+            >
               {CATEGORIES.map((c) => (
                 <Link
                   key={c.id}
@@ -164,7 +194,7 @@ function SearchResults() {
                     gap: '8px',
                     textAlign: 'center',
                     transition: 'all var(--motion-fast) var(--motion-easing)',
-                    minHeight: '100px'
+                    minHeight: '100px',
                   }}
                 >
                   <span style={{ fontSize: '1.75rem' }}>{c.icon}</span>
@@ -192,7 +222,7 @@ function SearchResults() {
               {results.map((p) => (
                 <Link
                   key={p.id}
-                  href={`/watch/${p.id}`}
+                  href={p.watchHref || `/watch/${p.id}`}
                   className="glass"
                   style={{
                     display: 'grid',
@@ -202,27 +232,31 @@ function SearchResults() {
                     borderRadius: 'var(--radius-md)',
                     textDecoration: 'none',
                     alignItems: 'center',
-                    transition: 'all var(--motion-fast) var(--motion-easing)'
+                    transition: 'all var(--motion-fast) var(--motion-easing)',
                   }}
                 >
-                  <div style={{
-                    aspectRatio: '16/9',
-                    backgroundImage: `linear-gradient(to bottom, rgba(14,13,12,0.15), rgba(14,13,12,0.85)), url(${getProgramThumbnail(p.categoryId)})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    borderRadius: 'var(--radius-sm)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
+                  <div
+                    style={{
+                      aspectRatio: '16/9',
+                      backgroundImage: p.posterUrl
+                        ? `url(${p.posterUrl})`
+                        : (p.posterGradient || `url(${getProgramThumbnail(p.categoryId)})`),
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <span style={{ opacity: 0.1, fontSize: '1.5rem' }}>◈</span>
                   </div>
                   <div>
                     <span style={{ fontSize: 'var(--type-caption)', color: 'var(--color-gold)', fontWeight: 600 }}>
-                      {t(p.category, p.category)}
+                      {t(p.categoryId || 'Content', p.categoryId || 'सामग्री')}
                     </span>
                     <h3 style={{ fontSize: 'var(--type-body-l)', fontWeight: 600, color: 'var(--primitive-white)', margin: '2px 0 0 0' }}>
-                      {p.nameEn} / <span lang="hi" style={{ fontFamily: 'var(--font-ui-hi)' }}>{p.nameHi}</span>
+                      {p.titleEn} {p.titleHi ? `/ ${p.titleHi}` : ''}
                     </h3>
                     <p style={{ fontSize: 'var(--type-label)', color: 'var(--color-text-dim)', margin: '2px 0 0 0' }} className="truncate-2">
                       {p.description}
@@ -234,12 +268,15 @@ function SearchResults() {
           </div>
         ) : (
           /* Zero results state */
-          <div style={{
-            textAlign: 'center',
-            padding: 'var(--space-12) 0',
-            border: '1px dashed var(--color-border)',
-            borderRadius: 'var(--radius-lg)'
-          }} className="reveal-fade">
+          <div
+            style={{
+              textAlign: 'center',
+              padding: 'var(--space-12) 0',
+              border: '1px dashed var(--color-border)',
+              borderRadius: 'var(--radius-lg)',
+            }}
+            className="reveal-fade"
+          >
             <span style={{ fontSize: '3rem', display: 'block', marginBottom: 'var(--space-2)' }}>🔍</span>
             <h2 className="type-display-m" style={{ color: 'var(--primitive-ivory)' }}>
               No matches found for &quot;{query}&quot; / कोई मेल नहीं मिला
@@ -259,11 +296,13 @@ function SearchResults() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={
-      <div style={{ textAlign: 'center', padding: 'var(--space-12) 0', color: 'var(--color-text-dim)' }}>
-        Loading Search...
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div style={{ textAlign: 'center', padding: 'var(--space-12) 0', color: 'var(--color-text-dim)' }}>
+          Loading Search...
+        </div>
+      }
+    >
       <SearchResults />
     </Suspense>
   );

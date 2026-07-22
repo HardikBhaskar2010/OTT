@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import Link from 'next/link';
 import { useLang } from '@/components/LangContext';
 import { PRODUCTS, Product } from '@/lib/mockData';
 
@@ -23,7 +22,7 @@ const TrashIcon = ({ size = 16 }: { size?: number }) => (
 
 export default function StorePage() {
   const { t } = useLang();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   // Tab selection
   const tabs = [
@@ -372,3 +371,4 @@ export default function StorePage() {
     </main>
   );
 }
+

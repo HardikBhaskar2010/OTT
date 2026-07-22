@@ -30,7 +30,9 @@ export type Lang =
   | 'or' | 'as' | 'mai' | 'sa' | 'ur' | 'ks' | 'sd' | 'ne' | 'doi' | 'kok'
   | 'mni' | 'brx';
 
-const MESSAGES: Record<Lang, any> = {
+type MessageDict = typeof en;
+
+const MESSAGES: Record<Lang, MessageDict> = {
   en, hi, ta, te, mr, bn, gu, kn, ml, pa,
   or, as, mai, sa, ur, ks, sd, ne, doi, kok,
   mni, brx,
@@ -63,7 +65,7 @@ export const SUPPORTED_LANGUAGES: { code: Lang; nativeName: string; englishName:
 
 interface LangContextValue {
   lang: Lang;
-  messages: any;
+  messages: MessageDict;
   setLang: (lang: Lang) => void;
   toggle: () => void;
   t: (keyOrEn: string, fallbackOrHi?: string) => string;
@@ -123,32 +125,32 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
    */
   const t = useCallback(
     (keyOrEn: string, fallbackOrHi?: string): string => {
-      const activeDict = MESSAGES[lang] || MESSAGES.hi;
+      const activeDict: MessageDict = MESSAGES[lang] || MESSAGES.hi;
 
       // 1. Check dot-notated key path (e.g. "nav.home", "common.play")
       if (keyOrEn.includes('.')) {
         const parts = keyOrEn.split('.');
-        let val: any = activeDict;
+        let val: unknown = activeDict;
         for (const p of parts) {
-          val = val?.[p];
+          val = (val as Record<string, unknown>)?.[p];
         }
         if (typeof val === 'string') return val;
       }
 
       // 2. Direct key lookup in common / nav / home / hero / onboarding / categories
-      if (activeDict?.common?.[keyOrEn]) return activeDict.common[keyOrEn];
-      if (activeDict?.nav?.[keyOrEn]) return activeDict.nav[keyOrEn];
-      if (activeDict?.home?.[keyOrEn]) return activeDict.home[keyOrEn];
-      if (activeDict?.hero?.[keyOrEn]) return activeDict.hero[keyOrEn];
-      if (activeDict?.categories?.[keyOrEn]) return activeDict.categories[keyOrEn];
+      if ((activeDict?.common as Record<string, string>)?.[keyOrEn]) return (activeDict.common as Record<string, string>)[keyOrEn];
+      if ((activeDict?.nav as Record<string, string>)?.[keyOrEn]) return (activeDict.nav as Record<string, string>)[keyOrEn];
+      if ((activeDict?.home as Record<string, string>)?.[keyOrEn]) return (activeDict.home as Record<string, string>)[keyOrEn];
+      if ((activeDict?.hero as Record<string, string>)?.[keyOrEn]) return (activeDict.hero as Record<string, string>)[keyOrEn];
+      if ((activeDict?.categories as Record<string, string>)?.[keyOrEn]) return (activeDict.categories as Record<string, string>)[keyOrEn];
 
       // 3. Fallback for two-argument t(enString, hiString)
       if (lang === 'hi' && fallbackOrHi) return fallbackOrHi;
       if (lang !== 'en' && lang !== 'hi') {
         // Look up translated nav or common string if key matches English text
-        for (const ns of ['nav', 'home', 'hero', 'common', 'categories', 'genres']) {
-          const dictNs = activeDict[ns];
-          const enNs = MESSAGES.en[ns];
+        for (const ns of ['nav', 'home', 'hero', 'common', 'categories', 'genres'] as const) {
+          const dictNs = activeDict[ns] as Record<string, string> | undefined;
+          const enNs = MESSAGES.en[ns] as Record<string, string> | undefined;
           if (dictNs && enNs) {
             const foundKey = Object.keys(enNs).find((k) => enNs[k] === keyOrEn);
             if (foundKey && dictNs[foundKey]) {

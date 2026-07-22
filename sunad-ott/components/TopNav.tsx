@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useState, startTransition } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLang, SUPPORTED_LANGUAGES } from './LangContext';
-
-import { NAV_ITEMS } from '@/lib/mockData';
+import { useAuth } from './AuthContext';
 import { trackLanguageSwitch, trackNavSignIn } from '@/lib/analytics';
 
+// ICONS is reserved for the mobile nav dropdown (Phase 1) — preserve until implemented
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ICONS: Record<string, React.ReactNode> = {
   home: (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -85,6 +87,7 @@ export default function TopNav() {
   const navRef = useRef<HTMLElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { lang, setLang, t } = useLang();
+  const { user, signOutUser } = useAuth();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -95,10 +98,16 @@ export default function TopNav() {
   const dropdownRef = useRef<HTMLLIElement>(null);
   const langDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close categories dropdown on navigation
+  // Close dropdowns and clear search on route change.
+  // Wrapped in startTransition: these are non-urgent state resets (satisfies set-state-in-effect)
   useEffect(() => {
-    setCategoriesOpen(false);
-    setLangDropdownOpen(false);
+    startTransition(() => {
+      setCategoriesOpen(false);
+      setLangDropdownOpen(false);
+      if (!pathname.startsWith('/search')) {
+        setSearchQuery('');
+      }
+    });
   }, [pathname]);
 
   // Click outside to close dropdowns
@@ -114,13 +123,6 @@ export default function TopNav() {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
-
-  // Clear search query if navigating away from search page
-  useEffect(() => {
-    if (!pathname.startsWith('/search')) {
-      setSearchQuery('');
-    }
-  }, [pathname]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -179,6 +181,7 @@ export default function TopNav() {
   // Mobile menu — state-driven for clean animated transitions
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- reserved for mobile hamburger (Phase 1)
   const openMenu = useCallback(() => {
     setMobileMenuOpen(true);
     document.body.style.overflow = 'hidden';
@@ -247,7 +250,7 @@ export default function TopNav() {
       >
         {/* ── Left: Logo ── */}
         <Link href="/" className="nav-logo" aria-label={t('Sunad TV — Home', 'सुनाद टीवी — होम')}>
-          <img src="/sunad_logo.jpg" alt="" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" />
+          <Image src="/sunad_logo.jpg" alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--color-gold)' }} aria-hidden="true" priority={false} />
           <span className="nav-logo__text">Sunad</span>
           <span className="nav-logo__badge">TV</span>
         </Link>
@@ -394,10 +397,29 @@ export default function TopNav() {
             )}
           </div>
 
-          {/* Sign In */}
-          <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
-            {t('Sign In', 'साइन इन')}
-          </Link>
+          {/* Sign In / Sign Out */}
+          {user ? (
+            <button
+              type="button"
+              className="nav-sign-in"
+              onClick={async () => {
+                await signOutUser();
+                router.push('/');
+              }}
+              style={{
+                cursor: 'pointer',
+                background: 'rgba(196,96,75,0.15)',
+                border: '1px solid var(--color-error)',
+                color: 'var(--primitive-white)'
+              }}
+            >
+              {t('Sign Out', 'साइन आउट')}
+            </button>
+          ) : (
+            <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
+              {t('Sign In', 'साइन इन')}
+            </Link>
+          )}
 
         </div>
       </nav>

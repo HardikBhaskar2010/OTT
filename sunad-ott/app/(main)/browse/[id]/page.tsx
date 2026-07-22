@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { PROGRAMS, CATEGORIES, getProgramThumbnail } from '@/lib/mockData';
+import { CATEGORIES, getProgramThumbnail } from '@/lib/mockData';
+import { getProgramsFromFirestore } from '@/lib/firestoreCatalog';
 
 interface BrowseCategoryPageProps {
   params: Promise<{ id: string }>;
@@ -17,8 +18,8 @@ export default async function BrowseCategoryPage({ params }: BrowseCategoryPageP
     notFound();
   }
 
-  // Filter programs belonging to this category
-  const categoryPrograms = PROGRAMS.filter((p) => p.categoryId === id);
+  // Filter programs belonging to this category from Firestore
+  const categoryPrograms = await getProgramsFromFirestore(id);
 
   return (
     <main className="main-content reveal" style={{ paddingInline: 'var(--space-6)', paddingBottom: 'var(--space-12)' }}>

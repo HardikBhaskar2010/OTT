@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { useLang } from '@/components/LangContext';
 import { PLANS } from '@/lib/mockData';
 

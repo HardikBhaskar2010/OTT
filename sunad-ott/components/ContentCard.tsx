@@ -47,16 +47,16 @@ export function ContentCard({ item, variant = 'portrait', rank }: ContentCardPro
 
   return (
     <Link
-      href={item.watchHref}
+      href={`/info/${item.id}`}
       className={`content-card-v2 content-card-v2--${variant} reveal-card`}
-      aria-label={`${item.titleEn} — ${item.year} · ${item.rating} · ${item.duration}`}
+      aria-label={`View details for ${item.titleEn}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* Poster / thumbnail */}
       <div
         className="content-card-v2__poster"
-        style={{ background: item.posterGradient }}
+        style={{ background: item.posterUrl ? `url(${item.posterUrl}) center/cover no-repeat` : item.posterGradient }}
         aria-hidden="true"
       >
         {/* Teaser video on hover */}

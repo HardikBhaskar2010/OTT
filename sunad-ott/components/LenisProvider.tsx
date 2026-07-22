@@ -3,6 +3,13 @@
 import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 
+declare global {
+  interface Window {
+    /** Exposed Lenis instance for use by modals/overlays that need to pause scroll */
+    __sunadLenis: Lenis | null;
+  }
+}
+
 interface LenisProviderProps {
   children: React.ReactNode;
 }
@@ -32,7 +39,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
     // Expose lenis instance globally for pausing scroll in modal/popups
     if (typeof window !== 'undefined') {
-      (window as any).lenis = lenis;
+      window.__sunadLenis = lenis;
     }
 
     function raf(time: number) {

@@ -15,7 +15,7 @@ export default function CulturePanel() {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
     
-    let mm = gsap.matchMedia();
+    const mm = gsap.matchMedia();
 
     // Only add animations if the user doesn't prefer reduced motion
     mm.add("(prefers-reduced-motion: no-preference)", () => {
