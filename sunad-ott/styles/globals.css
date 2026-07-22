@@ -48,8 +48,6 @@ body {
   scrollbar-color: var(--color-gold) rgba(200,134,10,0.08);
 }
 
-[data-theme="light"] 
-
 /* Light theme nav docked — warm ivory frosted glass pill */
 [data-theme="light"] .site-nav.is-docked {
   --nav-docked-bg: rgba(255, 251, 240, 0.88);
@@ -3191,23 +3189,6 @@ nextjs-portal,
   color: var(--color-gold);
 }
 
-/* btn-ghost */
-.btn-ghost {
-  background: none;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-md);
-  color: var(--color-text-dim);
-  font-size: 0.88rem;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.btn-ghost:hover {
-  color: var(--color-text);
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
 @media (max-width: 768px) {
   .culture-panel {
     grid-template-columns: 1fr;
@@ -4550,7 +4531,7 @@ nextjs-portal,
   margin-bottom: 2px;
 }
 
-.btn-ghost {
+.onboarding-step .btn-ghost {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--color-text-dim);
@@ -4563,7 +4544,7 @@ nextjs-portal,
   transition: all 0.2s ease;
 }
 
-.btn-ghost:hover {
+.onboarding-step .btn-ghost:hover {
   color: var(--primitive-white);
   border-color: rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.05);
