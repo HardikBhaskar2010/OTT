@@ -4715,6 +4715,7 @@ nextjs-portal,
 .onboarding-modal {
   width: 100%;
   max-width: 480px;
+  max-height: 90vh;
   background: rgba(20, 16, 10, 0.6);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -4739,6 +4740,7 @@ nextjs-portal,
   gap: 8px;
   margin-bottom: var(--space-6);
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .onboarding-step-dot {
@@ -4785,6 +4787,7 @@ nextjs-portal,
   font-size: 1.5rem;
   color: var(--primitive-white);
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
 .onboarding-title {
@@ -4794,6 +4797,7 @@ nextjs-portal,
   text-align: center;
   margin-bottom: var(--space-2);
   line-height: 1.1;
+  flex-shrink: 0;
 }
 
 .onboarding-title__hi {
@@ -4808,14 +4812,31 @@ nextjs-portal,
   text-align: center;
   color: var(--color-text-dim);
   font-size: var(--type-body-m);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
+  flex-shrink: 0;
 }
 
 .lang-grid, .genre-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
+  overflow-y: auto;
+  max-height: 38vh;
+  padding-right: 8px;
+}
+
+/* Custom Scrollbar for grids */
+.lang-grid::-webkit-scrollbar, .genre-grid::-webkit-scrollbar {
+  width: 4px;
+}
+.lang-grid::-webkit-scrollbar-track, .genre-grid::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+.lang-grid::-webkit-scrollbar-thumb, .genre-grid::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
 }
 
 .lang-btn, .genre-btn {
