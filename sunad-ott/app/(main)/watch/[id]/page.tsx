@@ -300,7 +300,7 @@ export default function WatchPage({ params }: WatchPageProps) {
         {/* Main Video Player Canvas */}
         <div style={{ position: 'relative', zIndex: 1, flex: 1, width: '100%' }}>
           {/* Ambient Glow matching poster/theme color */}
-          <div className="player-ambient-glow" style={{ '--ambient-color': program.posterColor } as React.CSSProperties}></div>
+          <div className="player-ambient-glow" style={{ '--ambient-color': (program as any).posterColor || 'rgba(200, 134, 10, 0.15)' } as React.CSSProperties}></div>
           <div style={{
             position: 'relative',
             aspectRatio: '16/9',
