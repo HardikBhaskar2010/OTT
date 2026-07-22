@@ -397,24 +397,52 @@ export default function TopNav() {
             )}
           </div>
 
-          {/* Sign In / Sign Out */}
+          {/* User Profile Avatar / Sign In */}
           {user ? (
-            <button
-              type="button"
-              className="nav-sign-in"
-              onClick={async () => {
-                await signOutUser();
-                router.push('/');
-              }}
+            <Link
+              href="/profile"
+              className="nav-profile-btn"
+              title={user.displayName || user.email || t('Account Profile', 'खाता प्रोफ़ाइल')}
+              aria-label={t('Account Profile', 'खाता प्रोफ़ाइल')}
               style={{
-                cursor: 'pointer',
-                background: 'rgba(196,96,75,0.15)',
-                border: '1px solid var(--color-error)',
-                color: 'var(--primitive-white)'
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '38px',
+                height: '38px',
+                borderRadius: '50%',
+                border: '1.5px solid var(--color-gold)',
+                background: 'rgba(230, 154, 36, 0.15)',
+                overflow: 'hidden',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 0 10px rgba(230, 154, 36, 0.25)',
+                flexShrink: 0,
               }}
             >
-              {t('Sign Out', 'साइन आउट')}
-            </button>
+              {user.photoURL ? (
+                // Google account PFP image
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={user.photoURL}
+                  alt={user.displayName || 'User Profile'}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                // Fallback initial or avatar icon
+                <span
+                  style={{
+                    color: 'var(--color-gold)',
+                    fontWeight: 700,
+                    fontSize: '0.9rem',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {(user.displayName || user.email || 'U')[0]}
+                </span>
+              )}
+            </Link>
           ) : (
             <Link href="/signin" className="nav-sign-in" onClick={() => trackNavSignIn(false)}>
               {t('Sign In', 'साइन इन')}

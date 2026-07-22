@@ -1088,6 +1088,11 @@ h2[lang="hi"] {
   box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-gold) 12%, transparent);
   transform: scale(1.02);
 }
+.nav-profile-btn:hover {
+  transform: scale(1.08);
+  border-color: #FFB83D !important;
+  box-shadow: 0 0 16px rgba(230, 154, 36, 0.5) !important;
+}
 .nav-sign-in:focus-visible {
   outline: 2px solid var(--color-border-focus);
   outline-offset: 3px;
