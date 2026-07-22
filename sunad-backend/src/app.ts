@@ -17,12 +17,12 @@ const app: Application = express();
 // Restrict CORS: in production use ALLOWED_ORIGINS env var (comma-separated list of Vercel domains)
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-  : ['http://localhost:3000'];
+  : ['http://localhost:3000', 'https://www.sunadtv.com', 'https://sunadtv.com'];
 
 app.use(cors({
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-    // Allow server-to-server requests (no origin) and whitelisted origins
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow server-to-server requests (no origin), whitelisted origins, and Vercel preview domains
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error(`CORS: origin '${origin}' not allowed`));
