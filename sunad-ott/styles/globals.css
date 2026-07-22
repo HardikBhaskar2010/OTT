@@ -4743,6 +4743,13 @@ nextjs-portal,
   flex-shrink: 0;
 }
 
+.onboarding-step {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .onboarding-step-dot {
   width: 32px;
   height: 4px;
@@ -4820,10 +4827,18 @@ nextjs-portal,
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
   overflow-y: auto;
-  max-height: 38vh;
+  flex: 1;
+  min-height: 0;
   padding-right: 8px;
+}
+
+.onboarding-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+  background: linear-gradient(to top, rgba(20, 16, 10, 1) 40%, rgba(20, 16, 10, 0));
+  padding-top: var(--space-4);
 }
 
 /* Custom Scrollbar for grids */
