@@ -4,14 +4,13 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useLang } from '@/components/LangContext';
+import { useAuth } from '@/components/AuthContext';
 import { CATEGORIES } from '@/lib/mockData';
 import {
   auth,
-  googleProvider,
-  sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
-  signInWithPopup,
+  sendSignInLinkToEmail,
 } from '@/lib/firebase/client';
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
@@ -95,6 +94,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 
 function SignInContent() {
   const { t } = useLang();
+  const { signInWithGoogle } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/';
@@ -194,19 +194,13 @@ function SignInContent() {
     try {
       setLoading(true);
       setError('');
-      const result = await signInWithPopup(auth, googleProvider);
-      if (result.user) {
-        const idToken = await result.user.getIdToken();
-        await fetch('/api/auth/session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ idToken }),
-        });
+      const user = await signInWithGoogle();
+      if (user) {
         setStep('onboarding');
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Google sign-in failed';
-      setError(msg);
+      setError(msg.replace('Firebase: ', '').replace(/\s*\(auth\/[^)]+\)/, ''));
     } finally {
       setLoading(false);
     }

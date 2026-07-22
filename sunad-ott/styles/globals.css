@@ -4627,3 +4627,35 @@ nextjs-portal,
   transform: translateY(-2px);
   box-shadow: 0 12px 36px rgba(230, 154, 36, 0.6);
 }
+
+/* ── Auth Spinner & Error ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.onboarding-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.onboarding-auth-error {
+  background: rgba(196, 96, 75, 0.12);
+  border: 1px solid rgba(196, 96, 75, 0.4);
+  border-radius: 10px;
+  color: #f4a69a;
+  font-size: 0.82rem;
+  padding: 10px 14px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.social-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
