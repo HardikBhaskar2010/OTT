@@ -4747,8 +4747,8 @@ nextjs-portal,
 .onboarding-step {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-height: 0;
+  flex-grow: 1;
+  overflow: hidden;
 }
 
 .onboarding-step-dot {
@@ -4830,8 +4830,7 @@ nextjs-portal,
   gap: var(--space-3);
   margin-bottom: var(--space-4);
   overflow-y: auto;
-  flex: 1;
-  min-height: 0;
+  flex-grow: 1;
   padding-right: 8px;
 }
 
