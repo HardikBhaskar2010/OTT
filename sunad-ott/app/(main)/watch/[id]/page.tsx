@@ -10,7 +10,6 @@ import { PROGRAMS, MOVIES, SHOWS, DOCUMENTARIES, MUSIC_CONTENT, ContentItem, PRO
 import { getContentByIdFromFirestore } from '@/lib/firestoreCatalog';
 import { addToMyList, removeFromMyList, isInMyList, saveWatchProgress, getWatchProgressItem } from '@/lib/firestoreUserData';
 import { trackContentWatched, trackWatchProgress, trackMyListAdd, trackMyListRemove } from '@/lib/analytics';
-import seededCatalog from '@/lib/seeded-catalog.json';
 
 const CartIcon = ({ size = 18 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle' }} aria-hidden="true">
@@ -28,12 +27,8 @@ export default function WatchPage({ params }: WatchPageProps) {
   const { t } = useLang();
   const { id } = React.use(params);
 
-  // Helper to extract youtubeVideoId from seeded catalog or item
+  // Helper to extract youtubeVideoId from item
   const getInitialYoutubeId = (itemId: string): string | undefined => {
-    if (seededCatalog && typeof seededCatalog === 'object' && itemId in seededCatalog) {
-      const seededItem = (seededCatalog as Record<string, ContentItem>)[itemId];
-      if (seededItem?.youtubeVideoId) return seededItem.youtubeVideoId;
-    }
     const allContent: ContentItem[] = [...MOVIES, ...SHOWS, ...DOCUMENTARIES, ...MUSIC_CONTENT];
     const cItem = allContent.find((c) => c.id === itemId);
     return cItem?.youtubeVideoId;

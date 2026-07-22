@@ -1,5 +1,4 @@
 import { ContentItem, MOVIES, SHOWS, MUSIC_CONTENT, DOCUMENTARIES, PROGRAMS, Program } from './mockData';
-import seededCatalog from './seeded-catalog.json';
 
 // Consolidate all seed content items
 export const ALL_MOCK_CONTENT: ContentItem[] = [
@@ -11,14 +10,8 @@ export const ALL_MOCK_CONTENT: ContentItem[] = [
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-// Helper to get fallback items (seeded catalog if available, else mock data)
+// Helper to get fallback items
 function getFallbackContentList(): ContentItem[] {
-  if (seededCatalog && typeof seededCatalog === 'object') {
-    const values = Object.values(seededCatalog) as ContentItem[];
-    if (values.length > 0) {
-      return values;
-    }
-  }
   return ALL_MOCK_CONTENT;
 }
 

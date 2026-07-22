@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { auth } from './firebase';
+import { auth } from './firebase/client';
 import { ContentItem } from './mockData';
 import { getContentByIdFromFirestore, getAllContentFromFirestore } from './firestoreCatalog';
 
