@@ -84,7 +84,7 @@ export default function WatchPage({ params }: WatchPageProps) {
           thumbnailGradient: contentItem.posterUrl ? `url(${contentItem.posterUrl}) center/cover no-repeat` : (contentItem.posterGradient ?? prev?.thumbnailGradient ?? 'linear-gradient(135deg, #1a0800, #3d1500)'),
           posterColor: '#1a0800',
           youtubeVideoId: (() => {
-            const rawVid = contentItem.videoUrl || contentItem.youtubeVideoId || prev?.youtubeVideoId || getInitialYoutubeId(id);
+            const rawVid = contentItem.youtubeVideoId || prev?.youtubeVideoId || getInitialYoutubeId(id);
             if (!rawVid) return undefined;
             // If it's a full YouTube URL, extract the ID
             const match = rawVid.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/);
