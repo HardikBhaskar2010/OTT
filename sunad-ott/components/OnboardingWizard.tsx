@@ -249,7 +249,7 @@ export default function OnboardingWizard() {
                 return (
                   <button
                     key={lang.code}
-                    className={`lang-tile${isSelected ? ' lang-tile--selected' : ''}${lang.rtl ? ' lang-tile--rtl' : ''}`}
+                    className={`lang-btn${isSelected ? ' selected' : ''}${lang.rtl ? ' lang-tile--rtl' : ''}`}
                     onClick={() => toggleLang(lang.code)}
                     aria-pressed={isSelected}
                     aria-label={`${lang.englishName} - ${lang.nativeName}`}
@@ -258,9 +258,9 @@ export default function OnboardingWizard() {
                       direction: lang.rtl ? 'rtl' : 'ltr',
                     }}
                   >
-                    <span className="lang-tile__native">{lang.nativeName}</span>
+                    <span className="lang-btn__native">{lang.nativeName}</span>
                     <span className="lang-tile__script">{lang.scriptName}</span>
-                    <span className="lang-tile__english">{lang.englishName}</span>
+                    <span className="lang-btn__en">{lang.englishName}</span>
                     {isSelected && (
                       <span className="lang-tile__check" aria-hidden="true">✓</span>
                     )}
@@ -276,7 +276,7 @@ export default function OnboardingWizard() {
                   : `${selectedLangs.length} language${selectedLangs.length > 1 ? 's' : ''} selected`}
               </p>
               <button
-                className={`btn-primary onboarding-cta${selectedLangs.length === 0 ? ' btn-disabled' : ''}`}
+                className={`onboarding-action${selectedLangs.length === 0 ? ' btn-disabled' : ''}`}
                 onClick={() => {
                   if (selectedLangs.length > 0) {
                     setLang(selectedLangs[0] as Lang);
@@ -365,7 +365,7 @@ export default function OnboardingWizard() {
               </div>
 
               <button
-                className="btn-primary onboarding-cta"
+                className="onboarding-action"
                 onClick={() => setStep(3)}
                 id="onboarding-register-continue"
                 type="button"
@@ -413,14 +413,14 @@ export default function OnboardingWizard() {
                 return (
                   <button
                     key={genre.id}
-                    className={`genre-tile${isSelected ? ' genre-tile--selected' : ''}`}
+                    className={`genre-btn${isSelected ? ' selected' : ''}`}
                     onClick={() => toggleGenre(genre.id)}
                     aria-pressed={isSelected}
                     style={isSelected ? { borderColor: genre.color, background: `${genre.color}22` } : {}}
                   >
                     <span className="genre-tile__icon" aria-hidden="true">{genre.icon}</span>
-                    <span className="genre-tile__en">{genre.nameEn}</span>
-                    <span className="genre-tile__hi" lang="hi">{genre.nameHi}</span>
+                    <span className="lang-btn__en">{genre.nameEn}</span>
+                    <span className="lang-btn__native" lang="hi">{genre.nameHi}</span>
                     {isSelected && <span className="genre-tile__check" aria-hidden="true">✓</span>}
                   </button>
                 );
@@ -436,7 +436,7 @@ export default function OnboardingWizard() {
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                 <button className="btn-ghost" onClick={() => setStep(2)} type="button">← Back</button>
                 <button
-                  className={`btn-primary onboarding-cta${selectedGenres.length < 3 ? ' btn-disabled' : ''}`}
+                  className={`onboarding-action${selectedGenres.length < 3 ? ' btn-disabled' : ''}`}
                   onClick={() => selectedGenres.length >= 3 && setStep(4)}
                   disabled={selectedGenres.length < 3}
                   aria-disabled={selectedGenres.length < 3}

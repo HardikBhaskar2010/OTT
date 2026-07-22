@@ -110,6 +110,14 @@ export default function WatchPage({ params }: WatchPageProps) {
   const [durationSeconds, setDurationSeconds] = useState(3600);
   const [activeTab, setActiveTab] = useState<'chapters' | 'transcript'>('chapters');
   const [showShopPanel, setShowShopPanel] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Check My List status in Firestore / localStorage
   useEffect(() => {
@@ -271,7 +279,7 @@ export default function WatchPage({ params }: WatchPageProps) {
   const youtubeVideoId = program.youtubeVideoId;
 
   return (
-    <main className="main-content reveal" style={{ paddingInline: 'var(--space-6)', paddingBottom: 'var(--space-12)' }}>
+    <main className="main-content reveal" style={{ paddingInline: 'clamp(var(--space-4), 5vw, var(--space-6))', paddingBottom: 'var(--space-12)' }}>
       {/* ─── BREADCRUMB ─── */}
       <nav style={{ marginBottom: 'var(--space-3)', fontSize: 'var(--type-label)' }}>
         <Link href="/" style={{ color: 'var(--color-text-dim)', textDecoration: 'none' }}>
@@ -288,24 +296,21 @@ export default function WatchPage({ params }: WatchPageProps) {
       </nav>
 
       {/* ─── VIDEO SCREEN & DRAWER PANEL SECTION ─── */}
-      <section style={{
-        display: 'grid',
-        gridTemplateColumns: showShopPanel ? '1fr 320px' : '1fr',
-        gap: 'var(--space-4)',
-        marginBottom: 'var(--space-6)',
-        transition: 'grid-template-columns var(--motion-slow) var(--motion-easing)',
-        alignItems: 'start'
-      }}>
+      <section className={`watch-grid-main ${(!showShopPanel || (showShopPanel && isMobile)) ? 'no-sidebar' : ''}`} style={{ marginBottom: 'var(--space-6)' }}>
         {/* Main Video Player Canvas */}
-        <div style={{
-          position: 'relative',
-          aspectRatio: '16/9',
-          background: '#040404',
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--color-border)',
-          overflow: 'hidden',
-          boxShadow: 'var(--shadow-2)'
-        }}>
+        <div style={{ position: 'relative', zIndex: 1, flex: 1, width: '100%' }}>
+          {/* Ambient Glow matching poster/theme color */}
+          <div className="player-ambient-glow" style={{ '--ambient-color': program.posterColor } as React.CSSProperties}></div>
+          <div style={{
+            position: 'relative',
+            aspectRatio: '16/9',
+            background: '#040404',
+            borderRadius: 'var(--radius-lg)',
+            border: '1px solid var(--color-border)',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-2)',
+            width: '100%'
+          }}>
           {youtubeVideoId ? (
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <YouTube
@@ -355,87 +360,95 @@ export default function WatchPage({ params }: WatchPageProps) {
             </div>
           )}
         </div>
-
-        {/* pause-triggered "Shop the Story" glassmorphic sidebar */}
+        </div>
+        {/* Desktop Sidebar OR Mobile Bottom Sheet */}
         {showShopPanel && linkedProducts.length > 0 && (
-          <aside className="glass-strong" style={{
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--color-border-gold)',
-            height: '100%',
-            aspectRatio: '16/27',
-            maxHeight: '100%',
-            overflowY: 'auto',
-            padding: 'var(--space-3)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--space-3)',
-            animation: 'fadeIn var(--motion-base) var(--motion-easing)'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--color-border)', paddingBottom: 'var(--space-1)' }}>
-              <h3 style={{ fontSize: 'var(--type-label)', fontWeight: 700, color: 'var(--color-gold)', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <CartIcon size={16} /> {t('Shop the Story', 'कहानी से खरीदें')}
-              </h3>
-              <button
-                onClick={() => setShowShopPanel(false)}
-                style={{ background: 'transparent', border: 'none', color: 'var(--color-text-dim)', cursor: 'pointer', fontSize: '0.875rem' }}
-              >
-                ✕
-              </button>
-            </div>
+          <>
+            {isMobile && <div className="mobile-bottom-sheet-backdrop" onClick={() => setShowShopPanel(false)}></div>}
+            <aside 
+              className={isMobile ? "mobile-bottom-sheet" : "glass-strong"} 
+              style={!isMobile ? {
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid var(--color-border-gold)',
+                height: '100%',
+                aspectRatio: '16/27',
+                maxHeight: '100%',
+                overflowY: 'auto',
+                padding: 'var(--space-3)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--space-3)',
+                animation: 'fadeIn var(--motion-base) var(--motion-easing)'
+              } : { gap: 'var(--space-3)' }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--color-border)', paddingBottom: 'var(--space-1)' }}>
+                <h3 style={{ fontSize: 'var(--type-label)', fontWeight: 700, color: 'var(--color-gold)', margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <CartIcon size={16} /> {t('Shop the Story', 'कहानी से खरीदें')}
+                </h3>
+                <button
+                  onClick={() => setShowShopPanel(false)}
+                  style={{ background: 'transparent', border: 'none', color: 'var(--color-text-dim)', cursor: 'pointer', fontSize: '1.25rem', padding: '0 8px' }}
+                >
+                  ✕
+                </button>
+              </div>
 
-            <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-dim)', margin: 0 }}>
-              {t('Handcrafted goods featured in this program:', 'इस कार्यक्रम में दिखाए गए हस्तनिर्मित उत्पाद:')}
-            </p>
+              <div style={{ overflowY: 'auto', flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                <p style={{ fontSize: 'var(--type-caption)', color: 'var(--color-text-dim)', margin: 0 }}>
+                  {t('Handcrafted goods featured in this program:', 'इस कार्यक्रम में दिखाए गए हस्तनिर्मित उत्पाद:')}
+                </p>
 
-            {linkedProducts.map((prod) => (
-              <div
-                key={prod.id}
-                className="glass-subtle"
-                style={{
-                  padding: 'var(--space-2)',
-                  borderRadius: 'var(--radius-md)',
-                  display: 'grid',
-                  gridTemplateColumns: '60px 1fr',
-                  gap: 'var(--space-2)',
-                  alignItems: 'center'
-                }}
-              >
-                <div style={{ aspectRatio: '1/1', background: prod.thumbnail, borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
-                  <span style={{ fontSize: '1rem', opacity: 0.1, margin: 'auto' }}>◈</span>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                  <h4 style={{ fontSize: 'var(--type-caption)', fontWeight: 600, color: 'var(--primitive-white)', margin: 0 }}>
-                    {t(prod.nameEn, prod.nameHi)}
-                  </h4>
-                  <span style={{ fontSize: 'var(--type-caption)', color: 'var(--color-gold)', fontWeight: 700 }}>
-                    ₹{prod.price}
-                  </span>
-                  <button
-                    onClick={() => alert(t(`Added ${prod.nameEn} to bag`, `${prod.nameHi} झोले में डाला गया`))}
+                {linkedProducts.map((prod) => (
+                  <div
+                    key={prod.id}
+                    className="glass-subtle"
                     style={{
-                      background: 'var(--color-gold)',
-                      color: 'var(--primitive-black)',
-                      border: 'none',
-                      padding: '2px 8px',
-                      borderRadius: 'var(--radius-sm)',
-                      fontSize: '0.65rem',
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                      marginTop: '4px',
-                      alignSelf: 'flex-start'
+                      padding: 'var(--space-2)',
+                      borderRadius: 'var(--radius-md)',
+                      display: 'grid',
+                      gridTemplateColumns: '60px 1fr',
+                      gap: 'var(--space-2)',
+                      alignItems: 'center'
                     }}
                   >
-                    {t('Add to Cart', 'झोले में डालें')}
-                  </button>
-                </div>
+                    <div style={{ aspectRatio: '1/1', background: prod.thumbnail, borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
+                      <span style={{ fontSize: '1rem', opacity: 0.1, margin: 'auto' }}>◈</span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                      <h4 style={{ fontSize: 'var(--type-caption)', fontWeight: 600, color: 'var(--primitive-white)', margin: 0 }}>
+                        {t(prod.nameEn, prod.nameHi)}
+                      </h4>
+                      <span style={{ fontSize: 'var(--type-caption)', color: 'var(--color-gold)', fontWeight: 700 }}>
+                        ₹{prod.price}
+                      </span>
+                      <button
+                        onClick={() => alert(t(`Added ${prod.nameEn} to bag`, `${prod.nameHi} झोले में डाला गया`))}
+                        style={{
+                          background: 'var(--color-gold)',
+                          color: 'var(--primitive-black)',
+                          border: 'none',
+                          padding: '4px 12px',
+                          borderRadius: 'var(--radius-sm)',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          marginTop: '4px',
+                          alignSelf: 'flex-start'
+                        }}
+                      >
+                        {t('Add to Cart', 'झोले में डालें')}
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </aside>
+            </aside>
+          </>
         )}
       </section>
 
       {/* ─── DETAIL & CHAPTERS ROW ─── */}
-      <section style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: 'var(--space-4)', alignItems: 'start' }}>
+      <section className="watch-grid-content">
         {/* Title metadata */}
         <div>
           <h1 className="type-display-m" style={{ color: 'var(--primitive-white)', marginBottom: 'var(--space-1)' }}>

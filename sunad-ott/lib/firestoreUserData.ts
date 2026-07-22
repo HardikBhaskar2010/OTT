@@ -1,4 +1,3 @@
-import { db } from './firebase';
 import { auth } from './firebase/client';
 import { ContentItem } from './mockData';
 import { getContentByIdFromFirestore, getAllContentFromFirestore } from './firestoreCatalog';
@@ -14,6 +13,10 @@ export interface WatchProgressRecord {
   durationSeconds: number;
   updatedAt?: Date;
 }
+
+// Typed shapes matching the backend API responses
+interface ApiMyListItem { contentId: string; addedAt?: string; }
+interface ApiWatchProgressItem { contentId: string; progressSeconds?: number; durationSeconds?: number; }
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -84,7 +87,7 @@ export async function isInMyList(uid: string, contentId: string): Promise<boolea
     });
     if (!res.ok) return false;
     const json = await res.json();
-    return json.data?.some((item: any) => item.contentId === contentId) || false;
+    return (json.data as ApiMyListItem[])?.some((item) => item.contentId === contentId) || false;
   } catch (err) {
     console.error(`Failed to check if content '${contentId}' in myList for user '${uid}':`, err);
     return false;
@@ -106,7 +109,7 @@ export async function getUserMyList(uid: string): Promise<ContentItem[]> {
     if (!res.ok) return [];
     
     const json = await res.json();
-    const itemIds = json.data?.map((item: any) => item.contentId) || [];
+    const itemIds = (json.data as ApiMyListItem[])?.map((item) => item.contentId) || [];
 
     if (itemIds.length === 0) return [];
 
@@ -178,7 +181,7 @@ export async function getWatchProgressItem(
     if (!res.ok) return null;
     
     const json = await res.json();
-    const item = json.data?.find((i: any) => i.contentId === contentId);
+    const item = (json.data as ApiWatchProgressItem[])?.find((i) => i.contentId === contentId);
     
     if (item) {
       return {
@@ -208,7 +211,7 @@ export async function getUserContinueWatching(uid: string, limitCount = 5): Prom
     if (!res.ok) return [];
     
     const json = await res.json();
-    let docsList = json.data || [];
+    let docsList: ApiWatchProgressItem[] = json.data || [];
     docsList = docsList.slice(0, limitCount);
 
     if (docsList.length === 0) return [];
@@ -224,9 +227,11 @@ export async function getUserContinueWatching(uid: string, limitCount = 5): Prom
         item = (await getContentByIdFromFirestore(itemProgress.contentId)) || undefined;
       }
       if (item) {
+        const durationSeconds = itemProgress.durationSeconds ?? 0;
+        const progressSeconds = itemProgress.progressSeconds ?? 0;
         const pct =
-          itemProgress.durationSeconds > 0
-            ? Math.min(100, Math.max(0, Math.round((itemProgress.progressSeconds / itemProgress.durationSeconds) * 100)))
+          durationSeconds > 0
+            ? Math.min(100, Math.max(0, Math.round((progressSeconds / durationSeconds) * 100)))
             : 0;
         result.push({
           ...item,

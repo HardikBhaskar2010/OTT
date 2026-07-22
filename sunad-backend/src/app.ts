@@ -14,8 +14,22 @@ import webhooksRouter from './routes/webhooks';
 
 const app: Application = express();
 
-// Standard middlewares
-app.use(cors());
+// Restrict CORS: in production use ALLOWED_ORIGINS env var (comma-separated list of Vercel domains)
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+  : ['http://localhost:3000'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow server-to-server requests (no origin) and whitelisted origins
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS: origin '${origin}' not allowed`));
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 // Global Rate Limiter (100 req/min)
